@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+
+body{
+	
+}
+
+h1{
+	position:relative;
+	top:50%;
+	font-style:bold;
+	font-family:serif;
+	color:white;
+}
+
+div.content{
+	position:absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+ 	text-align: center;
+	height:100%;
+	width:100%;
+	
+	background-image: linear-gradient(bottom, rgb(152,162,179) 0%, rgb(47,62,173) 35%, rgb(56,56,201) 81%);
+	background-image: -o-linear-gradient(bottom, rgb(152,162,179) 0%, rgb(47,62,173) 35%, rgb(56,56,201) 81%);
+	background-image: -moz-linear-gradient(bottom, rgb(152,162,179) 0%, rgb(47,62,173) 35%, rgb(56,56,201) 81%);
+	background-image: -webkit-linear-gradient(bottom, rgb(152,162,179) 0%, rgb(47,62,173) 35%, rgb(56,56,201) 81%);
+	background-image: -ms-linear-gradient(bottom, rgb(152,162,179) 0%, rgb(47,62,173) 35%, rgb(56,56,201) 81%);
+	
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, rgb(152,162,179)),
+	color-stop(0.35, rgb(47,62,173)),
+	color-stop(0.81, rgb(56,56,201))
+	);
+}
+
+div.login{
+	position: relative;
+	top:60%;
+	text-align: center;
+}
+
+
+
+input{
+	width:90%;
+}
+
+input.button{
+	color: #222961;
+}
+
