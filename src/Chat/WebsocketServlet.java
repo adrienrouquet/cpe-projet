@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Servlet implementation class Test
  */
-@WebServlet("/Chat")
-public class Chat extends WebSocketServlet {
+@WebServlet("/WebsocketServlet")
+public class WebsocketServlet extends WebSocketServlet {
 	private static final long serialVersionUID = 1L;
        
     private int _id = 0;
 	/**
      * @see HttpServlet#HttpServlet()
      */
-    public Chat() {
+    public WebsocketServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class Chat extends WebSocketServlet {
 			HttpServletRequest arg1) {
 		
 		System.out.println("createWebSocketInbound");
-		return new ChatMessageInbound(++_id);
+		return new Websocket(++_id);
 	}
 	
 }

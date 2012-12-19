@@ -12,14 +12,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 //import org.json.simple.JSONArray;
 
-public class ChatMessageInbound extends MessageInbound{
+public class Websocket extends MessageInbound{
 
 	private static Map<String, WsOutbound> connectionsMap = new HashMap<String, WsOutbound>();
 	
 	private final String nickname;
 	
 
-	public ChatMessageInbound(int id) {
+	public Websocket(int id) {
 		this.nickname = "GUEST_" + id;
 	}
 	
@@ -29,22 +29,26 @@ public class ChatMessageInbound extends MessageInbound{
 	}
 
 	@Override
-	protected void onTextMessage(CharBuffer message) throws IOException {
+	protected void onTextMessage(CharBuffer data) throws IOException {
 		System.out.println("onTextMessage");
 //		String msg = "(" + nickname + ")" + message.toString();
 //		broadcast(msg);
 		
-		String msg = message.toString();
+		String msg = data.toString();
 		System.out.println(msg);
 
-		JSONObject json = (JSONObject) JSONValue.parse(message.toString());
-		System.out.println(json);
+		JSONObject json = (JSONObject) JSONValue.parse(data.toString());
 		
-		String dest = (String) json.get("dest");
-		System.out.println(dest);
+		String receiver = (String) json.get("receiver");
+		json.put("sender", nickname);
+		json.remove("receiver");
+				
+		String jsonText = json.toJSONString();
+		System.out.print(jsonText);
+		
 		try {
-			WsOutbound conn = connectionsMap.get(dest);
-			conn.writeTextMessage(CharBuffer.wrap("(" + nickname + ")" + (String)json.get("message")));
+			WsOutbound conn = connectionsMap.get(receiver);
+			conn.writeTextMessage(CharBuffer.wrap(jsonText));
 		} catch (Exception e) {
 			System.err.println("ERROR: user is probably disconnected: " + e.getMessage());
 			// send msg to DB
@@ -69,14 +73,14 @@ public class ChatMessageInbound extends MessageInbound{
 		System.out.println("onOpen");
 		connectionsMap.put(nickname, outbound);
 		System.out.println(connectionsMap);
-		String message = String.format("** %s %s",nickname, "has joined **");
+		String message = String.format("{ \"message\": \"" + nickname + " has joined\" }");
 		broadcast(message);
 	}
 	
 	@Override
 	protected void onClose(int status) {
 		System.out.println("onClose");
-		String message = String.format("** %s %s",nickname, "has disconnected **");
+		String message = String.format("{ \"message\": \"" + nickname + " is disconnected\" }");
 		connectionsMap.remove(nickname);
 		broadcast(message);
 	}
