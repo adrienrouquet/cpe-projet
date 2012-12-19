@@ -52,6 +52,17 @@
 			<div class="messageStatus">V</div>
 			<div class="messageDateTime">(00:00)</div>
 		</div>
+		<div class="newMessageWrapper">
+			<div class="messageContent">
+				<textarea name="message" rows="4" class="messageContent">
+				Enter your message here...
+				</textarea>			
+			</div>
+			<div class="messageSend">
+				<button class="button"> Send </button>
+			</div>
+		</div>
+		
 		</form>
 	</div>
 </div>

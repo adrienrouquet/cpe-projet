@@ -3,7 +3,6 @@ package ServerCore;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,28 +12,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import TestEnvSetup.DBReset;
-
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public LoginServlet() throws SQLException {
+    public LoginServlet() {
         super();
-        DBReset.resetDatabase();
-    } s
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		System.out.println("LoginServlet: Entering doGet");
 		
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("content/login.html");
-		rd.forward(request, response);
+		RequestDispatcher rd = req.getRequestDispatcher("content/login/login.jsp");
+		rd.forward(req, res);
 		
-		HttpSession s = request.getSession(false);
+		HttpSession s = req.getSession(false);
 		
 		if (s == null)
 		{
@@ -43,24 +39,35 @@ public class LoginServlet extends HttpServlet {
 		
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		System.out.println("LoginServlet: Entering doPost");
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		
-		if ((login != null) && (password != null))
+		String login = req.getParameter("login");
+		String password = req.getParameter("password");
+		HttpSession session = req.getSession(true);
+		Beans.User user = (Beans.User) session.getAttribute("userBean");
+		if(user != null)
 		{
-			if (CredentialsMatch(login,password))
-			{	
-				request.setAttribute("userId", "12");
-				RequestDispatcher rd = request.getRequestDispatcher("AppServlet");
-				rd.forward(request, response);
+			if(!user.isConnected())
+				System.out.println("login or password NULL");
+			else
+			{
+				System.out.println("User exists and is connected");
+				RequestDispatcher rd = req.getRequestDispatcher("AppServlet");
+				rd.forward(req, res);
 			}
 		}
 		else
 		{
-			System.out.println("login or password NULL");
+			if (CredentialsMatch(login,password))
+			{
+				user = new Beans.User();
+				user.setIsConnected(true);
+				session.setAttribute("userBean", user);
+				session.setAttribute("chatRouterBean", new Beans.ChatRouter());
+				RequestDispatcher rd = req.getRequestDispatcher("AppServlet");
+				rd.forward(req, res);
+			}
 		}
 	}
 	
