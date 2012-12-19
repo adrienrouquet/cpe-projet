@@ -1,32 +1,43 @@
 package DB;
 
+import java.sql.ResultSet;
+
+import DB.DBHandler;
+
 
 /**
- * Class DBMsgToolbox
+ * Class DBUserToolbox
  */
 public class DBMsgToolbox extends DBToolbox {
 
-  //
-  // Fields
-  //
+	private String _dbName = "";
+	private DBHandler _dbHandler = null;
+	
+	public DBMsgToolbox ()
+	{
+		super();
+		_dbName = "cpe-projet_db";
+		_dbHandler = new DBHandler(_dbName);
+	}
 
-  
-  //
-  // Constructors
-  //
-  public DBMsgToolbox () { };
-  
-  //
-  // Methods
-  //
+	private ResultSet getResult(String query)
+	{
+		return _dbHandler.executeQueryRS(query);
+	}
 
-
-  //
-  // Accessor methods
-  //
-
-  //
-  // Other methods
-  //
+	private boolean executeQuery(String query)
+	{
+		return _dbHandler.executeQuery(query);
+	}
+	
+	public ResultSet getMessages(Integer userId)
+	{
+		return getResult("CALL getMessages('" + userId.toString() + "')");
+	}
+	
+	public void closeConn()
+	{
+		_dbHandler.closeConn();
+	}
 
 }

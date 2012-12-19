@@ -67,6 +67,7 @@ public class LoginServlet extends HttpServlet {
 			if (CredentialsMatch(login,password))
 			{
 				user = new Beans.User();
+				user.setId(2); //A CHANGER DANS LE FUTUR!!!!
 				user.setIsConnected(true);
 				session.setAttribute("userBean", user);
 				session.setAttribute("chatRouterBean", new Beans.ChatRouter());

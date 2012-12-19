@@ -35,6 +35,16 @@ public class DBUserToolbox extends DBToolbox {
 		return getResult("CALL getUsers()");
 	}
 	
+	public ResultSet getName(Integer id)
+	{
+		return getResult("CALL getName(" + id + ")");
+	}
+	
+	public ResultSet getLastLogin(Integer id)
+	{
+		return getResult("CALL getLastLogin(" + id + ")");
+	}
+	
 	public void closeConn()
 	{
 		_dbHandler.closeConn();

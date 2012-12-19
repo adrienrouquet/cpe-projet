@@ -16,8 +16,6 @@ import Beans.*;
 public class ChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private ChatRouter _router = null;
-	
     public ChatServlet() {
         super();
         
@@ -35,7 +33,9 @@ public class ChatServlet extends HttpServlet {
 	    	{
 	    		action = "view";
 	    		
+	    		cr.setContactId(Integer.parseInt(req.getParameter("contactId")));
 	    		cr.setUrl("content/chat/chatWindow.jsp");
+	    		session.setAttribute("msgBean", new Beans.Msg());
 	    	}
 	    	else
 	    	{

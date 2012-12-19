@@ -1,5 +1,7 @@
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="Manager.UserManager"%>
+
 <jsp:useBean id="userBean" class="Beans.User" scope="session" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -30,7 +32,7 @@
 					<input type="hidden" name="contactId" value="0"/>
 					
 					<%
-						ResultSet rs = userBean.getUsers();
+						ResultSet rs = UserManager.getUsers();
 						if(rs != null)
 						{
 							rs.first();

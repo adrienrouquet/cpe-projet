@@ -16,15 +16,18 @@ public class User {
   private String _password = "null";
   private boolean _isConnected = false;
   private int _prout;
-  private DBUserToolbox _dbut = new DBUserToolbox();
+  private DBUserToolbox _dbut = null;
   
-  public User () { };
+  public User () { 	  
+	  _dbut 	= new DBUserToolbox();
+  };
   
   public User (int id, String login, String password)
   { 
-	  _id = id;
-	  _login = login;
+	  _id 		= id;
+	  _login 	= login;
 	  _password = password;
+	  _dbut 	= new DBUserToolbox();
   };
   
   public void setId ( int newVar )
@@ -60,11 +63,6 @@ public class User {
   {
 	  return false;
   }
-  
-  public ResultSet getUsers()
-  {
-	  return _dbut.getUsers();
-  }
-  
+ 
   
 }
