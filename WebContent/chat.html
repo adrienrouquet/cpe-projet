@@ -36,6 +36,12 @@
 				message = msg;
 				input.value = "";
 			}
+			var JSONMessage = {
+				"dest": "GUEST_1",
+				"message": message
+			};
+			message = JSON.stringify(JSONMessage);
+			console.log(message);
 			writeToScreen("SENT: " + message);
 			websocket.send(message);
 		}
