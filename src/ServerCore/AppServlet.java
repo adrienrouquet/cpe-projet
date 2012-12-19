@@ -9,52 +9,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/AppServlet")
+public class AppServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public LoginServlet() {
+    public AppServlet() {
         super();
-        
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		System.out.println("LoginServlet: Entering doGet");
-		
-		
-		
-		RequestDispatcher rd = request.getRequestDispatcher("content/login.html");
+		System.out.println("AppServlet: Entering doGet");
+		RequestDispatcher rd = request.getRequestDispatcher("content/contacts.html");
 		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		System.out.println("Entering doPost");
+		System.out.println("AppServlet: Entering doPost");
+		
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		
 		System.out.println("Login: " + login);
 		System.out.println("Password: " + password);
 		
-		if ((login != null) && (password != null))
-		{
-			if (CredentialsMatch(login,password))
-			{
-				RequestDispatcher rd = request.getRequestDispatcher("AppServlet");
-				rd.forward(request, response);
-			}
-		}
-		else
-		{
-			System.out.println("login or paswd NULL");
-		}
-	}
-	
-	private boolean CredentialsMatch(String login, String password)
-	{
-		return true;
+		RequestDispatcher rd = request.getRequestDispatcher("content/contacts.html");
+		rd.forward(request, response);
 	}
 
 }
