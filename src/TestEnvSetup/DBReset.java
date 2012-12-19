@@ -52,7 +52,7 @@ public class DBReset {
 			e.printStackTrace();
 		}
 		try {
-			sr.runScript(new FileReader(new File("./Documents/Git/cpe-projet/src/TestEnvSetup/DBResetContent.sql")));
+			sr.runScript(new FileReader(new File("/home/debian/Documents/Git/cpe-projet/src/TestEnvSetup/DBResetContent.sql")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
