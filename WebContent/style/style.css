@@ -19,7 +19,8 @@ div.header{
 div.contactHeader{
 	background: rgb(40,40,40);
 	border: 2px;
-	border-style: groove;	
+	border-style: groove;
+	color: rgb(220,220,220);
 	
 }
 
@@ -133,3 +134,85 @@ button:hover {
 		0px 1px 0px rgba(255,255,255,0.3);
 }
 
+.messageWrapper{
+	width: 80%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #050505;
+	padding: 10px 20px;
+	
+	border: 2px solid;
+	-moz-box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	border-radius: 30px;
+	margin-top: 15px;
+	
+}
+
+.messageFrom{
+	float: left;
+	background: -moz-linear-gradient(
+		top,
+		rgb(210,223,237) 0%,
+		rgb(186,208,239));
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(rgb(110,203,217)),
+		to(rgb(086,158,209)));
+	border: #424242;	
+	text-align: left;
+	
+}
+
+.messageTo{
+	float: right;
+	background: -moz-linear-gradient(
+		top,
+		rgb(210,223,237) 0%,
+		rgb(186,208,239));
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(rgb(210,223,237)),
+		to(rgb(186,208,239)));
+	border: #424242;
+	text-align: right;
+	
+}
+
+.messageContent{
+	font-weight: bold;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.messageStatus{
+	font-weight: bold;
+	color: green;	
+	float: left;
+}
+
+.messageDateTime{
+	font-style: italic;
+	opacity: 0.6;
+	filter: alpha(opacity=60); /*for Internet Explorer 6/7*/
+	filter: “alpha(opacity=60)”; /*for Internet Explorer 8*/
+}
+
+.messageTo .messageDateTime, .messageTo .messageContent{
+	float: left;
+	margin-left: 10px;
+}
+
+.messageFrom .messageDateTime,  .messageFrom .messageContent{
+	float: right;
+	margin-right: 10px;
+}
