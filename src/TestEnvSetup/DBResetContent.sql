@@ -111,6 +111,7 @@ CREATE PROCEDURE addUser
 )
 BEGIN
 
+   DECLARE tempIdentity INT;
    INSERT INTO users
    (
       login,
@@ -130,7 +131,12 @@ BEGIN
       pLastName
    );
 
-   SELECT LAST_INSERT_ID() AS 'userId';
+   SET tempIdentity = LAST_INSERT_ID();
+   
+   UPDATE users SET lastLoginDate = NOW();
+   
+   SELECT tempIdentity;
+   
    
 END //
 DELIMITER ;
@@ -140,16 +146,18 @@ DELIMITER ;
 /*---------------------------------------------------*/
 
 /*---------------------------------------------------*/
-CALL addUser("loic","loic","ortola.loic@gmail.com","0658008166","loic","ortola");
-CALL addUser("adrien","rouquet","adrien.rouquet@gmail.com","0606060606","adrien","rouquet");
-CALL addUser("henri","lahoud","lahoud.henri@gmail.com","0606060606","henri","lahoud");
-CALL addUser("john","doe","john.doe@gmail.com","0606060606","john","doe");
-CALL addUser("jane","doe","jane.doe@gmail.com","0606060606","jane","doe");
+CALL addUser("loic","loic","ortola.loic@gmail.com","0658008166","Loic","Ortola");
+CALL addUser("adrien","adriem","adrien.rouquet@gmail.com","0606060606","Adrien","Rouquet");
+CALL addUser("henri","henri","lahoud.henri@gmail.com","0606060606","Henri","Lahoud");
+CALL addUser("john","john","john.doe@gmail.com","0606060606","John","Doe");
+CALL addUser("jane","jane","jane.doe@gmail.com","0606060606","Jane","Doe");
 
 /*---------------------------------------------------*/
 CALL sendMessage(1,2,1,"Salut Adrien, dis moi tu te rappelles je crois qu on a un projet de fin dannee a faire");
 CALL sendMessage(1,2,1,"Je sais plus trop pour quand c est mais ce serait cool qu on regarde... On est le 15 janvier quand meme");
 CALL sendMessage(2,1,1,"T es con, c est demain la presentation. On est dans la merde je crois");
+CALL sendMessage(1,2,1,"Faudrait peut etre faire quelques tests histoire de garder la tete haute tu vois...");
+CALL sendMessage(2,1,1,"Je suis assez d'accord");
 CALL sendMessage(3,1,1,"Ehh Lolo, je crois que j ai encore fait le con. Mon ordi marche plus.");
 CALL sendMessage(1,3,1,"Et que veux tu que je fasse?");
 CALL sendMessage(3,1,1,"Bonne question.");

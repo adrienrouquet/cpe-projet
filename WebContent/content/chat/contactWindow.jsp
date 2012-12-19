@@ -1,3 +1,7 @@
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.sql.ResultSet"%>
+<jsp:useBean id="userBean" class="Beans.User" scope="session" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -22,26 +26,29 @@
 			</div>
 			<div id="contactForm">
 				<form name="mainForm" method="post" action="LoginServlet">		
-				<input type="hidden" name="action" value="view"/>
-				<input type="hidden" name="contactId" value="0"/>		
-					<div class="contactWrapper" onclick="setValue('action','openChat');setValue('contactId','2');submitForm();">
+					<input type="hidden" name="action" value="view"/>
+					<input type="hidden" name="contactId" value="0"/>
+					
+					<%
+						ResultSet rs = userBean.getUsers();
+						if(rs != null)
+						{
+							rs.first();
+							do
+							{
+					%>
+					<div class="contactWrapper" onclick="setValue('action','openChat');setValue('contactId','<%= rs.getString("id") %>');submitForm();">
 						<div class="contactName">
-							Loic
+							<%= rs.getString("firstName") %> <%= rs.getString("lastName") %>
 						</div>
-						<div class="contactStatus">Last login: 01/01/01 at 00:00</div>
-					</div>
-					<div class="contactWrapper" onClick="setValue('action','openChat');setValue('contactId','3');submitForm();">
-						<div class="contactName">
-							Adrien
+						<div class="contactStatus">
+							Last login: <%= ((Timestamp) rs.getObject("lastLoginDate")).toString() %>
 						</div>
-						<div class="contactStatus">Last login: 01/01/01 at 00:00</div>
 					</div>
-					<div class="contactWrapper" onclick="setValue('action','openChat');setValue('contactId','4');submitForm();">
-						<div class="contactName">
-							Henri
-						</div>
-						<div class="contactStatus">Last login: 01/01/01 at 00:00</div>
-					</div>
+					<%
+							}while(rs.next());
+						}
+					%>			
 				</form>
 			</div>
 		</div>	

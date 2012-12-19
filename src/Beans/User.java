@@ -1,6 +1,9 @@
 package Beans;
 
+import java.sql.ResultSet;
 import java.util.*;
+
+import DB.DBUserToolbox;
 
 
 /**
@@ -13,6 +16,7 @@ public class User {
   private String _password = "null";
   private boolean _isConnected = false;
   private int _prout;
+  private DBUserToolbox _dbut = new DBUserToolbox();
   
   public User () { };
   
@@ -56,4 +60,11 @@ public class User {
   {
 	  return false;
   }
+  
+  public ResultSet getUsers()
+  {
+	  return _dbut.getUsers();
+  }
+  
+  
 }

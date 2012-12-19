@@ -29,7 +29,12 @@ public class DBUserToolbox extends DBToolbox {
 	{
 		return _dbHandler.executeQuery(query);
 	}
-
+	
+	public ResultSet getUsers()
+	{
+		return getResult("CALL getUsers()");
+	}
+	
 	public void closeConn()
 	{
 		_dbHandler.closeConn();
