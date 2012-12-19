@@ -31,10 +31,10 @@ public class ChatMessageInbound extends MessageInbound{
 	@Override
 	protected void onTextMessage(CharBuffer message) throws IOException {
 		System.out.println("onTextMessage");
-		String msg = "(" + nickname + ")" + message.toString();
-		broadcast(msg);
+//		String msg = "(" + nickname + ")" + message.toString();
+//		broadcast(msg);
 		
-		msg = message.toString();
+		String msg = message.toString();
 		System.out.println(msg);
 
 		JSONObject json = (JSONObject) JSONValue.parse(message.toString());
@@ -42,11 +42,12 @@ public class ChatMessageInbound extends MessageInbound{
 		
 		String dest = (String) json.get("dest");
 		System.out.println(dest);
-		WsOutbound conn = connectionsMap.get(dest);
 		try {
-			conn.writeTextMessage(CharBuffer.wrap((String)json.get("message")));
-		} catch (IOException ignore) {
-			//Ignore
+			WsOutbound conn = connectionsMap.get(dest);
+			conn.writeTextMessage(CharBuffer.wrap("(" + nickname + ")" + (String)json.get("message")));
+		} catch (Exception e) {
+			System.err.println("ERROR: user is probably disconnected: " + e.getMessage());
+			// send msg to DB
 		}
 		
 		System.out.println(connectionsMap);
@@ -76,6 +77,7 @@ public class ChatMessageInbound extends MessageInbound{
 	protected void onClose(int status) {
 		System.out.println("onClose");
 		String message = String.format("** %s %s",nickname, "has disconnected **");
+		connectionsMap.remove(nickname);
 		broadcast(message);
 	}
 }
