@@ -1,3 +1,4 @@
+package Beans;
 
 import java.util.*;
 
@@ -22,36 +23,32 @@ public class User {
 	  _password = password;
   };
   
-  public void set_id ( int newVar )
+  public void setId ( int newVar )
   {
     _id = newVar;
   }
-
-  public int get_id ( ) {
+  public int getId ( ) {
     return _id;
   }
 
-  public void set_login ( String newVar ) {
+  public void setLogin ( String newVar ) {
     _login = newVar;
   }
-
-  public String get_login ( ) {
+  public String getLogin ( ) {
     return _login;
   }
 
-  public void set_isConnected ( boolean newVar ) {
+  public void setIsConnected ( boolean newVar ) {
     _isConnected = newVar;
   }
-
-  public boolean get_isConnected ( ) {
+  public boolean getIsConnected ( ) {
     return _isConnected;
   }
 
-  public void set_prout ( int newVar ) {
+  public void setProut ( int newVar ) {
     _prout = newVar;
   }
-
-  public int get_prout ( ) {
+  public int getProut ( ) {
     return _prout;
   }
 
