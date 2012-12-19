@@ -28,3 +28,32 @@ BEGIN
    
 END //
 DELIMITER ;
+
+DELIMITER //
+
+DROP PROCEDURE getUser;
+CREATE PROCEDURE getUser 
+(
+   IN pUserId INT(11)
+)
+BEGIN
+
+   SELECT 
+   * 
+   FROM users 
+   WHERE users.id = pUserId;
+   
+END //
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE getUsers
+(
+)
+BEGIN
+
+   SELECT * FROM users;
+   
+END //
+DELIMITER ;
