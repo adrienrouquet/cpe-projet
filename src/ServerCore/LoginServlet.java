@@ -1,6 +1,8 @@
 package ServerCore;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,8 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public LoginServlet() {
+    public LoginServlet() throws SQLException {
         super();
+        TestEnvSetup.DBReset.resetDatabase(); 
         
     }
 

@@ -1,9 +1,9 @@
 
-%---------------------------------------------------
-%---------------------------------------------------
-%---------------------------------------------------
+/*---------------------------------------------------*/
+/*---------------------------------------------------*/
+/*---------------------------------------------------*/
 
-%---------------------------------------------------
+/*---------------------------------------------------*/
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
-%---------------------------------------------------
+/*---------------------------------------------------*/
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -31,11 +31,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
-%---------------------------------------------------
-%---------------------------------------------------
-%---------------------------------------------------
+/*---------------------------------------------------*/
+/*---------------------------------------------------*/
+/*---------------------------------------------------*/
 
-%---------------------------------------------------
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS sendMessage;
 DELIMITER //
 CREATE PROCEDURE sendMessage 
@@ -67,7 +67,7 @@ BEGIN
 END //
 DELIMITER ;
 
-%---------------------------------------------------
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getUser;
 DELIMITER //
 CREATE PROCEDURE getUser 
@@ -84,7 +84,7 @@ BEGIN
 END //
 DELIMITER ;
 
-%---------------------------------------------------
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getUsers;
 DELIMITER //
 CREATE PROCEDURE getUsers
@@ -97,7 +97,7 @@ BEGIN
 END //
 DELIMITER ;
 
-%---------------------------------------------------
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS addUser;
 DELIMITER //
 CREATE PROCEDURE addUser 
@@ -135,18 +135,18 @@ BEGIN
 END //
 DELIMITER ;
 
-%---------------------------------------------------
-%---------------------------------------------------
-%---------------------------------------------------
+/*---------------------------------------------------*/
+/*---------------------------------------------------*/
+/*---------------------------------------------------*/
 
-%---------------------------------------------------
-
+/*---------------------------------------------------*/
 CALL addUser("loic","loic","ortola.loic@gmail.com","0658008166","loic","ortola");
 CALL addUser("adrien","rouquet","adrien.rouquet@gmail.com","0606060606","adrien","rouquet");
 CALL addUser("henri","lahoud","lahoud.henri@gmail.com","0606060606","henri","lahoud");
 CALL addUser("john","doe","john.doe@gmail.com","0606060606","john","doe");
 CALL addUser("jane","doe","jane.doe@gmail.com","0606060606","jane","doe");
 
+/*---------------------------------------------------*/
 CALL sendMessage(1,2,1,"Salut Adrien, dis moi tu te rappelles je crois qu on a un projet de fin dannee a faire");
 CALL sendMessage(1,2,1,"Je sais plus trop pour quand c est mais ce serait cool qu on regarde... On est le 15 janvier quand meme");
 CALL sendMessage(2,1,1,"T es con, c est demain la presentation. On est dans la merde je crois");
