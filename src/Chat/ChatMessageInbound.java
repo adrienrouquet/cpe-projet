@@ -3,15 +3,21 @@ package Chat;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 import org.apache.catalina.websocket.*;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+//import org.json.simple.JSONArray;
 
 public class ChatMessageInbound extends MessageInbound{
 
-	private static List<WsOutbound> connections = new ArrayList<WsOutbound>();
+	private static Map<String, WsOutbound> connectionsMap = new HashMap<String, WsOutbound>();
 	
 	private final String nickname;
+	
 
 	public ChatMessageInbound(int id) {
 		this.nickname = "GUEST_" + id;
@@ -27,14 +33,30 @@ public class ChatMessageInbound extends MessageInbound{
 		System.out.println("onTextMessage");
 		String msg = "(" + nickname + ")" + message.toString();
 		broadcast(msg);
+		
+		msg = message.toString();
+		System.out.println(msg);
+
+		JSONObject json = (JSONObject) JSONValue.parse(message.toString());
+		System.out.println(json);
+		
+		String dest = (String) json.get("dest");
+		System.out.println(dest);
+		WsOutbound conn = connectionsMap.get(dest);
+		try {
+			conn.writeTextMessage(CharBuffer.wrap((String)json.get("message")));
+		} catch (IOException ignore) {
+			//Ignore
+		}
+		
+		System.out.println(connectionsMap);
 	}
 
 	private void broadcast(String msg) {
 		System.out.println("broadcast");
-		for (WsOutbound connection : connections) {
+		for (WsOutbound connection : connectionsMap.values()) {
 			try {
-				CharBuffer buffer = CharBuffer. wrap(msg);
-				connection.writeTextMessage(buffer);
+				connection.writeTextMessage(CharBuffer.wrap(msg));
 			} catch (IOException ignore) {
 				//Ignore
 			}
@@ -44,8 +66,8 @@ public class ChatMessageInbound extends MessageInbound{
 	@Override
 	protected void onOpen(WsOutbound outbound) {
 		System.out.println("onOpen");
-		connections.add(outbound);
-		System.out.println(connections);
+		connectionsMap.put(nickname, outbound);
+		System.out.println(connectionsMap);
 		String message = String.format("** %s %s",nickname, "has joined **");
 		broadcast(message);
 	}
