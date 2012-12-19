@@ -1,8 +1,37 @@
 $(document).ready(function() {
 	
-	var _wsUri = "ws://localhost:8080/cpe-projet/Chat";
-	var _output = document.getElementById("output");
+	console.log(window.location.host);
+	var _wsUri = "ws://"+window.location.host+"/cpe-projet/WebsocketServlet";
+	var _output = $("#output");
 	var _websocket = null;
+	
+	function JSONMessage() {
+		this.sender = "";
+		this.receiver = "";
+		this.message = "";
+		
+		this.getJSON = function () {
+			return {
+				"sender": this.sender,
+				"receiver": this.receiver,
+				"message": this.message
+			};
+		};
+		
+		this.stringify = function() {
+			return JSON.stringify(this.getJSON());
+		};
+		
+		this.parse = function(jsonString) {
+			console.log(jsonString);
+			
+			var obj = JSON.parse(jsonString);
+			
+			this.sender = (obj["sender"]!=undefined)?obj["sender"]:"";
+			this.receiver = (obj["receiver"]!=undefined)?obj["receiver"]:"";
+			this.message = (obj["message"]!=undefined)?obj["message"]:"";
+		};
+	}
 	
 	function onOpen(evt) {
 		writeToScreen("CONNECTED");
@@ -11,34 +40,31 @@ $(document).ready(function() {
 		writeToScreen("DISCONNECTED");
 	}
 	function onMessage(evt) {
-		writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
+		var json = new JSONMessage();
+		json.parse(evt.data);
+		
+		writeToScreen('<span style="color: blue;">' + json.sender + ": " + json.message +'</span>');
 	}
 	function onError(evt) {
 		writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
 	}
 	
 	function doSend() {
-		message = $('#msg').val();
-		destination = $('#dst').val();
+		
+		var json = new JSONMessage();
+		json.receiver = $('#rcv').val();
+		json.message = $('#msg').val();
+		
 		$("#msg").val("");
-		$("#dst").val("GUEST_");
+		$("#rcv").val("GUEST_");
+
+		var message = json.stringify();
 		
-		var JSONMessage = {
-			"dest": destination,
-			"message": message
-		};
-		message = JSON.stringify(JSONMessage);
-		
-		console.log(message);
-		
-		writeToScreen("SENT to "+ destination + ": " + message);
+		writeToScreen("SENT to "+ json.receiver + ": " + json.message);
 		_websocket.send(message);
 	}
 	function writeToScreen(message) {
-		var pre = document.createElement("p");
-		pre.style.wordWrap = "break-word";
-		pre.innerHTML = message;
-		_output.appendChild(pre);
+		_output.append("<p>" + message + "</p>");
 	}
 
 	function init() {
