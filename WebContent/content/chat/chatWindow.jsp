@@ -40,12 +40,16 @@
 						{
 						
 			%>
-			<div class="messageWrapper messageFrom">
-				<div class="messageContent">
-					<%= rs.getString("content") %>
-				</div>
-				<div class="messageDateTime"><%= new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format((Timestamp) rs.getObject("sentDate")) %></div>
-			</div>
+<!-- 			<div class="messageWrapper messageFrom"> -->
+<!-- 				<div class="messageContent"> -->
+<%-- 					<%= rs.getString("content") %> --%>
+<!-- 				</div> -->
+<%-- 				<div class="messageDateTime"><%= new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format((Timestamp) rs.getObject("sentDate")) %></div> --%>
+<!-- 			</div> -->
+			<jsp:include page="incomingMessage.jsp">
+				<jsp:param value='<%= rs.getString("content") %>' name='content'/>
+				<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
+			</jsp:include>
 			<%
 						}
 						else
