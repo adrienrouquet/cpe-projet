@@ -16,18 +16,18 @@ public class ChatRouter {
 	{
 		this._url = url;
 	}
-	
 	public String getUrl()
 	{
 		return this._url;
 	}
 
-	public Integer getContactId() {
-		return _contactId;
+	public Integer getContactId()
+	{
+		return this._contactId;
 	}
-
-	public void setContactId(Integer _contactId) {
-		this._contactId = _contactId;
+	public void setContactId(Integer contactId)
+	{
+		this._contactId = contactId;
 	}
 	
 }

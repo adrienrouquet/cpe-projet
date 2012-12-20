@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import TestEnvSetup.DBReset;
+import DB.DBUserToolbox;
 
 
 @WebServlet("/LoginServlet")
@@ -85,7 +86,13 @@ public class LoginServlet extends HttpServlet {
 	
 	private boolean CredentialsMatch(String login, String password)
 	{
-		return true;
+		boolean match = true;
+				
+		//DBUserToolbox utb = new DBUserToolbox(); 
+		
+		
+		
+		return match;
 	}
 
 	

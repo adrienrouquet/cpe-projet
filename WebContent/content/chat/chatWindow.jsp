@@ -40,12 +40,14 @@
 						{
 						
 			%>
+			
 			<div class="messageWrapper messageFrom">
 				<div class="messageContent">
 					<%= rs.getString("content") %>
 				</div>
 				<div class="messageDateTime"><%= new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format((Timestamp) rs.getObject("sentDate")) %></div>
 			</div>
+			
 			<%
 						}
 						else
@@ -66,11 +68,16 @@
 			%>		
 			<div class="newMessageWrapper">
 				<div class="messageContent">
-					<textarea name="message" rows="4" class="messageContent">
+					<textarea name="message" rows="4" wrap="hard" class="messageContent">
+					<!-- FAUT TROUVER UN MOYEN DE RECUPERER CE TEXTE -->
 					Enter your message here...
 					</textarea>			
 				</div>
-				<div class="messageSend">
+				<div class="messageSend" 	onclick="setValue('action','sendMsg');
+											setValue('srcUserId','<%= userBean.getId() %>');
+											setValue('dstUserId','<%= chatRouterBean.getContactId() %>');
+											setValue('content','<%=  %>');
+											submitForm();">
 					<button class="button"> Send </button>
 				</div>
 			</div>		

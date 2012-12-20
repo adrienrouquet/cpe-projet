@@ -32,5 +32,14 @@ public class DBUserToolbox extends DBToolbox {
 	{
 		return getResult("CALL getLastLogin(" + id + ")");
 	}
+	
+	public boolean checkCredentials(String login, String password)
+	{
+		boolean match = false;
+				
+		
+		
+		return match;
+	}
 
 }
