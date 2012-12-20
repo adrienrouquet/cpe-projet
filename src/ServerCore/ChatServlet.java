@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import Beans.*;
 
-@WebServlet("/AppServlet")
+@WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -50,10 +50,14 @@ public class ChatServlet extends HttpServlet {
     	}
     	
     	RequestDispatcher rd = req.getRequestDispatcher(cr.getUrl());
-		try {
+		
+    	try
+		{
 			rd.forward(req, res);
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (ServletException | IOException e)
+		{
+			
 			e.printStackTrace();
 		}
     	

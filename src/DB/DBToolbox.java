@@ -1,32 +1,30 @@
 package DB;
 
+import java.sql.ResultSet;
+
 
 /**
  * Class DBToolbox
  */
 abstract public class DBToolbox {
 
-  //
-  // Fields
-  //
-
+	protected String _dbName = "";
+	protected DBHandler _dbHandler = null;
   
-  //
-  // Constructors
-  //
-  public DBToolbox () { };
-  
-  //
-  // Methods
-  //
+	public DBToolbox () { };
 
+	protected ResultSet getResult(String query)
+	{
+		return _dbHandler.executeQueryRS(query);
+	}
 
-  //
-  // Accessor methods
-  //
+	protected boolean executeQuery(String query)
+	{
+		return _dbHandler.executeQuery(query);
+	}
 
-  //
-  // Other methods
-  //
-
+	public void closeConn()
+	{
+		_dbHandler.closeConn();
+	}
 }
