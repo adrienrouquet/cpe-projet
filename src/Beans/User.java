@@ -48,7 +48,7 @@ public class User {
   public void setIsConnected ( boolean newVar ) {
     _isConnected = newVar;
   }
-  public boolean isConnected ( ) {
+  public boolean getIsConnected ( ) {
     return _isConnected;
   }
 

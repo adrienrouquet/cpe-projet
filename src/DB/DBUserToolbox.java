@@ -9,9 +9,6 @@ import DB.DBHandler;
  * Class DBUserToolbox
  */
 public class DBUserToolbox extends DBToolbox {
-
-	private String _dbName = "";
-	private DBHandler _dbHandler = null;
 	
 	public DBUserToolbox ()
 	{
@@ -20,15 +17,6 @@ public class DBUserToolbox extends DBToolbox {
 		_dbHandler = new DBHandler(_dbName);
 	}
 
-	private ResultSet getResult(String query)
-	{
-		return _dbHandler.executeQueryRS(query);
-	}
-
-	private boolean executeQuery(String query)
-	{
-		return _dbHandler.executeQuery(query);
-	}
 	
 	public ResultSet getUsers()
 	{
@@ -45,9 +33,13 @@ public class DBUserToolbox extends DBToolbox {
 		return getResult("CALL getLastLogin(" + id + ")");
 	}
 	
-	public void closeConn()
+	public boolean checkCredentials(String login, String password)
 	{
-		_dbHandler.closeConn();
+		boolean match = false;
+				
+		
+		
+		return match;
 	}
 
 }

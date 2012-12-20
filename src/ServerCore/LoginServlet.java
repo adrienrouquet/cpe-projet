@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import TestEnvSetup.DBReset;
+import DB.DBUserToolbox;
 
 
 @WebServlet("/LoginServlet")
@@ -47,21 +48,25 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		System.out.println("LoginServlet: Entering doPost");
+		
 		String login = req.getParameter("login");
 		String password = req.getParameter("password");
 		HttpSession session = req.getSession(true);
+		
 		Beans.User user = (Beans.User) session.getAttribute("userBean");
+		
 		if(user != null)
 		{
-			if(!user.isConnected())
-				System.out.println("login or password NULL");
+			if(!user.getIsConnected())
+				System.out.println("User disconnected");
 			else
 			{
 				System.out.println("User exists and is connected");
-				RequestDispatcher rd = req.getRequestDispatcher("AppServlet");
+				RequestDispatcher rd = req.getRequestDispatcher("ChatServlet");
 				rd.forward(req, res);
 			}
 		}
+		
 		else
 		{
 			if (CredentialsMatch(login,password))
@@ -69,9 +74,11 @@ public class LoginServlet extends HttpServlet {
 				user = new Beans.User();
 				user.setId(2); //A CHANGER DANS LE FUTUR!!!!
 				user.setIsConnected(true);
+				
 				session.setAttribute("userBean", user);
 				session.setAttribute("chatRouterBean", new Beans.ChatRouter());
-				RequestDispatcher rd = req.getRequestDispatcher("AppServlet");
+				
+				RequestDispatcher rd = req.getRequestDispatcher("ChatServlet");
 				rd.forward(req, res);
 			}
 		}
@@ -79,7 +86,14 @@ public class LoginServlet extends HttpServlet {
 	
 	private boolean CredentialsMatch(String login, String password)
 	{
-		return true;
+		boolean match = true;
+				
+		//DBUserToolbox utb = new DBUserToolbox(); 
+		
+		
+		
+		return match;
 	}
 
+	
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import Beans.*;
 
-@WebServlet("/AppServlet")
+@WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -24,9 +24,10 @@ public class ChatServlet extends HttpServlet {
     private void router(HttpServletRequest req, HttpServletResponse res)
     {
     	String action = "view";
-    	HttpSession session = req.getSession(true);
     	
+    	HttpSession session = req.getSession(true);
     	ChatRouter cr = (ChatRouter) session.getAttribute("chatRouterBean");
+    	
     	if (req.getParameter("action") != null)
     	{
 	    	if( req.getParameter("action").equals("openChat") )
@@ -35,6 +36,7 @@ public class ChatServlet extends HttpServlet {
 	    		
 	    		cr.setContactId(Integer.parseInt(req.getParameter("contactId")));
 	    		cr.setUrl("content/chat/chatWindow.jsp");
+	    		
 	    		session.setAttribute("msgBean", new Beans.Msg());
 	    	}
 	    	else
@@ -50,10 +52,14 @@ public class ChatServlet extends HttpServlet {
     	}
     	
     	RequestDispatcher rd = req.getRequestDispatcher(cr.getUrl());
-		try {
+		
+    	try
+		{
 			rd.forward(req, res);
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (ServletException | IOException e)
+		{
+			
 			e.printStackTrace();
 		}
     	
