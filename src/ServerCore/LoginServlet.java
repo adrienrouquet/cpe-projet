@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
     public LoginServlet() throws SQLException {
         super();
         DBReset.resetDatabase();
-    } s
+    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
