@@ -188,6 +188,35 @@ button:hover {
 	
 }
 
+.newMessageWrapper textarea
+{
+	display: inline-block;
+	width: 70%;
+	text-align: left;
+	margin-left: 20px;
+	border: 2px groove;
+	-moz-box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	margin-top: 15px;
+	
+}
+
+.newMessageWrapper .button
+{
+	display: inline-block;
+	vertical-align: center;
+	width: 20%;	
+	margin-top: 35px;
+	margin-right: 20px;
+}
+
 .messageContent{
 	font-weight: bold;
 	margin-left: 20px;
