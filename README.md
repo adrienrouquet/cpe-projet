@@ -34,9 +34,18 @@ Plug des fonctions de send message et de la liaison bd dans la websocket
 Voir avec Adrien comment on lie tout ca.
 
 Par Loic:
+On a redefini le sens des Beans, il faut donc bouger des methodes/supprimer des attributs:
+-supprimer attribut contactId de ChatRouter, car on va definir un MsgManager
+-changer Msg: c'est juste une classe, et non plus un bean, par contre il doit etre gere entierement par
+msgManager
 
+Par Loic pour tout le monde:
+-changer User: mettre getContacts (aujourdhui on a un getUsers pour le moment)
+-Regarder si ca a un sens d'avoir un userManager
+@LOIC: IM ON IT
 
 Par Loic pour Henri:
 Preparer un meilleur squelette HTML/CSS
 Changer les headers pour HTML5, et faire des meilleurs include pour limiter les changements de code.
 (nom de page principale = nom du dossier)
+
