@@ -1,10 +1,8 @@
-package Beans;
+package Class;
 
 import java.sql.ResultSet;
-import java.util.*;
 
 import DB.DBMsgToolbox;
-import DB.DBUserToolbox;
 
 public class Msg {
 

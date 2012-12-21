@@ -22,9 +22,5 @@ abstract public class DBToolbox {
 	{
 		return _dbHandler.executeQuery(query);
 	}
-
-	public void closeConn()
-	{
-		_dbHandler.closeConn();
-	}
+	
 }

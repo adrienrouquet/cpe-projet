@@ -5,7 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Chat - Main Window</title>
-		<jsp:useBean id="chatRouterBean" class="Beans.ChatRouter" scope="session" />
+		<jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
 	</head>
 	<body style="background: rgb(230,230,230); text-align: center;">		
 		<div class="section" style="text-align: center;">

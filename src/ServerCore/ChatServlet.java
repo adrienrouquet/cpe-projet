@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Beans.*;
+import Bean.ChatRouter;
 
 @WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
@@ -37,7 +37,7 @@ public class ChatServlet extends HttpServlet {
 	    		cr.setContactId(Integer.parseInt(req.getParameter("contactId")));
 	    		cr.setUrl("content/chat/chatWindow.jsp");
 	    		
-	    		session.setAttribute("msgBean", new Beans.Msg());
+	    		//session.setAttribute("msgBean", new Class.Msg());
 	    	}
 	    	else
 	    	{

@@ -1,12 +1,14 @@
-package Beans;
+package Bean;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import Beans.*;
+import java.io.Serializable;
 
 
-public class ChatRouter {
+public class ChatRouter implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6734150431891723390L;
 	private String _url = "";
 	private Integer _contactId = 0;
 	

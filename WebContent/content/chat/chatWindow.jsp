@@ -4,10 +4,10 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Manager.UserManager"%>
 
-<jsp:useBean id="msgBean" class="Beans.Msg" scope="session" />
-<jsp:useBean id="userBean" class="Beans.User" scope="session" />
+<jsp:useBean id="msgBean" class="Manager.MsgManager" scope="session" />
+<jsp:useBean id="userBean" class="Bean.User" scope="session" />
 
-<jsp:useBean id="chatRouterBean" class="Beans.ChatRouter" scope="session" />
+<jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
 
 <div class="content">
 	<div class="header">

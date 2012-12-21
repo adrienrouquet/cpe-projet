@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 		String password = req.getParameter("password");
 		HttpSession session = req.getSession(true);
 		
-		Beans.User user = (Beans.User) session.getAttribute("userBean");
+		Bean.User user = (Bean.User) session.getAttribute("userBean");
 		
 		if(user != null)
 		{
@@ -71,12 +71,12 @@ public class LoginServlet extends HttpServlet {
 		{
 			if (CredentialsMatch(login,password))
 			{
-				user = new Beans.User();
+				user = new Bean.User();
 				user.setId(2); //A CHANGER DANS LE FUTUR!!!!
 				user.setIsConnected(true);
 				
 				session.setAttribute("userBean", user);
-				session.setAttribute("chatRouterBean", new Beans.ChatRouter());
+				session.setAttribute("chatRouterBean", new Bean.ChatRouter());
 				
 				RequestDispatcher rd = req.getRequestDispatcher("ChatServlet");
 				rd.forward(req, res);
