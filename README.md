@@ -17,17 +17,20 @@ Par Loic pour Loic:
 Scinder les fichiers DB.sql selon le contenu (procedure, tables, entrees)
 --Fait par Loic
 
+Par Adrien:
+Ne pas rester sur la LoginServlet quand on est dans l'application :
+  Utiliser un res.sendRedirect("url") a la place d'un rd.forward...
+  Si vous voulez un point d'entrée unique à l'app, créer une nouvelle servlet.
+--Fait par Loic: il n'existe pas de sendRedirect, j'ai donc cree la nouvelle servlet CoreServlet.
+--Finalement c'est plus interessant car on fait passer l'utilisateur par des controles sur la servlet Login,
+--puis un bon dispatch selon ce sur quoi il etait.
+
 ===============
 TODO
 
 Par Loic pour tout le monde:
 COMMENTER LE CODE en FRANCAIS (Et pas: ceci est une boucle)
 Supprimer les anciens bouts de code inutiles
-
-Par Adrien:
-Ne pas rester sur la LoginServlet quand on est dans l'application :
-  Utiliser un res.sendRedirect("url") a la place d'un rd.forward...
-  Si vous voulez un point d'entrée unique à l'app, créer une nouvelle servlet.
 
 Par Adrien:
 Créer un MessageBean quand on entre dans chatWindow.jsp et initialiser les IDs sender et receiver.
