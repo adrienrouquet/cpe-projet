@@ -56,4 +56,4 @@ Par Loic pour Henri:
 Preparer un meilleur squelette HTML/CSS
 Changer les headers pour HTML5, et faire des meilleurs include pour limiter les changements de code.
 (nom de page principale = nom du dossier)
-
+@HENRI: IM ON IT
