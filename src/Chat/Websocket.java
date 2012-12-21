@@ -22,7 +22,7 @@ public class Websocket extends MessageInbound{
 	public Websocket(int id) {
 		this.nickname = "GUEST_" + id;
 	}
-	
+
 	@Override
 	protected void onBinaryMessage(ByteBuffer arg0) throws IOException {
 		throw new UnsupportedOperationException("Binary not supported");
@@ -42,7 +42,7 @@ public class Websocket extends MessageInbound{
 		String receiver = (String) json.get("receiver");
 		json.put("sender", nickname);
 		json.remove("receiver");
-				
+		MsgManager.Send()
 		String jsonText = json.toJSONString();
 		System.out.print(jsonText);
 		

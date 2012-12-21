@@ -8,14 +8,7 @@
 <jsp:useBean id="userBean" class="Beans.User" scope="session" />
 
 <jsp:useBean id="chatRouterBean" class="Beans.ChatRouter" scope="session" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
-<title>Insert title here</title>
-</head>
-<body>
+
 <div class="content">
 	<div class="header">
 		<div class="contactHeader">
@@ -28,56 +21,52 @@
 		</div>
 	</div>
 	<div id="messageForm">
-		<form>
-			<%
-				ResultSet rs = msgBean.getMessages(chatRouterBean.getContactId());
-				if(rs != null)
+		<%
+			ResultSet rs = msgBean.getMessages(chatRouterBean.getContactId());
+			if(rs != null)
+			{
+				rs.first();
+				do
 				{
-					rs.first();
-					do
+					if(Integer.parseInt(rs.getString("srcUserId")) != userBean.getId())
 					{
-						if(Integer.parseInt(rs.getString("srcUserId")) != userBean.getId())
-						{
-						
-			%>
-			<jsp:include page="incomingMessage.jsp">
-				<jsp:param value='<%= rs.getString("content") %>' name='content'/>
-				<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
-			</jsp:include>
-			<%
-						}
-						else
-						{
-			%>
-			<jsp:include page="outgoingMessage.jsp">
-				<jsp:param value='<%= rs.getString("content") %>' name='content'/>
-				<jsp:param value='<%= rs.getString("isDelivered") %>' name='messageStatus'/>
-				<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
-			</jsp:include>			
-			<%
-						}
-						
-					}while(rs.next());
-				}
-			%>		
-			<div class="newMessageWrapper">
-				<div class="messageContent">
-					<textarea name="message" rows="4" wrap="hard" class="messageContent">
-					<!-- FAUT TROUVER UN MOYEN DE RECUPERER CE TEXTE -->
-					Enter your message here...
-					</textarea>			
-				</div>
+					
+		%>
+		<jsp:include page="incomingMessage.jsp">
+			<jsp:param value='<%= rs.getString("content") %>' name='content'/>
+			<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
+		</jsp:include>
+		<%
+					}
+					else
+					{
+		%>
+		<jsp:include page="outgoingMessage.jsp">
+			<jsp:param value='<%= rs.getString("content") %>' name='content'/>
+			<jsp:param value='<%= rs.getString("isDelivered") %>' name='messageStatus'/>
+			<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
+		</jsp:include>			
+		<%
+					}
+					
+				}while(rs.next());
+			}
+		%>		
+		<div class="newMessageWrapper">
+			<div class="messageContent">
+				<textarea name="message" rows="4" wrap="hard" class="messageContent">
+				<!-- FAUT TROUVER UN MOYEN DE RECUPERER CE TEXTE -->
+				Enter your message here...
+				</textarea>			
+			</div>
 <%-- 				<div class="messageSend" 	onclick="setValue('action','sendMsg'); --%>
 <%-- 											setValue('srcUserId','<%= userBean.getId() %>'); --%>
 <%-- 											setValue('dstUserId','<%= chatRouterBean.getContactId() %>'); --%>
 <%-- 											setValue('content','<%=  %>'); --%>
 <%-- 											submitForm();"> --%>
-				<div class="messageSend" >
-					<button class="button"> Send </button>
-				</div>
-			</div>		
-		</form>
+			<div class="messageSend" >
+				<button class="button"> Send </button>
+			</div>
+		</div>
 	</div>
 </div>
-</body>
-</html>
