@@ -35,23 +35,23 @@ public class ChatServlet extends HttpServlet {
 	    		action = "view";
 	    		
 	    		cr.setContactId(Integer.parseInt(req.getParameter("contactId")));
-	    		cr.setUrl("content/chat/chatWindow.jsp");
+	    		cr.setUrl("chatWindow.jsp");
 	    		
 	    		//session.setAttribute("msgBean", new Class.Msg());
 	    	}
 	    	else
 	    	{
 	    		action = "view";
-	    		cr.setUrl("content/chat/contactWindow.jsp");
+	    		cr.setUrl("contactWindow.jsp");
 	    	}
     	}
     	else
     	{
     		action = "view";
-    		cr.setUrl("content/chat/contactWindow.jsp");    		
+    		cr.setUrl("contactWindow.jsp");    		
     	}
     	
-    	RequestDispatcher rd = req.getRequestDispatcher(cr.getUrl());
+    	RequestDispatcher rd = req.getRequestDispatcher("content/chat/chat.jsp");
 		
     	try
 		{

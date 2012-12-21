@@ -1,10 +1,11 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.util.Date"%>
-<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Manager.UserManager"%>
+<%@page import="Class.Msg"%>
 
-<jsp:useBean id="msgBean" class="Manager.MsgManager" scope="session" />
+<jsp:useBean id="msgManagerBean" class="Manager.MsgManager" scope="session" />
 <jsp:useBean id="userBean" class="Bean.User" scope="session" />
 
 <jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
@@ -16,39 +17,34 @@
 				<%= UserManager.getName(chatRouterBean.getContactId()) %>
 			</div>
 			<div class="contactStatus">
-				Last login: <%= new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format((Timestamp) UserManager.getLastLogin(chatRouterBean.getContactId())) %>
+				Last login: <%= new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(UserManager.getLastLogin(chatRouterBean.getContactId())) %>
 			</div>
 		</div>
 	</div>
 	<div id="messageForm">
 		<%
-			ResultSet rs = msgBean.getMessages(chatRouterBean.getContactId());
-			if(rs != null)
+			ArrayList<Msg> messages = msgManagerBean.getMessages(chatRouterBean.getContactId());
+			for( Msg msg : messages)
 			{
-				rs.first();
-				do
+				if(msg.getSrcUserId() != userBean.getId())
 				{
-					if(Integer.parseInt(rs.getString("srcUserId")) != userBean.getId())
-					{
 		%>
 		<jsp:include page="incomingMessage.jsp">
-			<jsp:param value='<%= rs.getString("content") %>' name='content'/>
-			<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
+			<jsp:param value='<%= msg.getContent() %>' name='content'/>
+			<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
 		</jsp:include>
 		<%
-					}
-					else
-					{
+				}
+				else
+				{
 		%>
 		<jsp:include page="outgoingMessage.jsp">
-			<jsp:param value='<%= rs.getString("content") %>' name='content'/>
-			<jsp:param value='<%= rs.getString("isDelivered") %>' name='messageStatus'/>
-			<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
+			<jsp:param value='<%= msg.getContent() %>' name='content'/>
+			<jsp:param value='<%= msg.isDelivered().toString() %>' name='messageStatus'/>
+			<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
 		</jsp:include>			
 		<%
-					}
-					
-				}while(rs.next());
+				}
 			}
 		%>		
 		<div class="newMessageWrapper">

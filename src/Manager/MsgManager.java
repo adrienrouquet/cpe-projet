@@ -2,7 +2,9 @@ package Manager;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
+import Class.Msg;
 import DB.DBMsgToolbox;
 
 
@@ -18,9 +20,9 @@ public class MsgManager implements Serializable{
 		_dbmt = new DBMsgToolbox();
 	};
 
-	public ResultSet getMessages(Integer userId)
+	public ArrayList<Msg> getMessages(int id)
 	{
-		return _dbmt.getMessages(userId);
+		return _dbmt.getMessages(id);
 	}
 
 }

@@ -9,7 +9,8 @@
 		<div class="content">
 			<h1>SuperMessenger</h1>
 			<div class="login">
-	 			<form method="post" action="LoginServlet">
+	 			<form method="post" action="CoreServlet">
+					<input type="hidden" name="action" value="login"/>
 					<input type="text" name="login" value="Login"/>
 					<br />
 					<input type="password" name="password" value="Password"/>

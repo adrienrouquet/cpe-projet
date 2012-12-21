@@ -1,7 +1,11 @@
 package DB;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
+import Class.Msg;
 import DB.DBHandler;
 
 
@@ -17,9 +21,22 @@ public class DBMsgToolbox extends DBToolbox {
 		_dbHandler = new DBHandler(_dbName);
 	}
 	
-	public ResultSet getMessages(Integer userId)
+	public ArrayList<Msg> getMessages(Integer userId)
 	{
-		return getResult("CALL getMessages('" + userId.toString() + "')");
+		Connection conn = getConn();
+		ResultSet rs = executeQueryRS(conn, "CALL getMessages('" + userId.toString() + "')");
+		ArrayList<Msg> messages = new ArrayList<Msg>();
+		
+		try {
+			while(rs.next())
+			{
+				messages.add(new Msg(rs.getInt("id"),rs.getInt("srcUserId"),rs.getInt("dstUserId"),rs.getString("content"),rs.getTimestamp("sentDate"),rs.getBoolean("isDelivered")));
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in getMessages:" +e.getMessage());
+		}
+		closeConn(conn);
+		return messages;
 	}
 
 }

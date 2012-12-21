@@ -4,7 +4,7 @@
 	</div>
 	<div class="messageStatus">
 	<% 
-		if(Integer.parseInt(request.getParameter("messageStatus")) == 1)
+		if(request.getParameter("messageStatus").equals("true"))
 			out.print("V");
 		else
 			out.print("X");	

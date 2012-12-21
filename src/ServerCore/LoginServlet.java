@@ -23,77 +23,82 @@ public class LoginServlet extends HttpServlet {
        
     public LoginServlet() throws SQLException {
         super();
-    
-        DBReset.resetDatabase();
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		System.out.println("LoginServlet: Entering doGet");
 		
-		
-		
-		RequestDispatcher rd = req.getRequestDispatcher("content/login/login.jsp");
-		rd.forward(req, res);
-		
-		HttpSession s = req.getSession(false);
-		
-		if (s == null)
-		{
-			System.out.println("No active session");
-		}
-		
+		loginRouting(req,res);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
 		System.out.println("LoginServlet: Entering doPost");
 		
-		String login = req.getParameter("login");
-		String password = req.getParameter("password");
-		HttpSession session = req.getSession(true);
+		loginRouting(req,res);
+	}
+	
+	protected void loginRouting(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
+	{
+		HttpSession session 	= req.getSession(true);
+		RequestDispatcher rd 	= null;
 		
-		Bean.User user = (Bean.User) session.getAttribute("userBean");
+		//On recupere le UserBean de la session
+		Bean.User user 			= (Bean.User) session.getAttribute("userBean");
 		
 		if(user != null)
 		{
 			if(!user.getIsConnected())
-				System.out.println("User disconnected");
+			{	
+				System.out.println("User disconnected/No active session");
+				rd = req.getRequestDispatcher("content/account/account.jsp");
+			}
 			else
 			{
-				System.out.println("User exists and is connected");
-				RequestDispatcher rd = req.getRequestDispatcher("ChatServlet");
-				rd.forward(req, res);
+				System.out.println("User exists and is already connected");
+				//Si on est deja connecte, on passe sur le ChatServlet
+				rd = req.getRequestDispatcher("ChatServlet");
 			}
 		}
-		
+		//Si le bean user n'etait pas set, c'est qu'on cherche a se connecter!
 		else
 		{
-			if (CredentialsMatch(login,password))
+			if(req.getParameter("action") != null && req.getParameter("login") != null && req.getParameter("password") != null)
 			{
-				user = new Bean.User();
-				user.setId(2); //A CHANGER DANS LE FUTUR!!!!
-				user.setIsConnected(true);
+				System.out.println("LoginServlet: Checking User credentials");
 				
-				session.setAttribute("userBean", user);
-				session.setAttribute("chatRouterBean", new Bean.ChatRouter());
+				String login 		= req.getParameter("login").trim().toLowerCase();
+				String password 	= req.getParameter("password").trim();
+				DBUserToolbox dbut 	= new DBUserToolbox();
 				
-				RequestDispatcher rd = req.getRequestDispatcher("ChatServlet");
-				rd.forward(req, res);
+				if (dbut.checkCredentials(login,password))
+				{
+					System.out.println("LoginServlet: Connecting user");
+					//On recupere le user de la database et on le set dans un bean session
+					//On set au passage le chatRouterBean en session aussi
+					
+					user = dbut.getUser(login); 
+					user.setIsConnected(true);
+					session.setAttribute("userBean", user);
+					session.setAttribute("chatRouterBean", new Bean.ChatRouter());
+					
+					rd = req.getRequestDispatcher("ChatServlet");
+				}
+				else
+				{
+					System.out.println("LoginServlet: Wrong credentials");
+					//Par defaut, on forward sur account.jsp
+					rd = req.getRequestDispatcher("content/account/account.jsp");
+					
+				}
+			}
+			else
+			{
+				//Par defaut, on forward sur account.jsp
+				rd = req.getRequestDispatcher("content/account/account.jsp");
 			}
 		}
+		rd.forward(req, res);
 	}
-	
-	private boolean CredentialsMatch(String login, String password)
-	{
-		boolean match = true;
-				
-		//DBUserToolbox utb = new DBUserToolbox(); 
-		
-		
-		
-		return match;
-	}
-
-	
 }

@@ -3,7 +3,9 @@ package Manager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
+import Bean.User;
 import DB.DBMsgToolbox;
 import DB.DBUserToolbox;
 
@@ -18,43 +20,24 @@ public abstract class UserManager {
 	public UserManager(){};
 
 
-	public static ResultSet getUsers()
+	public static ArrayList<User> getUsers()
 	{
 		return _dbut.getUsers();
 	}
 
-	public static String getName(Integer id)
+	public static String getName(int id)
 	{
 
-		ResultSet rs = _dbut.getName(id);
-		if(rs != null)
-		{
-			try {
-				rs.first();
-				return rs.getString("name");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return "N/A";
+		String name = _dbut.getName(id);
+		if(name == null)
+			return "N/A";
+		return name;
 	}
 	
-	public static Timestamp getLastLogin(Integer id)
+	public static Timestamp getLastLogin(int id)
 	{
 
-		ResultSet rs = _dbut.getLastLogin(id);
-		if(rs != null)
-		{
-			try {
-				rs.first();
-				return (Timestamp) rs.getObject("lastLoginDate");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return null;
+		return _dbut.getLastLogin(id);
 	}  	
 
 }
