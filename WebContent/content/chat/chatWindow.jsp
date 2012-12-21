@@ -30,7 +30,6 @@
 				{
 					if(Integer.parseInt(rs.getString("srcUserId")) != userBean.getId())
 					{
-					
 		%>
 		<jsp:include page="incomingMessage.jsp">
 			<jsp:param value='<%= rs.getString("content") %>' name='content'/>

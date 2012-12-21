@@ -201,7 +201,7 @@ DELIMITER ;
 
 /*---------------------------------------------------*/
 CALL addUser("loic","loic","ortola.loic@gmail.com","0658008166","Loic","Ortola");
-CALL addUser("adrien","adriem","adrien.rouquet@gmail.com","0606060606","Adrien","Rouquet");
+CALL addUser("adrien","adrien","adrien.rouquet@gmail.com","0606060606","Adrien","Rouquet");
 CALL addUser("henri","henri","lahoud.henri@gmail.com","0606060606","Henri","Lahoud");
 CALL addUser("john","john","john.doe@gmail.com","0606060606","John","Doe");
 CALL addUser("jane","jane","jane.doe@gmail.com","0606060606","Jane","Doe");

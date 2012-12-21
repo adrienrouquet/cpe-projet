@@ -2,15 +2,14 @@ package DB;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Properties;
-
+import java.sql.Connection;
 
 
 public class DBHandler{
 	
 	private String _dbName = "";
-	private java.sql.Connection _conn = null;
-	private java.sql.Statement _query = null;
 	private Properties _connectionProps = null;
 	
 	public DBHandler(String dbName)
@@ -20,54 +19,77 @@ public class DBHandler{
 	    _connectionProps.put("user", "root");
 	    _connectionProps.put("password", "password");
 	   
+	   
 	    try {
-	    	
-			_conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/"+_dbName, _connectionProps);
-		} catch (Exception e) {
-			
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
 			System.err.println("Error in DBHandler constructor: " + e.getMessage());
-		} 
+			e.printStackTrace();
+		}
 	   
 			    
 	}
 	
+	public Connection getConn()
+	{ 
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/"+_dbName, _connectionProps);
+		} catch (Exception e) {			
+			System.err.println("Error in getConn: " + e.getMessage());
+		}
+		return conn;
+	}
+	
 	public ResultSet executeQueryRS(String query)
 	{
+		Connection conn = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		
 		try
 		{
-			_query = _conn.createStatement();	
-			return _query.executeQuery(query);
+			conn = getConn();
+			statement = conn.createStatement();	
+			rs = statement.executeQuery(query);
 
-		}catch (Exception e) {
-			System.err.println("Error in executeQueryRS:" + e.getMessage());
-			return null;
 		}
+		catch (Exception e) {
+			System.err.println("Error in executeQueryRS:" + e.getMessage());
+		}
+		finally {
+			closeConn(conn);			
+		}
+		return rs;
 	}
 	
 	public boolean executeQuery(String query)
 	{
+		Connection conn = null;
+		Statement statement = null;
 		try
 		{
-			_query = _conn.createStatement();
-			_query.executeUpdate(query);
+			conn = getConn();
+			statement = conn.createStatement();	
+			statement.executeUpdate(query);
 			return true;
 
 		}catch (Exception e) {
 			System.err.println("Error in executeQuery:" + e.getMessage());
-			return false;
 		}
-		
+		return false;
 	}
 	
-	public boolean closeConn()
+	public boolean closeConn(Connection conn)
 	{
 		try {
-			_conn.close();
+			conn.close();
 			return true;
 		}catch (Exception e) {
 			System.err.println("Error in closeConn:" + e.getMessage());
-			return false;
 		}
+		return false;
 		
 	}
 }
