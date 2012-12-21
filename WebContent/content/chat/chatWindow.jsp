@@ -40,12 +40,6 @@
 						{
 						
 			%>
-<!-- 			<div class="messageWrapper messageFrom"> -->
-<!-- 				<div class="messageContent"> -->
-<%-- 					<%= rs.getString("content") %> --%>
-<!-- 				</div> -->
-<%-- 				<div class="messageDateTime"><%= new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format((Timestamp) rs.getObject("sentDate")) %></div> --%>
-<!-- 			</div> -->
 			<jsp:include page="incomingMessage.jsp">
 				<jsp:param value='<%= rs.getString("content") %>' name='content'/>
 				<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
@@ -55,13 +49,11 @@
 						else
 						{
 			%>
-			<div class="messageWrapper messageTo">
-				<div class="messageContent">
-					<%= rs.getString("content") %>
-				</div>
-				<div class="messageStatus">V</div>
-				<div class="messageDateTime"><%= new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format((Timestamp) rs.getObject("sentDate")) %></div>
-			</div>
+			<jsp:include page="outgoingMessage.jsp">
+				<jsp:param value='<%= rs.getString("content") %>' name='content'/>
+				<jsp:param value='<%= rs.getString("isDelivered") %>' name='messageStatus'/>
+				<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format((Timestamp) rs.getObject("sentDate")) %>' name="date"/>
+			</jsp:include>			
 			<%
 						}
 						
@@ -75,11 +67,12 @@
 					Enter your message here...
 					</textarea>			
 				</div>
-				<div class="messageSend" 	onclick="setValue('action','sendMsg');
-											setValue('srcUserId','<%= userBean.getId() %>');
-											setValue('dstUserId','<%= chatRouterBean.getContactId() %>');
-											setValue('content','<%=  %>');
-											submitForm();">
+<%-- 				<div class="messageSend" 	onclick="setValue('action','sendMsg'); --%>
+<%-- 											setValue('srcUserId','<%= userBean.getId() %>'); --%>
+<%-- 											setValue('dstUserId','<%= chatRouterBean.getContactId() %>'); --%>
+<%-- 											setValue('content','<%=  %>'); --%>
+<%-- 											submitForm();"> --%>
+				<div class="messageSend" >
 					<button class="button"> Send </button>
 				</div>
 			</div>		
