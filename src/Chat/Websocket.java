@@ -42,7 +42,6 @@ public class Websocket extends MessageInbound{
 		String receiver = (String) json.get("receiver");
 		json.put("sender", nickname);
 		json.remove("receiver");
-		MsgManager.Send()
 		String jsonText = json.toJSONString();
 		System.out.print(jsonText);
 		
