@@ -13,6 +13,10 @@ Par Loic pour Loic:
 Try catch Finally: fermer la connexion a chaque fois!
 --Fait par Loic
 
+Par Loic pour Loic:
+Scinder les fichiers DB.sql selon le contenu (procedure, tables, entrees)
+--Fait par Loic
+
 ===============
 TODO
 
@@ -53,7 +57,3 @@ Preparer un meilleur squelette HTML/CSS
 Changer les headers pour HTML5, et faire des meilleurs include pour limiter les changements de code.
 (nom de page principale = nom du dossier)
 
-
-
-Par Loic pour Loic:
-Scinder les fichiers DB.sql selon le contenu (procedure, tables, entrees)

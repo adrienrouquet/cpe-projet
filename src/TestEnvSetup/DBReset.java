@@ -42,17 +42,22 @@ public class DBReset {
 		ScriptRunner sr = new ScriptRunner(DBReset.getConnection(),false,false);
 		
 		try {
-			sr.runScript(new FileReader(new File("./git/cpe-projet/src/TestEnvSetup/DBResetContent.sql")));
+			sr.runScript(new FileReader(new File("./git/cpe-projet/src/TestEnvSetup/DBDefaultEntries.sql")));
+			sr.runScript(new FileReader(new File("./git/cpe-projet/src/TestEnvSetup/DBProcedures.sql")));
+			sr.runScript(new FileReader(new File("./git/cpe-projet/src/TestEnvSetup/DBTables.sql")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			sr.runScript(new FileReader(new File("/home/debian/Documents/Git/cpe-projet/src/TestEnvSetup/DBResetContent.sql")));
+			sr.runScript(new FileReader(new File("/home/debian/Documents/Git/cpe-projet/src/TestEnvSetup/DBDefaultEntries.sql")));
+			sr.runScript(new FileReader(new File("/home/debian/Documents/Git/cpe-projet/src/TestEnvSetup/DBProcedures.sql")));
+			sr.runScript(new FileReader(new File("/home/debian/Documents/Git/cpe-projet/src/TestEnvSetup/DBTables.sql")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 			
 	}
 }
