@@ -25,3 +25,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastLoginDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+/*---------------------------------------------------*/
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE IF NOT EXISTS `contacts` (
+  `srcUserId` int(11) NOT NULL,
+  `dstUserId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

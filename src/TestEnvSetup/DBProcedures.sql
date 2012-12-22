@@ -48,6 +48,26 @@ END //
 DELIMITER ;
 
 /*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS getContacts;
+DELIMITER //
+CREATE PROCEDURE getContacts
+(
+	IN pUserId INT
+)
+BEGIN
+
+	SELECT * FROM users
+	WHERE id IN 
+	(
+   		SELECT dstUserId FROM contacts
+   		WHERE srcUserId = pUserId
+   	);
+   
+END //
+DELIMITER ;
+
+
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getUsers;
 DELIMITER //
 CREATE PROCEDURE getUsers
@@ -167,6 +187,36 @@ BEGIN
    SET tempIdentity = LAST_INSERT_ID();
    
    UPDATE users SET lastLoginDate = NOW();
+   
+   SELECT tempIdentity;
+   
+   
+END //
+DELIMITER ;
+
+/*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS addContact;
+DELIMITER //
+CREATE PROCEDURE addContact 
+(
+   IN pSrcUserId INT,
+   IN pDstUserId INT
+)
+BEGIN
+
+   DECLARE tempIdentity INT;
+   INSERT INTO contacts
+   (
+      srcUserId,
+      dstUserId
+   ) 
+   VALUES 
+   (
+      pSrcUserId,
+      pDstUserId
+   );
+
+   SET tempIdentity = LAST_INSERT_ID();
    
    SELECT tempIdentity;
    
