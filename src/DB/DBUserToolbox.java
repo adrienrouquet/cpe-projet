@@ -1,5 +1,6 @@
 package DB;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,12 +26,19 @@ public class DBUserToolbox extends DBToolbox {
 	
 	public ArrayList<User> getUsers()
 	{
-		ArrayList<User> users 	= new ArrayList<User>();
 		
 		Connection conn 		= getConn();
-		ResultSet rs 			= executeQueryRS(conn, "CALL getUsers()");
-				
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		ArrayList<User> users 	= null;
+		
 		try {
+			
+			cs = conn.prepareCall("{CALL getUsers()}");
+			rs = cs.executeQuery();		
+			
+			users = new ArrayList<User>();
+			
 			while(rs.next())
 			{
 				users.add(new User(rs.getInt("id"),rs.getString("login"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate")));
@@ -46,12 +54,17 @@ public class DBUserToolbox extends DBToolbox {
 	
 	public String getName(Integer id)
 	{
-		String name 	= "";
-		
-		Connection conn = getConn();
-		ResultSet rs 	= executeQueryRS(conn, "CALL getName(" + id + ")");
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		String name 			= "";
 		
 		try {
+			
+			cs = conn.prepareCall("{CALL getName(?)}");
+			cs.setInt("pUserId", id);		
+			rs = cs.executeQuery();	
+			
 			while(rs.next())
 			{
 				name = rs.getString("name");
@@ -67,12 +80,18 @@ public class DBUserToolbox extends DBToolbox {
 	
 	public Timestamp getLastLogin(Integer id)
 	{
-		Timestamp lastLogin = null;
 		
-		Connection conn 	= getConn();
-		ResultSet rs 		= executeQueryRS(conn, "CALL getLastLogin(" + id + ")");
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		Timestamp lastLogin 	= null;
 		
 		try {
+			
+			cs = conn.prepareCall("{CALL getLastLogin(?)}");
+			cs.setInt("pUserId", id);		
+			rs = cs.executeQuery();
+			
 			while(rs.next())
 			{
 				lastLogin = rs.getTimestamp("lastLoginDate");
@@ -90,10 +109,17 @@ public class DBUserToolbox extends DBToolbox {
 	{
 		boolean match 	= false;
 		
-		Connection conn = getConn();
-		ResultSet rs 	= executeQueryRS(conn, "CALL checkCredentials('" + login + "','" + password + "')");
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
 		
 		try {
+			
+			cs = conn.prepareCall("{CALL checkCredentials(?,?)}");
+			cs.setString("pLogin", login);
+			cs.setString("pPassword", password);
+			rs = cs.executeQuery();
+			
 			while(rs.next())
 			{
 				match = rs.getBoolean("valid");
@@ -109,12 +135,19 @@ public class DBUserToolbox extends DBToolbox {
 	
 	public int getIdFromLogin(String login)
 	{
-		int id	 		= 0;
 		
-		Connection conn = getConn();
-		ResultSet rs 	= executeQueryRS(conn, "CALL getIdFromLogin('" + login + "')");
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		int id	 				= 0;
 		
 		try {
+			
+			cs = conn.prepareCall("{CALL getIdFromLogin(?)}");
+			cs.setString("pLogin", login);
+			rs = cs.executeQuery();
+			
+			
 			while(rs.next())
 			{
 				id = rs.getInt("id");
@@ -130,14 +163,23 @@ public class DBUserToolbox extends DBToolbox {
 	
 	public User getUser(int id)
 	{
-		User user 		= null;
 		
-		Connection conn = getConn();
-		ResultSet rs 	= executeQueryRS(conn, "CALL getUser(" + id + ")");
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		User user 				= null;
 		
 		try {
-			rs.first();
-			user = new User(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate"));
+			
+			cs = conn.prepareCall("{CALL getUser(?)}");
+			cs.setInt("pUserId", id);
+			rs = cs.executeQuery();
+			
+			while(rs.next())
+			{
+				user = new User(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate"));
+			}
 		} catch (SQLException e) {
 			System.out.println("Error in getUser:" +e.getMessage());
 		}

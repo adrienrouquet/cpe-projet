@@ -24,10 +24,11 @@ public class DBMsgToolbox extends DBToolbox {
 	
 	public ArrayList<Msg> getMessages(Integer userId)
 	{
-		Connection conn = getConn();
-		CallableStatement cs = null;
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
 		ArrayList<Msg> messages = null;
-		ResultSet rs = null;
+		
 		
 		try {
 			cs = conn.prepareCall("{CALL getMessages(?)}");
