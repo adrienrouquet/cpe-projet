@@ -21,6 +21,11 @@ public abstract class UserManager {
 	{
 		return _dbut.getUsers();
 	}
+	
+	public static ArrayList<User> getContacts(int id)
+	{
+		return _dbut.getContacts(id);
+	}
 
 	public static String getName(int id)
 	{

@@ -27,9 +27,14 @@
 				<input type="hidden" name="action" value="view"/>
 				<input type="hidden" name="contactId" value="0"/>
 				<%
-					ArrayList<User> users = UserManager.getUsers();
-					for(User user : users)
+					ArrayList<User> users = null;
+				
+					users = UserManager.getContacts(userBean.getId());
+					
+					if(users.size() > 0)
 					{
+						for(User user : users)
+						{
 				%>
 				<div class="contactWrapper" onclick="setValue('action','openChat');setValue('contactId','<%= user.getId() %>');submitForm();">
 					<div class="contactName">
@@ -37,6 +42,17 @@
 					</div>
 					<div class="contactStatus">
 						Last login: <%= user.getLastLoginDate().toString() %>
+					</div>
+				</div>
+				<%
+						}
+					}
+					else
+					{
+				%>
+				<div class="contactWrapper">
+					<div class="contactName">
+						You have no contact to display yet
 					</div>
 				</div>
 				<%
