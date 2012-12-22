@@ -17,7 +17,6 @@ public class MsgManager implements Serializable{
 	
 	private int _srcUserId 		= 0;
 	private int _dstUserId 		= 0;
-	private Msg _message		= null;
 	
 	private DBMsgToolbox _dbmt	= null;
 	
@@ -51,6 +50,10 @@ public class MsgManager implements Serializable{
 	}
 	public void setDstUserId(int dstUserId) {
 		this._dstUserId = dstUserId;
+	}
+	public void sendMessage(String content)
+	{
+		_dbmt.sendMessage(_srcUserId, _dstUserId, content);
 	}
 	
 
