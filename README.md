@@ -4,6 +4,20 @@ cpe-projet TODO
 
 ===============
 FINISHED
+
+Par Adrien: --PROBLEME NON RESOLU--
+Ne pas rester sur la LoginServlet quand on est dans l'application :
+  Utiliser un res.sendRedirect("url") a la place d'un rd.forward...
+  Si vous voulez un point d'entrée unique à l'app, créer une nouvelle servlet.
+--Fait par Loic: il n'existe pas de sendRedirect, j'ai donc cree la nouvelle servlet CoreServlet.
+--Finalement c'est plus interessant car on fait passer l'utilisateur par des controles sur la servlet Login,
+--puis un bon dispatch selon ce sur quoi il etait.
+----Edit par Adrien: Le probleme n'est pas résolu : on arrive dans CoreServlet, on forward vers
+----AccountServlet, puis AccountServlet forward vers ChatServlet...
+------Fait par Adrien: CoreServlet ("/!") redirige vers AccountServlet. Apres le login, on est 
+------redirigé vers ChatServlet...
+------ATTENTION: Dans les formulaires, les actions correspondent à la servlet et plus à Core
+
 Par Adrien:
 Dans chatWindow.jsp, enlever le code de formation des messages, les deplacer dans des jsp déparés
 (incomingMessage.jsp et outcomingMessage.jsp) et utiliser <jsp:include...
@@ -16,14 +30,6 @@ Try catch Finally: fermer la connexion a chaque fois!
 Par Loic pour Loic:
 Scinder les fichiers DB.sql selon le contenu (procedure, tables, entrees)
 --Fait par Loic
-
-Par Adrien:
-Ne pas rester sur la LoginServlet quand on est dans l'application :
-  Utiliser un res.sendRedirect("url") a la place d'un rd.forward...
-  Si vous voulez un point d'entrée unique à l'app, créer une nouvelle servlet.
---Fait par Loic: il n'existe pas de sendRedirect, j'ai donc cree la nouvelle servlet CoreServlet.
---Finalement c'est plus interessant car on fait passer l'utilisateur par des controles sur la servlet Login,
---puis un bon dispatch selon ce sur quoi il etait.
 
 Par Adrien:
 Créer un MessageBean quand on entre dans chatWindow.jsp et initialiser les IDs sender et receiver.
@@ -42,8 +48,10 @@ Changer les headers pour HTML5, et faire des meilleurs include pour limiter les 
 (nom de page principale = nom du dossier)
 --Fait par Henri et Loic: Voila! HTML 5 et bons includes
 
+
 ===============
 TODO
+
 
 Par Loic pour tout le monde:
 COMMENTER LE CODE en FRANCAIS (Et pas: ceci est une boucle)

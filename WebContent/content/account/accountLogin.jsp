@@ -22,7 +22,7 @@
 	
 </script>
 <div class="login">
-		<form method="post" id="accountLoginForm" action="CoreServlet">
+		<form method="post" id="accountLoginForm" action="AccountServlet">
 		<input type="hidden" name="action" value="login"/>
 		<input placeholder="Enter Login..." type="text" id="login" name="login"/>
 		<br />

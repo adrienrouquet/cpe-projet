@@ -23,7 +23,7 @@
 	</div>
 	<div class="section">
 		<div id="messageForm">
-			<form method="post" id="chatWindowForm" action="CoreServlet">
+			<form method="post" id="chatWindowForm" action="ChatServlet">
 				<%
 					ArrayList<Msg> messages = msgManagerBean.getMessages(msgManagerBean.getDstUserId());
 					for( Msg msg : messages)

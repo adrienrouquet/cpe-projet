@@ -88,7 +88,8 @@ public class AccountServlet extends HttpServlet {
 							session.setAttribute("chatRouterBean", new Bean.ChatRouter());
 							session.setAttribute("msgManagerBean", new Bean.MsgManager(user.getId()));
 							
-							rd = req.getRequestDispatcher("ChatServlet");
+//							rd = req.getRequestDispatcher("ChatServlet");
+							res.sendRedirect("ChatServlet");
 						}
 						else
 						{
@@ -96,6 +97,7 @@ public class AccountServlet extends HttpServlet {
 							//Par defaut, on forward sur accountLogin.jsp
 							ar.setUrl("accountLogin.jsp");
 							rd = req.getRequestDispatcher("content/account/account.jsp");
+							rd.forward(req, res);
 						}	
 					}break;
 					default:
@@ -109,15 +111,17 @@ public class AccountServlet extends HttpServlet {
 				//Par defaut, on forward sur accountLogin.jsp
 				ar.setUrl("accountLogin.jsp");
 				rd = req.getRequestDispatcher("content/account/account.jsp");
+				rd.forward(req, res);
 			}			
 		}
 		else
 		{
 			System.out.println("User exists and is already connected");
 			//Si on est deja connecte, on passe sur le ChatServlet
-			rd = req.getRequestDispatcher("ChatServlet");
+//			rd = req.getRequestDispatcher("ChatServlet");
+			res.sendRedirect("ChatServlet");
 		}
 
-		rd.forward(req, res);
+//		rd.forward(req, res);
 	}
 }

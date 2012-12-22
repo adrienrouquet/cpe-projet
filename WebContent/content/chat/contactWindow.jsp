@@ -23,7 +23,7 @@
 			<h1>Super Messenger</h1>
 		</div>
 		<div id="contactForm">
-			<form name="mainForm" method="post" action="CoreServlet">		
+			<form name="mainForm" method="post" action="ChatServlet">		
 				<input type="hidden" name="action" value="view"/>
 				<input type="hidden" name="contactId" value="0"/>
 				<%

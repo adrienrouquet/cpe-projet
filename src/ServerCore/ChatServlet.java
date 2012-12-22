@@ -60,6 +60,7 @@ public class ChatServlet extends HttpServlet {
 			{    		
 				cr.setUrl("chatWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
 	    	}break;
 	    	
 	    	default:
@@ -67,6 +68,7 @@ public class ChatServlet extends HttpServlet {
 	    		cr.setAction("DefaultView");
 	    		cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
 	    	}break;
 		}
 		
