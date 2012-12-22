@@ -25,6 +25,23 @@ Ne pas rester sur la LoginServlet quand on est dans l'application :
 --Finalement c'est plus interessant car on fait passer l'utilisateur par des controles sur la servlet Login,
 --puis un bon dispatch selon ce sur quoi il etait.
 
+Par Adrien:
+Créer un MessageBean quand on entre dans chatWindow.jsp et initialiser les IDs sender et receiver.
+--Fait par Loic: C'est un msgManagerBean qui set tout ca maintenant.
+
+Par Loic:
+On a redefini le sens des Beans, il faut donc bouger des methodes/supprimer des attributs:
+-supprimer attribut contactId de ChatRouter, car on va definir un MsgManager
+-changer Msg: c'est juste une classe, et non plus un bean, par contre il doit etre gere entierement par
+msgManager
+--Fait par Loic: Ca fonctionne et c'est beaucoup mieux comme ca
+
+Par Loic pour Henri:
+Preparer un meilleur squelette HTML/CSS
+Changer les headers pour HTML5, et faire des meilleurs include pour limiter les changements de code.
+(nom de page principale = nom du dossier)
+--Fait par Henri et Loic: Voila! HTML 5 et bons includes
+
 ===============
 TODO
 
@@ -32,8 +49,6 @@ Par Loic pour tout le monde:
 COMMENTER LE CODE en FRANCAIS (Et pas: ceci est une boucle)
 Supprimer les anciens bouts de code inutiles
 
-Par Adrien:
-Créer un MessageBean quand on entre dans chatWindow.jsp et initialiser les IDs sender et receiver.
 
 Par Adrien, Pour Adrien:
 Plug websocket sur chatWindows.jsp
@@ -44,19 +59,8 @@ Par Loic:
 Plug des fonctions de send message et de la liaison bd dans la websocket
 Voir avec Adrien comment on lie tout ca.
 
-Par Loic:
-On a redefini le sens des Beans, il faut donc bouger des methodes/supprimer des attributs:
--supprimer attribut contactId de ChatRouter, car on va definir un MsgManager
--changer Msg: c'est juste une classe, et non plus un bean, par contre il doit etre gere entierement par
-msgManager
-
 Par Loic pour tout le monde:
 -changer User: mettre getContacts (aujourdhui on a un getUsers pour le moment)
 -Regarder si ca a un sens d'avoir un userManager
 @LOIC: IM ON IT
 
-Par Loic pour Henri:
-Preparer un meilleur squelette HTML/CSS
-Changer les headers pour HTML5, et faire des meilleurs include pour limiter les changements de code.
-(nom de page principale = nom du dossier)
-@HENRI: IM ON IT
