@@ -1,23 +1,26 @@
 <!DOCTYPE html>
+<jsp:useBean id="accountRouterBean" class="Bean.AccountRouter" scope="session" />  
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" href="style/style.css" />
 		<title>Super Messenger</title>
-	</head>
+		<script type="text/javascript" src="script/jquery-1.8.3.js" ></script>
+		<script type="text/javascript" src="script/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="script/jquery.defaultvalue.js"></script>
+		
+		
+</head>
 	<body class="login">
-		<div class="content">
-			<h1>SuperMessenger</h1>
-			<div class="login">
-	 			<form method="post" action="CoreServlet">
-					<input type="hidden" name="action" value="login"/>
-					<input type="text" name="login" value="Login"/>
-					<br />
-					<input type="password" name="password" value="Password"/>
-					<br />
-					<button type="button" onclick="this.form.submit();"> Login </button>
-				</form>
-			</div>
+		<div class="section" style="text-align: center;">
+			<% 
+				if( accountRouterBean.getUrl() != "")  
+				{
+			%>  
+				<jsp:include page="<%= accountRouterBean.getUrl() %>" />
+			<% 
+				}
+			%>
 		</div>
 		
 	</body>

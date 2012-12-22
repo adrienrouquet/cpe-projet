@@ -1,12 +1,9 @@
 package Manager;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import Bean.User;
-import DB.DBMsgToolbox;
 import DB.DBUserToolbox;
 
 

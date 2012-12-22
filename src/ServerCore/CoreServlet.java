@@ -31,14 +31,14 @@ public class CoreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("======================================================");
 		System.out.println("CoreServlet: Entering doGet");
-		RequestDispatcher rd = req.getRequestDispatcher("LoginServlet");
+		RequestDispatcher rd = req.getRequestDispatcher("AccountServlet");
 		rd.forward(req, res);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("======================================================");
 		System.out.println("CoreServlet: Entering doPost");
-		RequestDispatcher rd = req.getRequestDispatcher("LoginServlet");
+		RequestDispatcher rd = req.getRequestDispatcher("AccountServlet");
 		rd.forward(req, res);
 	}
 

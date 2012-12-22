@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Bean.ChatRouter;
 
 @WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
@@ -21,61 +20,70 @@ public class ChatServlet extends HttpServlet {
         
     }
     
-    private void router(HttpServletRequest req, HttpServletResponse res)
+    private void chatRouting(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
     {
-    	String action = "view";
-    	
-    	HttpSession session = req.getSession(true);
-    	ChatRouter cr = (ChatRouter) session.getAttribute("chatRouterBean");
-    	
-    	if (req.getParameter("action") != null)
-    	{
-	    	if( req.getParameter("action").equals("openChat") )
-	    	{
-	    		action = "view";
-	    		
-	    		cr.setContactId(Integer.parseInt(req.getParameter("contactId")));
-	    		cr.setUrl("chatWindow.jsp");
-	    		
-	    		//session.setAttribute("msgBean", new Class.Msg());
-	    	}
-	    	else
-	    	{
-	    		action = "view";
-	    		cr.setUrl("contactWindow.jsp");
-	    	}
-    	}
-    	else
-    	{
-    		action = "view";
-    		cr.setUrl("contactWindow.jsp");    		
-    	}
-    	
-    	RequestDispatcher rd = req.getRequestDispatcher("content/chat/chat.jsp");
-		
-    	try
+    	HttpSession session 	= req.getSession(true);
+    	RequestDispatcher rd 	= null;
+    	    	
+    	//On recupere le userBean de la session    
+    	Bean.User user 			= (Bean.User) session.getAttribute("userBean");		
+		if(user == null)
 		{
-			rd.forward(req, res);
-		} 
-		catch (ServletException | IOException e)
-		{
-			
-			e.printStackTrace();
+			System.out.println("Warning: userBean is null in ChatServlet");
+			user	=  new Bean.User();
+			session.setAttribute("userBean", user);
 		}
     	
+    	//On recupere le chatRouterBean de la session    	
+    	Bean.ChatRouter cr 		= (Bean.ChatRouter) session.getAttribute("chatRouterBean");
+    	if(cr == null)
+    	{
+    		System.out.println("Warning: chatRouterBean is null in ChatServlet");
+    		cr = new Bean.ChatRouter();
+    		session.setAttribute("chatRouterBean", cr);
+    	}
+    	cr.setAction(req.getParameter("action"));
+    	
+    	//On recupere le msgManagerBean de la session    	
+    	Bean.MsgManager mm 		= (Bean.MsgManager) session.getAttribute("msgManagerBean");
+    	if(mm == null)
+    	{
+    		System.out.println("Warning: msgManagerBean is null in ChatServlet");
+    		mm = new Bean.MsgManager(user.getId());
+    		session.setAttribute("msgManagerBean", mm);
+    	}
+    	mm.setDstUserId(req.getParameter("contactId"));
+    	
+		switch(cr.getAction())
+		{
+			case "openChat":
+			{    		
+				cr.setUrl("chatWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+	    	}break;
+	    	
+	    	default:
+	    	{
+	    		cr.setAction("DefaultView");
+	    		cr.setUrl("contactWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+	    	}break;
+		}
+		
+    	rd.forward(req, res);	
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		System.out.println("AppServlet: Entering doGet");
-		router(req, res);
+		System.out.println("ChatServlet: Entering doGet");
+		chatRouting(req, res);
 		
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		System.out.println("AppServlet: Entering doPost");
-		router(req, res);
+		System.out.println("ChatServlet: Entering doPost");
+		chatRouting(req, res);
 	}
 	
 	

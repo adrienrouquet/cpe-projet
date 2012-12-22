@@ -5,13 +5,9 @@ import java.io.Serializable;
 
 public class ChatRouter implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6734150431891723390L;
 	private String _url = "";
-	private Integer _contactId = 0;
-	
+	private String _action = "";
 	public ChatRouter(){};
 
 	public void setUrl(String url)
@@ -22,14 +18,16 @@ public class ChatRouter implements Serializable {
 	{
 		return this._url;
 	}
-
-	public Integer getContactId()
+	public void setAction(String action)
 	{
-		return this._contactId;
+		if(action != null)
+			this._action = action;
+		
 	}
-	public void setContactId(Integer contactId)
+	public String getAction()
 	{
-		this._contactId = contactId;
+		return this._action;
 	}
+	
 	
 }

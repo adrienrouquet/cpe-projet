@@ -1,23 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" type="text/css" href="style/style.css" />
-		<title>Super Messenger</title>
-	</head>
-	<body class="login">
-		<div class="content">
-			<h1>SuperMessenger</h1>
-			<div class="login">
-	 			<form method="post" action="LoginServlet">
-					<input type="text" name="login" value="Login"/>
-					<br />
-					<input type="password" name="password" value="Password"/>
-					<br />
-					<button type="button" onclick="this.form.submit();"> Login </button>
-				</form>
-			</div>
-		</div>
+<script>
+	
+	$.validator.setDefaults({
+		success: "valid"
+	});
+	
+	$(document).ready(function() {
+		$("#accountLoginForm").validate({
+			rules: {
+				login: {
+					required: true,
+					minlength: 4
+				},
+				password: {
+					required: true,
+					minlength: 4
+				}
+			}
+		})
+	});	
+
+	
+</script>
+<div class="login">
+		<form method="post" id="accountLoginForm" action="CoreServlet">
+		<input type="hidden" name="action" value="login"/>
+		<input placeholder="Enter Login..." type="text" id="login" name="login"/>
+		<br />
+		<input placeholder="Enter Password..." type="password" id="password" name="password"/>
+		<br />
+		<input type="submit" class="button" value="Login" />
+	</form>
+</div>
 		
-	</body>
-</html>
