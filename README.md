@@ -1,6 +1,8 @@
 cpe-projet TODO
 ===============
 
+23/12/2012@0201 - Adrien
+GITHUB DOWN - RISQUE DE CONFLITS SUR LES PROCHAINS PUSH/PULL
 
 ===============
 FINISHED
@@ -53,24 +55,43 @@ Changer les headers pour HTML5, et faire des meilleurs include pour limiter les 
 TODO
 
 
-Par Loic pour tout le monde:
+21/12/2012 - Loic pour tout le monde:
 COMMENTER LE CODE en FRANCAIS (Et pas: ceci est une boucle)
 Supprimer les anciens bouts de code inutiles
+
+
+21/12/2012 - Loic:
+Plug des fonctions de send message et de la liaison bd dans la websocket
+Voir avec Adrien comment on lie tout ca.
+
+
+21/12/2012 - Loic pour tout le monde:
+-changer User: mettre getContacts (aujourdhui on a un getUsers pour le moment)
+-Regarder si ca a un sens d'avoir un userManager
+@LOIC: IM ON IT
 
 
 Par Adrien, Pour Adrien:
 Plug websocket sur chatWindows.jsp
 Afficher message dans la page (append after last div?), ou preparer un div en avance...
 Envoyer la websocket et ensuite le MsgManager enverra le message.
+--23/12/2012@0203 - Adrien
+--Il manque le send du msgManager: pour l'instant le sender = receiver
+--@ADRIEN: IM ON IT
 
-Par Loic:
-Plug des fonctions de send message et de la liaison bd dans la websocket
-Voir avec Adrien comment on lie tout ca.
-
-Par Loic pour tout le monde:
--changer User: mettre getContacts (aujourdhui on a un getUsers pour le moment)
--Regarder si ca a un sens d'avoir un userManager
-@LOIC: IM ON IT
-
-Par Adrien pour tout le monde:
+23/12/2012 - Adrien pour tout le monde:
 Est-il utile de garder 2 routers (ChatRouter et AccountRouter) qui ont la même fonction ?
+
+
+23/12/2012@0201 - Adrien
+Problemes avec les websockets: pas possible de garder la connexion lors d'un changement de page
+(par exemple entre contactWindow et chatWindow). La solution sera de refondre l'interface pour
+eviter les changement de page en faisant par exemple des requete JS (cf websocket.js)
+
+
+23/12/2012@0201 - Adrien
+Probleme d'interface: je suis en chat avec Loic et je recois un message d'Henry: comment faire la
+notification ? Quelles infos doivent etre ajouté au message ? Intéret d'une URL qui renvoie vers la
+fenetre de chat associer au contact qui m'envoie le nouveau message ?
+
+ 
