@@ -5,19 +5,28 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width" />
 		<title>Chat - Main Window</title>
 		<link rel="stylesheet" type="text/css" href="style/style.css" />
+	<script>
+		function submitForm()
+		{
+			document.forms['mainForm'].submit();
+		}
+		function setValue(pElement, pValue)
+		{
+			document.forms['mainForm'].elements[pElement].value = pValue;		
+		}
+	</script>
 	</head>
 	<body style="background: rgb(230,230,230); text-align: center;">		
-		<div class="section" style="text-align: center;">
-			<% 
-				if( chatRouterBean.getUrl() != "")  
-				{
-			%>  
-				<jsp:include page="<%= chatRouterBean.getUrl() %>" />
-			<% 
-				}
-			%>
-		</div>
+		<% 
+			if( chatRouterBean.getUrl() != "")  
+			{
+		%>  
+			<jsp:include page="<%= chatRouterBean.getUrl() %>" />
+		<% 
+			}
+		%>
 	</body>
 </html>

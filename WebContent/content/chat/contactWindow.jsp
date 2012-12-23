@@ -5,19 +5,6 @@
 <%@page import="Bean.User"%>
 
 <jsp:useBean id="userBean" class="Bean.User" scope="session" />
-
-
-	<script>
-	function submitForm()
-	{
-		document.forms['mainForm'].submit();
-	}
-	function setValue(pElement, pValue)
-	{
-		document.forms['mainForm'].elements[pElement].value = pValue;		
-	}
-	</script>
-	
 	<div class="content">			
 		<div class="header">
 			<h1>Super Messenger</h1>

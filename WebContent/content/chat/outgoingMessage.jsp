@@ -10,5 +10,6 @@
 			out.print("X");	
 	%>
 	</div>
+	<br/>
 	<div class="messageDateTime"><%= request.getParameter("date") %></div>
 </div>
