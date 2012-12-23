@@ -5,7 +5,7 @@ cpe-projet TODO
 ===============
 FINISHED
 
-Par Adrien: --PROBLEME NON RESOLU--
+Par Adrien:
 Ne pas rester sur la LoginServlet quand on est dans l'application :
   Utiliser un res.sendRedirect("url") a la place d'un rd.forward...
   Si vous voulez un point d'entrée unique à l'app, créer une nouvelle servlet.
@@ -72,3 +72,5 @@ Par Loic pour tout le monde:
 -Regarder si ca a un sens d'avoir un userManager
 @LOIC: IM ON IT
 
+Par Adrien pour tout le monde:
+Est-il utile de garder 2 routers (ChatRouter et AccountRouter) qui ont la même fonction ?
