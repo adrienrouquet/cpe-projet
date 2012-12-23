@@ -40,13 +40,18 @@
 					<%
 							}
 							else
-							{
-					%>
-					<jsp:include page="outgoingMessage.jsp">
-						<jsp:param value='<%= msg.getContent() %>' name='content'/>
-						<jsp:param value='<%= msg.isDelivered().toString() %>' name='messageStatus'/>
-						<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
-					</jsp:include>			
+						{
+							String delivered = "";
+							if (msg.isDelivered().toString().equals(true))
+								delivered = "/";
+							else
+								delivered = "X";
+				%>
+				<jsp:include page="outgoingMessage.jsp">
+					<jsp:param value='<%= msg.getContent() %>' name='content'/>
+					<jsp:param value='<%= delivered %>' name='messageStatus'/>
+					<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
+				</jsp:include>			
 					<%
 							}
 						}

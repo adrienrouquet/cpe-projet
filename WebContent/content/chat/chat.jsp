@@ -18,6 +18,8 @@
 			document.forms['mainForm'].elements[pElement].value = pValue;		
 		}
 	</script>
+	<script type="text/javascript" src="script/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="script/websocket.js"></script>
 	</head>
 	<body style="background: rgb(230,230,230); text-align: center;">		
 		<% 

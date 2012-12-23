@@ -1,19 +1,15 @@
 $(document).ready(function() {
 	
-	console.log(window.location.host);
-	var _wsUri = "ws://"+window.location.host+"/cpe-projet/WebsocketServlet";
-	var _output = $("#output");
+	var _wsUri = "ws://" + window.location.host + "/cpe-projet/WebsocketServlet";
 	var _websocket = null;
 	
 	function JSONMessage() {
-		this.sender = "";
-		this.receiver = "";
+		this.date = "";
 		this.message = "";
 		
 		this.getJSON = function () {
 			return {
-				"sender": this.sender,
-				"receiver": this.receiver,
+				"date": this.date,
 				"message": this.message
 			};
 		};
@@ -27,53 +23,83 @@ $(document).ready(function() {
 			
 			var obj = JSON.parse(jsonString);
 			
-			this.sender = (obj["sender"]!=undefined)?obj["sender"]:"";
-			this.receiver = (obj["receiver"]!=undefined)?obj["receiver"]:"";
+			this.date = (obj["date"]!=undefined)?obj["date"]:"";
 			this.message = (obj["message"]!=undefined)?obj["message"]:"";
 		};
 	}
 	
 	function onOpen(evt) {
-		writeToScreen("CONNECTED");
+		alert("CONNECTED");
 	}
 	function onClose(evt) {
-		writeToScreen("DISCONNECTED");
+		alert("DISCONNECTED");
 	}
 	function onMessage(evt) {
 		var json = new JSONMessage();
 		json.parse(evt.data);
 		
-		writeToScreen('<span style="color: blue;">' + json.sender + ": " + json.message +'</span>');
+//		confirm("NEW MESSAGE: " + json.message + " @ " + json.date);
+		
+		$.get('content/chat/incomingMessage.jsp', function(data) {
+			var element = $(data);
+			
+			element.find(".messageContent").html(json.message);
+			element.find(".messageDateTime").html(json.date);
+			
+			$('#messageForm').append(element);
+		});		
 	}
 	function onError(evt) {
-		writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+		console.log("ERROR: " + evt.data);
+	}
+	
+	function getDate() {
+		var d = new Date();
+		
+		var date = d.getDate();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+		var hour = d.getHours();
+		var min = d.getMinutes();
+		
+		date = (date>10?'':'0') + date;
+		month = (month>10?'':'0') + month;
+		year = '' + year;
+		hour = (hour>10?'':'0') + hour;
+		min = (min>10?'':'0') + min;
+		
+		return date + "/" + month + "/" + year + " @ " + hour + ":" + min;
 	}
 	
 	function doSend() {
 		
 		var json = new JSONMessage();
-		json.receiver = $('#rcv').val();
-		json.message = $('#msg').val();
 		
-		$("#msg").val("");
-		$("#rcv").val("GUEST_");
-
+		json.date = getDate();
+		json.message = $('#content').val();
+		$('#content').val("");
+		
 		var message = json.stringify();
 		
-		writeToScreen("SENT to "+ json.receiver + ": " + json.message);
+		$.get('content/chat/outgoingMessage.jsp', function(data) {
+			var element = $(data);
+			element.find(".messageContent").html(json.message);
+			element.find(".messageDateTime").html(json.date);
+			element.find(".messageStatus").html('');
+			$('#messageForm').append(element);
+		});
+		
 		_websocket.send(message);
-	}
-	function writeToScreen(message) {
-		_output.append("<p>" + message + "</p>");
+		
 	}
 
 	function init() {
-		var websocket = new WebSocket(_wsUri);
+		var WS = WebSocket || MozWebSocket;
+		websocket = new WS(_wsUri);
 		websocket.onopen = function(evt) { onOpen(evt); };
 		websocket.onclose = function(evt) { onClose(evt); };
 		websocket.onmessage = function(evt) { onMessage(evt); };
 		websocket.onerror = function(evt) { onError(evt); };
-		
 		_websocket = websocket;
 	}
 	

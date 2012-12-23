@@ -1,11 +1,10 @@
 package Bean;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.*;
 
-import Class.Msg;
+import Class.Websocket;
 import DB.DBUserToolbox;
 
 
@@ -27,6 +26,7 @@ public class User implements Serializable {
 	private String _lastName = "";
 	private Timestamp _lastLoginDate = null;
 	private boolean _isConnected = false;
+	private ArrayList<Integer> _websockets = new ArrayList<Integer>();
 	
 	private DBUserToolbox _dbut = null;
 
@@ -126,6 +126,22 @@ public class User implements Serializable {
 		return _isConnected;
 	}
 
+	public ArrayList<Integer> getWebsockets() {
+		return _websockets;
+	}
+
+	public void setWebsockets(ArrayList<Integer> websockets) {
+		this._websockets = websockets;
+	}
 	
+	public void addWebSocket(Integer websocketId) {
+		_websockets.add(websocketId);
+		System.out.println("ADD WS: " + _firstName + ": " + _websockets);
+	}
+	
+	public void delWebsocket(Integer websocketId) {
+		_websockets.remove(websocketId);
+		System.out.println("DEL WS: " + _firstName + ": " + _websockets);
+	}
 
 }
