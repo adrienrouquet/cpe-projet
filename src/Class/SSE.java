@@ -3,6 +3,7 @@ package Class;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+//Cette classe est abstraite et gere les actions des server sent events pour les differentes notifications de l'application
 public abstract class SSE {
 
 	private static Hashtable<Integer,ArrayList<Integer>> _messagesDelivered = new Hashtable<Integer,ArrayList<Integer>>();
@@ -26,11 +27,13 @@ public abstract class SSE {
 		_newMessagesReceived.put(dstUserId, userNewMessagesReceived);
 	}
 	
+	//Quand on a publie la notification, on la supprime de la hashtable
 	public static void deleteUserNewMessagesReceived(int userId)
 	{
 		_newMessagesReceived.remove(userId);
 	}
 	
+	//La conversion en JSON de la hashtable pour le user ID demande
 	public static String newMessagesReceivedToJSON(int userId)
 	{
 		String output = "";
@@ -76,11 +79,13 @@ public abstract class SSE {
 		_messagesDelivered.put(userId, userMessagesDelivered);
 	}	
 	
+	//Quand on a publie la notification, on la supprime de la hashtable
 	public static void deleteUserMessagesDelivered(int userId)
 	{
 		_messagesDelivered.remove(userId);
 	}
 	
+	//La conversion en JSON de la hashtable pour le user ID demande
 	public static String messagesDeliveredToJSON(int userId)
 	{
 		String output = "";

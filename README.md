@@ -2,6 +2,12 @@ cpe-projet TODO
 ===============
 
 
+
+JOYEUX NOEL
+TROUDUCS!
+
+
+
 ===============
 FINISHED
 
@@ -48,6 +54,15 @@ Changer les headers pour HTML5, et faire des meilleurs include pour limiter les 
 (nom de page principale = nom du dossier)
 --Fait par Henri et Loic: Voila! HTML 5 et bons includes
 
+21/12/2012 - Loic pour tout le monde:
+-changer User: mettre getContacts (aujourdhui on a un getUsers pour le moment)
+-Regarder si ca a un sens d'avoir un userManager
+--Fait par Loic: j'ai laisse l'ancienne stored procedure de getUsers dans le code au cas ou
+
+21/12/2012 - Loic:
+Plug des fonctions de send message et de la liaison bd dans la websocket
+Voir avec Adrien comment on lie tout ca.
+--Fait par Loic: On a une version qui fonctionne au 24/12
 
 ===============
 TODO
@@ -58,15 +73,6 @@ COMMENTER LE CODE en FRANCAIS (Et pas: ceci est une boucle)
 Supprimer les anciens bouts de code inutiles
 
 
-21/12/2012 - Loic:
-Plug des fonctions de send message et de la liaison bd dans la websocket
-Voir avec Adrien comment on lie tout ca.
-
-
-21/12/2012 - Loic pour tout le monde:
--changer User: mettre getContacts (aujourdhui on a un getUsers pour le moment)
--Regarder si ca a un sens d'avoir un userManager
-@LOIC: IM ON IT
 
 
 Par Adrien, Pour Adrien:
@@ -82,21 +88,32 @@ Envoyer la websocket et ensuite le MsgManager enverra le message.
 ----("Vous avez un message de ...") sauf si la chatWindow ouverte est celle de l'emeteur de msg.
 ----PROBLEME: Plantage lorsqu'on utilise MsgManager.sendMessage()...
 
-
-23/12/2012 - Adrien pour tout le monde:
+24/12/2012 - Adrien pour tout le monde:
 Est-il utile de garder 2 routers (ChatRouter et AccountRouter) qui ont la même fonction ?
+--Loic: Je pense que oui, ca nous permet d'avoir un controleur par servlet, et d'eviter d'avoir des switch 
+enormes dans le futur.
 
 
-23/12/2012@0201 - Adrien
+24/12/2012@0201 - Adrien
 Problemes avec les websockets: pas possible de garder la connexion lors d'un changement de page
 (par exemple entre contactWindow et chatWindow). La solution sera de refondre l'interface pour
 eviter les changement de page en faisant par exemple des requete JS (cf websocket.js)
+--Loic: On a resolu le pb, ca marche niquel avec un systeme hybride webSocket / SSE (notifications)
 
-
-23/12/2012@0201 - Adrien
+24/12/2012@0201 - Adrien
 Probleme d'interface: je suis en chat avec Loic et je recois un message d'Henry: comment faire la
 notification ? Quelles infos doivent etre ajouté au message ? Intéret d'une URL qui renvoie vers la
 fenetre de chat associer au contact qui m'envoie le nouveau message ?
+--Loic: Alors pour l'instant on gere seulement les notifications de type "contact a recu ton message" 
+et "contact t'a envoye un novueau message" mais sur la page contactWindow.
 
 24/12/2012@0144 - Adrien
 pas de liste des utilisateurs connectés ?? utilisation de Usermanager pour ca ?
+--Loic: Oui j'y pensais, on va en avoir besoin pour le status. Je sais meme pas si on en a besoin, 
+je pense qu'on devrait gerer ca avec une webSocket. D'ailleurs je voudrais t'en parler au tel ou sur google, 
+savoir comment tu vois les choses.
+Soit on decide de faire davantage de controles dans le code, soit on decide de s'affranchir des managers pour se concentrer
+sur les websocket. Tu fais souvent un parcours des websocket pour savoir si tu as une websocket du user en question, (
+cf webSocketServlet getsocket), ca peut etre notre test non? Si on a une socket avec srcUserId = celuiquoncherche alors il est connecte.
+
+

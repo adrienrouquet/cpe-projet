@@ -78,6 +78,7 @@ $(document).ready(function() {
 		
 	}
 	
+	//Renvoi d'un accuse de reception
 	function doSendDelivered(msgId)
 	{
 		var json = new JSONMessage();
@@ -127,6 +128,8 @@ $(document).ready(function() {
 		
 	}
 
+	
+	//Nouvelle version de la fonction write d'Adrien
 	function writeNewMessage(element, json) {
 		console.log("WriteNewMessage ");
 		if(document.getElementById("messageForm") != null)

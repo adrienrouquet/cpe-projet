@@ -38,7 +38,7 @@ public class SSEServlet extends HttpServlet {
 	        PrintWriter out = response.getWriter();  
 
 	        Bean.User user = (Bean.User) request.getSession().getAttribute("userBean");
-	        
+	        //On publie ces infos de type event-stream sur la servlet a intervalles reguliers
 	        out.print("retry: 5000\n");
 	        out.print("event: newMessageReceived\n");
 	        out.print("data: " + SSE.newMessagesReceivedToJSON(user.getId()) + "\n\n");
@@ -46,9 +46,11 @@ public class SSEServlet extends HttpServlet {
 	        out.print("event: messageDelivered\n");
 	        out.print("data: " + SSE.messagesDeliveredToJSON(user.getId()) + "\n\n");
 	        
+	        //On n'oublie pas de flush et close. Obligatoire
 	        out.flush();
 	        out.close();
 //	        
+	        //Si on a fait un ajout, c'est bien de supprimer les entrees pour le user afin de vider la hashtable
 	        SSE.deleteUserMessagesDelivered(user.getId());
 	        SSE.deleteUserNewMessagesReceived(user.getId());
 	      }

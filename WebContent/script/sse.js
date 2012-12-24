@@ -1,17 +1,20 @@
 $(document).ready(function() {
 
+	//Cette fonction instancie l'ecoute et les events a ecouter
 	function listenSSE()
 	{
-		console.log("LOADED ONCE");
+		console.log("Init SSE");
 		if (window.EventSource) 
 		{
 			var eventSource = new EventSource("http://" + window.location.host + "/cpe-projet/SSEServlet");
+			
 			//Event messageDelivered
 			eventSource.addEventListener('messageDelivered', function (e) {
 				var json = new JSONMessageDelivered();
 				json.parse(e.data);
 				for (var id in json.msgId)
 				{
+					//Update du statut > le message a ete recu
 					writeStatus(json.msgId[id]);
 				}
 			});
@@ -22,6 +25,7 @@ $(document).ready(function() {
 				json.parse(e.data);
 				for (var id in json.srcUserId)
 				{
+					//Update du nombre de messages non lus du contact
 					writeUpdateCount(json.srcUserId[id]);
 				}
 			});
@@ -76,7 +80,7 @@ $(document).ready(function() {
 		};
 		
 		this.parse = function(jsonString) {
-			console.log(jsonString);
+			//console.log(jsonString);
 			
 			var obj = JSON.parse(jsonString);
 			
@@ -98,7 +102,7 @@ $(document).ready(function() {
 		};
 		
 		this.parse = function(jsonString) {
-			console.log(jsonString);
+			//console.log(jsonString);
 			
 			var obj = JSON.parse(jsonString);
 			

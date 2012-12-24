@@ -38,6 +38,7 @@ public class Websocket extends MessageInbound{
 		
 		String msg 			= data.toString();
 		Integer msgId 		= 0;
+		//Trois types de messages a envoyer, trois objets separes
 		JSONObject jsonSrc 	= (JSONObject) JSONValue.parse(msg);
 		JSONObject jsonDst 	= (JSONObject) jsonSrc.clone();		
 		JSONObject jsonBack	= (JSONObject) jsonSrc.clone();
@@ -48,22 +49,28 @@ public class Websocket extends MessageInbound{
 		//Si le message est un accuse de reception
 		if(!jsonSrc.get("deliveredMsgId").equals("null")) 
 		{
+			//On update le champ isDelivered de l'enregistrement du message en DB
 			_msgManager.setMessageDelivered(Integer.parseInt((String)jsonSrc.get("deliveredMsgId")));
 			
 		}
 		//Si le message est un nouveau message
 		else
 		{			
+			//On ajoute le nouveau message en DB et on recupere l'ID de l'insertion
 			msgId = _msgManager.sendMessage((String) jsonSrc.get("content"));			
+			//On ajoute l'ID dans le jsonDst pour le destinataire
 			jsonDst.put("newMsgId",  msgId.toString());
+			//On publie un SSE qui publie une notification au user destinataire
 			SSE.setNewMessageReceived(_msgManager.getSrcUserId(), _msgManager.getDstUserId());
 			System.out.println("User" + _msgManager.getSrcUserId() + ": added message to DB");
 		}
 		
-		
+		//On cherche la webSocket du destinataire
 		Websocket WS = WebsocketManager.getWebsocket(_msgManager.getDstUserId());
+		//Si il est connecte, on envoit le message de reponse, c'est plus rapide
 		if(WS != null)
 		{
+			
 			WsOutbound conn = WS.getWsOutbound();
 			
 			conn.writeTextMessage(CharBuffer.wrap(jsonDst.toJSONString()));
@@ -73,12 +80,9 @@ public class Websocket extends MessageInbound{
 		else
 		{
 			System.out.println("User " + _msgManager.getSrcUserId() + " : Warning: dstUser "  + _msgManager.getDstUserId() + " is disconnected ");
-
-			
-			
 		}
 		
-		//Dans tous les cas, on donne l'ID du message au sender.
+		//Dans tous les cas, on envoit l'ID du message au sender.
 		jsonBack.put("sentMsgId", msgId);
 		WS = WebsocketManager.getWebsocket(_msgManager.getSrcUserId());
 		WsOutbound conn = WS.getWsOutbound();

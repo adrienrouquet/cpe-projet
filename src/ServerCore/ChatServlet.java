@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Bean.MsgManager;
+
 
 @WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
@@ -59,6 +61,16 @@ public class ChatServlet extends HttpServlet {
 			case "openChat":
 			{    		
 				cr.setUrl("chatWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+	    	}break;
+	    	//Action: on est sur la chatWindow et on veut retourner a la contactWindow. Il faut donc vider le dstUserId du msgManager
+			case "backToContactView":
+			{    		
+				cr.setAction("DefaultView");
+				cr.setUrl("contactWindow.jsp");
+				mm.setDstUserId(0);
+				System.out.println("test");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    	}break;

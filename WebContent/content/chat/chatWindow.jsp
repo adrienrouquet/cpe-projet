@@ -13,7 +13,7 @@
 	<div class="header">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
 		<input type="hidden" name="action" value="<%= chatRouterBean.getAction() %>" />
-		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','view');submitForm('backForm');"/>	
+		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
 		</form>	
 		<div class="contactHeader">
 			<div class="contactName">

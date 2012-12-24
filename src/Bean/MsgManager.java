@@ -62,6 +62,7 @@ public class MsgManager implements Serializable{
 	}
 	public Boolean setMessageDelivered(int msgId)
 	{
+		//Envoi d'un SSE a l'utilisateur distant si il est connecte
 		SSE.setMessageDelivered(_dstUserId, msgId);
 		return _dbmt.setMessageDelivered(msgId);
 	}
