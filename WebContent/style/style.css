@@ -53,6 +53,8 @@ div.login{
 }
 
 div.contactWrapper{
+	color: rgb(20,20,20);
+	
 	text-align: left;
 	border: 2px;
 	border-style: groove;	
@@ -65,6 +67,11 @@ div.contactWrapper:nth-child(odd){
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7FFFFFFF', EndColorStr='#7FFFFFFF');
 }
 
+div.contactHasUnreadMessages{
+	color: rgb(20,20,220);
+}
+
+
 div.contactWrapper:hover *{
 	cursor: pointer;
 	background-color: rgba(180,180,180,0.8);
@@ -73,7 +80,7 @@ div.contactWrapper:hover *{
 
 div.contactName{
 	text-size: 1.2em;
-	font-weight: bold;	
+	font-weight: bold;
 }
 
 input {

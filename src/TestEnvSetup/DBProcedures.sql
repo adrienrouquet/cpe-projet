@@ -282,3 +282,21 @@ BEGIN
    
 END //
 DELIMITER ;
+
+/*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS getNonDeliveredMessageCount;
+DELIMITER //
+CREATE PROCEDURE getNonDeliveredMessageCount 
+(
+   IN pSrcUserId INT,
+   IN pDstUserId INT
+)
+BEGIN
+
+   	SELECT COUNT(*) AS count FROM messages
+   	WHERE
+   	srcUserId = pDstUserId AND dstUserId = pSrcUserId AND isDelivered = false
+    ;
+   
+END //
+DELIMITER ;

@@ -78,6 +78,32 @@ public class DBMsgToolbox extends DBToolbox {
 		return 0;
 	}
 	
+	public int getNonDeliveredMessageCount(int srcUserId, int dstUserId)
+	{
+		Connection conn = getConn();
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			cs = conn.prepareCall("{CALL getNonDeliveredMessageCount(?,?)}");
+			cs.setInt("pSrcUserId", srcUserId);
+			cs.setInt("pDstUserId", dstUserId);		
+			
+			rs = cs.executeQuery();
+			while(rs.next())
+			{
+				return rs.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error in getNonDeliveredMessageCount:" +e.getMessage());
+		}
+		closeConn(conn);
+		
+		return 0;
+	}
+	
 	public Boolean setMessageDelivered(int msgId)
 	{
 		Connection conn = getConn();

@@ -5,6 +5,7 @@
 <%@page import="Bean.User"%>
 
 <jsp:useBean id="userBean" class="Bean.User" scope="session" />
+<jsp:useBean id="msgManagerBean" class="Bean.MsgManager" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
 	<div class="content">			
 		<div class="header">
@@ -27,10 +28,12 @@
 					{
 						for(User user : users)
 						{
+							int unreadMessageCount = msgManagerBean.getNonDeliveredMessageCount(user.getId()); 
 				%>
-				<div class="contactWrapper" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
-					<div class="contactName">
+				<div class="contactWrapper <% if( unreadMessageCount > 0 ) { out.print("contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
+					<div class="contactName ">
 						<%= user.getFirstName() %> <%= user.getLastName() %>
+						<% if( unreadMessageCount > 0 ) { out.print("( " + unreadMessageCount + " )");}%>
 					</div>
 					<div class="contactStatus">
 						Last login: <%= user.getLastLoginDate().toString() %>

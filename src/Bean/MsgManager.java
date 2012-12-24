@@ -56,6 +56,10 @@ public class MsgManager implements Serializable{
 	{
 		return _dbmt.sendMessage(_srcUserId, _dstUserId, content);
 	}
+	public int getNonDeliveredMessageCount(int dstUserId)
+	{
+		return _dbmt.getNonDeliveredMessageCount(_srcUserId, dstUserId);
+	}
 	public Boolean setMessageDelivered(int msgId)
 	{
 		SSE.setMessageDelivered(_dstUserId, msgId);
