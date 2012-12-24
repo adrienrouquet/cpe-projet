@@ -22,7 +22,7 @@ public class DBMsgToolbox extends DBToolbox {
 		_dbHandler = new DBHandler(_dbName);
 	}
 	
-	public ArrayList<Msg> getMessages(Integer userId)
+	public ArrayList<Msg> getMessages(int srcUserId, int dstUserId)
 	{
 		Connection conn 		= getConn();
 		CallableStatement cs 	= null;
@@ -31,8 +31,9 @@ public class DBMsgToolbox extends DBToolbox {
 		
 		
 		try {
-			cs = conn.prepareCall("{CALL getMessages(?)}");
-			cs.setInt("pUserId", userId);			
+			cs = conn.prepareCall("{CALL getMessages(?,?)}");
+			cs.setInt("pSrcUserId", srcUserId);
+			cs.setInt("pDstUserId", dstUserId);
 			rs = cs.executeQuery();		
 		
 			messages = new ArrayList<Msg>();
@@ -49,28 +50,32 @@ public class DBMsgToolbox extends DBToolbox {
 		return messages;
 	}
 	
-	public Boolean sendMessage(int srcUserId, int dstUserId, String content)
+	public int sendMessage(int srcUserId, int dstUserId, String content)
 	{
 		Connection conn = getConn();
 		CallableStatement cs = null;
-		Boolean result = null;
+		ResultSet rs = null;
 		
 		
 		try {
-			cs = conn.prepareCall("{CALL getMessages(?)}");
+			cs = conn.prepareCall("{CALL sendMessage(?,?,?,?)}");
 			cs.setInt("pSrcUserId", srcUserId);
 			cs.setInt("pDstUserId", dstUserId);
 			cs.setInt("pContentTypeId", 1);
 			cs.setString("pContent", content);			
-			result = cs.execute();
+			
+			rs = cs.executeQuery();
+			while(rs.next())
+			{
+				return rs.getInt("msgId");
+			}
 			
 		} catch (SQLException e) {
 			System.out.println("Error in sendMessage:" +e.getMessage());
 		}
-		
 		closeConn(conn);
 		
-		return result;
+		return 0;
 	}
 
 	

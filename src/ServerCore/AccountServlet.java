@@ -87,6 +87,7 @@ public class AccountServlet extends HttpServlet {
 							session.setAttribute("userBean", user);
 							session.setAttribute("chatRouterBean", new Bean.ChatRouter());
 							session.setAttribute("msgManagerBean", new Bean.MsgManager(user.getId()));
+							System.out.println("AccountServlet: UserId " + user.getId() + " is now connected");
 							
 //							rd = req.getRequestDispatcher("ChatServlet");
 							res.sendRedirect("ChatServlet");

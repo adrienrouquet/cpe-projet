@@ -77,7 +77,7 @@ public class ChatServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		System.out.println("ChatServlet: Entering doGet");
+		System.out.println("User" + ((Bean.User)req.getSession(true).getAttribute("userBean")).getId() + ": Entering ChatServlet.doGet");
 		chatRouting(req, res);
 		
 	}

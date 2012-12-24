@@ -7,12 +7,12 @@ $(document).ready(function() {
 	
 	function JSONMessage() {
 		this.date = "";
-		this.message = "";
+		this.content = "";
 		
 		this.getJSON = function () {
 			return {
 				"date": this.date,
-				"message": this.message
+				"content": this.content
 			};
 		};
 		
@@ -26,7 +26,7 @@ $(document).ready(function() {
 			var obj = JSON.parse(jsonString);
 			
 			this.date = (obj["date"]!=undefined)?obj["date"]:"";
-			this.message = (obj["message"]!=undefined)?obj["message"]:"";
+			this.content = (obj["content"]!=undefined)?obj["content"]:"";
 		};
 	}
 	
@@ -42,8 +42,28 @@ $(document).ready(function() {
 		
 //		confirm("NEW MESSAGE: " + json.message + " @ " + json.date);
 		
-		var incomingMsg = _incomingMessage.clone();
-		write(incomingMsg, json);
+		if(json.hasOwnProperty(sentMsgId))
+		{
+			var incomingMsg = _incomingMessage.clone();		
+			write(incomingMsg, json);
+			doSendStatus(json.sentMsgId);			
+		}
+		if(json.hasOwnProperty(receivedMsgId))
+		{
+			var incomingMsg = _incomingMessage.clone();		
+			writeStatus(incomingMsg, json);
+		}
+		
+	}
+	
+	function doSendStatus(msgId)
+	{
+		var json = new JSONMessage();
+		
+		json.receivedMsgId = msgId;
+		
+		var message = json.stringify();
+		_websocket.send(message);
 	}
 	function onError(evt) {
 		console.log("ERROR: " + evt.data);
@@ -64,7 +84,7 @@ $(document).ready(function() {
 		hour = (hour>10?'':'0') + hour;
 		min = (min>10?'':'0') + min;
 		
-		return date + "/" + month + "/" + year + " @ " + hour + ":" + min;
+		return date + "/" + month + "/" + year + " at " + hour + ":" + min;
 	}
 	
 	function doSend() {
@@ -72,11 +92,11 @@ $(document).ready(function() {
 		var json = new JSONMessage();
 		
 		json.date = getDate();
-		json.message = $('#content').val();
+		json.content = $('#content').val();
 		$('#content').val("");
 		
 		var outgoingMsg = _outgoingMessage.clone();
-		outgoingMsg.find(".messageStatus").html('');
+		outgoingMsg.find(".messageStatus").html('X');
 		write(outgoingMsg, json);
 		
 		var message = json.stringify();
@@ -85,9 +105,14 @@ $(document).ready(function() {
 	}
 
 	function write(element, json) {
-		element.find(".messageContent").html(json.message);
+		element.find(".messageId").html(json.sentMsgId);
+		element.find(".messageContent").html(json.content);
 		element.find(".messageDateTime").html(json.date);
 		$('.messagesWrapper').append(element);
+	}
+	
+	function writeStatus(element, json) {
+		document.getElementById("msg"+json.receivedMsgId).appendChild(find(".messageStatus")).html("V");
 	}
 	
 	function init() {

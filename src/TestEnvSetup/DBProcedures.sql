@@ -101,15 +101,16 @@ DROP PROCEDURE IF EXISTS getMessages;
 DELIMITER //
 CREATE PROCEDURE getMessages
 (
-	IN pUserId INT
+	IN pSrcUserId INT,
+	IN pDstUserId INT
 )
 BEGIN
 
    	SELECT * FROM messages 
    	WHERE 
-   		srcUserId = pUserId 
+   		(srcUserId = pSrcUserId AND dstUserId = pDstUserId)
    	OR
-   		dstUserId = pUserId
+   		(dstUserId = pSrcUserId AND srcUserId = pDstUserId)
    	ORDER BY sentDate
    	;
    

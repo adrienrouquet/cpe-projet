@@ -1,4 +1,4 @@
-<div class="messageWrapper messageTo">
+<div class="messageWrapper messageTo" id="msg<%= request.getParameter("id") %>">
 	<div class="messageContent">
 		<%= request.getParameter("content") %>
 	</div>

@@ -34,37 +34,56 @@ public class Websocket extends MessageInbound{
 
 	@Override
 	protected void onTextMessage(CharBuffer data) throws IOException {
-		System.out.println("onTextMessage");
+		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering WebSocket.onTextMessage");
 		
 		String msg = data.toString();
-		System.out.println(msg);
-
-		JSONObject json = (JSONObject) JSONValue.parse(msg);
+		int msgId = 0;
 		
-		String jsonText = json.toJSONString();
-		System.out.println(jsonText);
-
-//		_msgManager.sendMessage((String) json.get("message"));
+		JSONObject jsonSrc = (JSONObject) JSONValue.parse(msg);
 		
-		try {
-			System.out.println(_msgManager);
-			Websocket WS = WebsocketManager.getWebsocket(_msgManager.getDstUserId());
-			WsOutbound conn = WS.getWsOutbound();
-			conn.writeTextMessage(CharBuffer.wrap(jsonText));
-		} catch (Exception e) {
-			System.err.println("ERROR: user is probably disconnected: " + e.getMessage());
+		JSONObject jsonDst = (JSONObject) jsonSrc.clone();		
+		
+		System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg received: " + jsonSrc.toJSONString());
+
+		//Si le message est un accuse de reception
+		if(jsonSrc.get("receivedMsgId") != null)
+		{
+			
 		}
+		else
+		{
+			msgId = _msgManager.sendMessage((String) jsonSrc.get("content"));
+			jsonDst.put("sentMsgId", msgId);
+		}
+		
+		
+		//System.out.println(_msgManager);
+		Websocket WS = WebsocketManager.getWebsocket(_msgManager.getDstUserId());
+		if(WS != null)
+		{
+			WsOutbound conn = WS.getWsOutbound();
+			
+			conn.writeTextMessage(CharBuffer.wrap(jsonDst.toJSONString()));
+			System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg sent: " + jsonDst.toJSONString());
+			conn.close(1, null);
+		}
+		else
+		{
+			System.out.println("User " + _msgManager.getSrcUserId() + " : Warning: dstUser "  + _msgManager.getDstUserId() + " is disconnected ");
+		}
+		
+		
 	}
 
 	
 	@Override
 	protected void onOpen(WsOutbound outbound) {
-		System.out.println("onOpen: " + this.getWsOutbound());
+		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering onOpen: " + this.getWsOutbound());
 	}
 	
 	@Override
 	protected void onClose(int status) {
-		System.out.println("onClose: " + this.getWsOutbound());
+		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering onClose: " + this.getWsOutbound());
 		Manager.WebsocketManager.delWebsocket(this);
 	}
 

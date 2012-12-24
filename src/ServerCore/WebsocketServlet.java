@@ -29,10 +29,10 @@ public class WebsocketServlet extends WebSocketServlet {
 
 	@Override
 	protected StreamInbound createWebSocketInbound(String arg0, HttpServletRequest req) {
-		System.out.println("createWebSocketInbound");
-		
 		HttpSession session = req.getSession(true);
 		Bean.User user = (Bean.User) session.getAttribute("userBean");
+		System.out.println("User" + user.getId() + ": Entering createWebSocketInbound");
+		
 		Bean.MsgManager msgManager = (Bean.MsgManager) session.getAttribute("msgManagerBean");
 		
 		Websocket websocket = _websocketManager.addWebsocket(msgManager);

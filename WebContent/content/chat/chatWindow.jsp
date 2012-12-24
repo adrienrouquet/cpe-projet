@@ -23,31 +23,33 @@
 	</div>
 	<div class="section">
 		<div id="messageForm">
-<!-- 			<form method="post" id="mainForm" name="mainForm" action="ChatServlet"> -->
+<!--  			<form method="post" id="mainForm" name="mainForm" action="ChatServlet"> -->
 				<input type="hidden" name="action" value="<%= chatRouterBean.getAction() %>" />
 				<div class="messagesWrapper">
 					<%
-						ArrayList<Msg> messages = msgManagerBean.getMessages(msgManagerBean.getDstUserId());
+						ArrayList<Msg> messages = msgManagerBean.getMessages(msgManagerBean.getSrcUserId(),msgManagerBean.getDstUserId());
 						for( Msg msg : messages)
 						{
 							if(msg.getSrcUserId() != userBean.getId())
 							{
 					%>
 					<jsp:include page="incomingMessage.jsp">
+						<jsp:param value='<%= msg.getId() %>' name='id'/>
 						<jsp:param value='<%= msg.getContent() %>' name='content'/>
 						<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
 					</jsp:include>
 					<%
 							}
 							else
-						{
+							{
 							String delivered = "";
-							if (msg.isDelivered().toString().equals(true))
-								delivered = "/";
+							if (msg.isDelivered())
+								delivered = "V";
 							else
 								delivered = "X";
 				%>
 				<jsp:include page="outgoingMessage.jsp">
+					<jsp:param value='<%= msg.getId() %>' name='id'/>
 					<jsp:param value='<%= msg.getContent() %>' name='content'/>
 					<jsp:param value='<%= delivered %>' name='messageStatus'/>
 					<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
@@ -68,7 +70,7 @@
 					</div>
 				</div>
 				
-<!-- 			</form> -->
+<!--  			</form> -->
 		</div>
 	</div>
 </div>

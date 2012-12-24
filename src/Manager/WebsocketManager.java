@@ -21,8 +21,7 @@ public class WebsocketManager {
 		
 		Websocket websocket = new Websocket(msgManager);
 		_websockets.add(websocket);
-		
-		System.out.println(_websockets);
+		System.out.println("User" + websocket.getMsgManager().getSrcUserId() + ": webSocket Added");
 		return websocket;
 	}
 	
@@ -30,13 +29,13 @@ public class WebsocketManager {
 //		Integer userId = websocket.getMsgManager().getSrcUserId();
 		// TODO FOREACH user.id == userId, user.websocket = null;
 		_websockets.remove(websocket);
-		System.out.println(_websockets);
+		System.out.println("User" + websocket.getMsgManager().getSrcUserId() + ": webSocket Deleted");
 	}
 	
 	public static Websocket getWebsocket(Integer userId) {
 		
 		for (Websocket websocket: _websockets) {
-			System.out.println(websocket.getMsgManager().getSrcUserId());
+			System.out.println("User" + websocket.getMsgManager().getSrcUserId() + ": Entering getWebSocket: DstUserId: " + websocket.getMsgManager().getDstUserId());
 			if (websocket.getMsgManager().getSrcUserId() == userId)
 				return websocket;
 		}

@@ -30,9 +30,9 @@ public class MsgManager implements Serializable{
 	};
 	
 
-	public ArrayList<Msg> getMessages(int id)
+	public ArrayList<Msg> getMessages(int srcUserId, int dstUserId)
 	{
-		return _dbmt.getMessages(id);
+		return _dbmt.getMessages(srcUserId, dstUserId);
 	}
 
 	public int getSrcUserId() {
@@ -51,9 +51,9 @@ public class MsgManager implements Serializable{
 	public void setDstUserId(int dstUserId) {
 		this._dstUserId = dstUserId;
 	}
-	public void sendMessage(String content)
+	public int sendMessage(String content)
 	{
-		_dbmt.sendMessage(_srcUserId, _dstUserId, content);
+		return _dbmt.sendMessage(_srcUserId, _dstUserId, content);
 	}
 	
 
