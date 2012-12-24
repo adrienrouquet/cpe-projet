@@ -1,40 +1,46 @@
 package Manager;
 
-import java.util.HashMap;
-
-import Bean.User;
+import java.util.ArrayList;
 import Class.Websocket;
 
 public class WebsocketManager {
 	
-	private static HashMap<Websocket, Bean.User> _websocketMap = new HashMap<Websocket, Bean.User>();
+	private static ArrayList<Websocket> _websockets = new ArrayList<Websocket>();
 	
-	private Integer _id = 0;
+//	private Integer _id = 0;
 
-	public HashMap<Websocket, User> getWebsocketMap() {
-		return _websocketMap;
+	public ArrayList<Websocket> getWebsockets() {
+		return _websockets;
 	}
 
-	public void setWebsocketMap(HashMap<Websocket, User> websocketMap) {
-		_websocketMap = websocketMap;
+	public void setWebsockets(ArrayList<Websocket> websockets) {
+		_websockets = websockets;
 	}
 	
-	public Websocket addWebsocket(Bean.User user, Bean.MsgManager msgManager) {
+	public Websocket addWebsocket(Bean.MsgManager msgManager) {
 		
-		Integer id = ++_id;
-		Websocket websocket = new Websocket(id, msgManager);
-		_websocketMap.put(websocket, user);
+		Websocket websocket = new Websocket(msgManager);
+		_websockets.add(websocket);
 		
+		System.out.println(_websockets);
 		return websocket;
 	}
 	
 	public static void delWebsocket(Websocket websocket) {
-		User user = _websocketMap.get(websocket);
-		user.delWebsocket(websocket.getId());
-		_websocketMap.remove(websocket);
+//		Integer userId = websocket.getMsgManager().getSrcUserId();
+		// TODO FOREACH user.id == userId, user.websocket = null;
+		_websockets.remove(websocket);
+		System.out.println(_websockets);
 	}
 	
-//	public static Websocket getWebsocket(Bean.User user) {
-//		return _websocketMap.get(user);
-//	}
+	public static Websocket getWebsocket(Integer userId) {
+		
+		for (Websocket websocket: _websockets) {
+			System.out.println(websocket.getMsgManager().getSrcUserId());
+			if (websocket.getMsgManager().getSrcUserId() == userId)
+				return websocket;
+		}
+		
+		return null;
+	}
 }

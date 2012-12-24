@@ -1,8 +1,6 @@
 cpe-projet TODO
 ===============
 
-23/12/2012@0201 - Adrien
-GITHUB DOWN - RISQUE DE CONFLITS SUR LES PROCHAINS PUSH/PULL
 
 ===============
 FINISHED
@@ -77,7 +75,13 @@ Afficher message dans la page (append after last div?), ou preparer un div en av
 Envoyer la websocket et ensuite le MsgManager enverra le message.
 --23/12/2012@0203 - Adrien
 --Il manque le send du msgManager: pour l'instant le sender = receiver
---@ADRIEN: IM ON IT
+----24/12/2012@0132 - Adrien
+----Le sender n'est plus le receiver: je peux etablir une communication entre 2 contacts.
+----PROBLEME: On recoit les msg quelque soit leur sender si on est sur une page chatWindow (meme si
+----la chatWindow ouverte n'est pas celle de l'emeteur...) => Prevoir systeme de notification
+----("Vous avez un message de ...") sauf si la chatWindow ouverte est celle de l'emeteur de msg.
+----PROBLEME: Plantage lorsqu'on utilise MsgManager.sendMessage()...
+
 
 23/12/2012 - Adrien pour tout le monde:
 Est-il utile de garder 2 routers (ChatRouter et AccountRouter) qui ont la même fonction ?
@@ -94,4 +98,5 @@ Probleme d'interface: je suis en chat avec Loic et je recois un message d'Henry:
 notification ? Quelles infos doivent etre ajouté au message ? Intéret d'une URL qui renvoie vers la
 fenetre de chat associer au contact qui m'envoie le nouveau message ?
 
- 
+24/12/2012@0144 - Adrien
+pas de liste des utilisateurs connectés ?? utilisation de Usermanager pour ca ?

@@ -2,6 +2,8 @@ $(document).ready(function() {
 	
 	var _wsUri = "ws://" + window.location.host + "/cpe-projet/WebsocketServlet";
 	var _websocket = null;
+	var _incomingMessage = null;
+	var _outgoingMessage = null;
 	
 	function JSONMessage() {
 		this.date = "";
@@ -29,10 +31,10 @@ $(document).ready(function() {
 	}
 	
 	function onOpen(evt) {
-		alert("CONNECTED");
+//		alert("CONNECTED");
 	}
 	function onClose(evt) {
-		alert("DISCONNECTED");
+//		alert("DISCONNECTED");
 	}
 	function onMessage(evt) {
 		var json = new JSONMessage();
@@ -40,14 +42,8 @@ $(document).ready(function() {
 		
 //		confirm("NEW MESSAGE: " + json.message + " @ " + json.date);
 		
-		$.get('content/chat/incomingMessage.jsp', function(data) {
-			var element = $(data);
-			
-			element.find(".messageContent").html(json.message);
-			element.find(".messageDateTime").html(json.date);
-			
-			$('#messageForm').append(element);
-		});		
+		var incomingMsg = _incomingMessage.clone();
+		write(incomingMsg, json);
 	}
 	function onError(evt) {
 		console.log("ERROR: " + evt.data);
@@ -79,21 +75,32 @@ $(document).ready(function() {
 		json.message = $('#content').val();
 		$('#content').val("");
 		
+		var outgoingMsg = _outgoingMessage.clone();
+		outgoingMsg.find(".messageStatus").html('');
+		write(outgoingMsg, json);
+		
 		var message = json.stringify();
-		
-		$.get('content/chat/outgoingMessage.jsp', function(data) {
-			var element = $(data);
-			element.find(".messageContent").html(json.message);
-			element.find(".messageDateTime").html(json.date);
-			element.find(".messageStatus").html('');
-			$('#messageForm').append(element);
-		});
-		
 		_websocket.send(message);
 		
 	}
 
+	function write(element, json) {
+		element.find(".messageContent").html(json.message);
+		element.find(".messageDateTime").html(json.date);
+		$('.messagesWrapper').append(element);
+	}
+	
 	function init() {
+		
+		$.get('content/chat/outgoingMessage.jsp', function(data) {
+			_outgoingMessage = $(data);
+			element.find(".messageStatus").html('');
+		});
+		
+		$.get('content/chat/incomingMessage.jsp', function(data) {
+			_incomingMessage = $(data);
+		});
+		
 		var WS = WebSocket || MozWebSocket;
 		websocket = new WS(_wsUri);
 		websocket.onopen = function(evt) { onOpen(evt); };

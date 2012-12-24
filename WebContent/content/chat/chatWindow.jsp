@@ -23,7 +23,7 @@
 	</div>
 	<div class="section">
 		<div id="messageForm">
-			<form method="post" id="mainForm" name="mainForm" action="ChatServlet">
+<!-- 			<form method="post" id="mainForm" name="mainForm" action="ChatServlet"> -->
 				<input type="hidden" name="action" value="<%= chatRouterBean.getAction() %>" />
 				<div class="messagesWrapper">
 					<%
@@ -63,12 +63,12 @@
 						<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
 					</div>
 					<div class="newMessageSend">
-						<input type="submit" class="button" value="Send"/>
+<!-- 						<input type="submit" class="button" value="Send"/> -->
+						<button class="button" onclick='doSend()'>Send</button>
 					</div>
 				</div>
 				
-			</form>
+<!-- 			</form> -->
 		</div>
 	</div>
-	
 </div>

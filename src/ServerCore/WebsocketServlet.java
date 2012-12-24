@@ -35,10 +35,9 @@ public class WebsocketServlet extends WebSocketServlet {
 		Bean.User user = (Bean.User) session.getAttribute("userBean");
 		Bean.MsgManager msgManager = (Bean.MsgManager) session.getAttribute("msgManagerBean");
 		
-		Websocket websocket = _websocketManager.addWebsocket(user, msgManager);
-		user.addWebSocket(websocket.getId());
+		Websocket websocket = _websocketManager.addWebsocket(msgManager);
+		user.setWebsocket(websocket);
 		
-		System.out.println(_websocketManager.getWebsocketMap());
 		return websocket;
 	}
 	
