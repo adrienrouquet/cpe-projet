@@ -263,3 +263,22 @@ BEGIN
    	;   
 END //
 DELIMITER ;
+
+/*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS setMessageDelivered;
+DELIMITER //
+CREATE PROCEDURE setMessageDelivered
+(
+	IN pMsgId INT
+)
+BEGIN
+
+   	UPDATE messages 
+   	SET
+   		isDelivered = true
+   	WHERE
+   		id = pMsgId
+   	;
+   
+END //
+DELIMITER ;

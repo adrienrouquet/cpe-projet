@@ -77,6 +77,28 @@ public class DBMsgToolbox extends DBToolbox {
 		
 		return 0;
 	}
+	
+	public Boolean setMessageDelivered(int msgId)
+	{
+		Connection conn = getConn();
+		CallableStatement cs = null;
+		Boolean rs = false;
+		
+		
+		try {
+			cs = conn.prepareCall("{CALL setMessageDelivered(?)}");
+			cs.setInt("pMsgId", msgId);			
+			
+			rs = cs.execute();
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Error in setMessageDelivered:" +e.getMessage());
+		}
+		closeConn(conn);
+		
+		return rs;
+	}
 
 	
 

@@ -32,6 +32,10 @@
 						{
 							if(msg.getSrcUserId() != userBean.getId())
 							{
+								if (!msg.isDelivered())
+								{
+									msgManagerBean.setMessageDelivered(msg.getId());
+								}
 					%>
 					<jsp:include page="incomingMessage.jsp">
 						<jsp:param value='<%= msg.getId() %>' name='id'/>
@@ -65,7 +69,6 @@
 						<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
 					</div>
 					<div class="newMessageSend">
-<!-- 						<input type="submit" class="button" value="Send"/> -->
 						<button class="button" onclick='doSend()'>Send</button>
 					</div>
 				</div>

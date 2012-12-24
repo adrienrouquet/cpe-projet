@@ -6,6 +6,7 @@ CALL addUser("john","john","john.doe@gmail.com","0606060606","John","Doe");
 CALL addUser("jane","jane","jane.doe@gmail.com","0606060606","Jane","Doe");
 
 /*---------------------------------------------------*/
+CALL addContact(2,2);
 CALL addContact(2,3);
 CALL addContact(2,4);
 CALL addContact(2,5);

@@ -8,11 +8,16 @@ $(document).ready(function() {
 	function JSONMessage() {
 		this.date = "";
 		this.content = "";
+		this.sentMsgId = "null";
+		this.deliveredMsgId = "null";
 		
 		this.getJSON = function () {
 			return {
 				"date": this.date,
-				"content": this.content
+				"content": this.content,
+				"sentMsgId": this.sentMsgId,
+				"deliveredMsgId": this.deliveredMsgId
+				
 			};
 		};
 		
@@ -27,6 +32,8 @@ $(document).ready(function() {
 			
 			this.date = (obj["date"]!=undefined)?obj["date"]:"";
 			this.content = (obj["content"]!=undefined)?obj["content"]:"";
+			this.sentMsgId = (obj["sentMsgId"]!=undefined)?obj["sentMsgId"]:"";
+			this.deliveredMsgId = (obj["deliveredMsgId"]!=undefined)?obj["deliveredMsgId"]:"";
 		};
 	}
 	
@@ -42,16 +49,17 @@ $(document).ready(function() {
 		
 //		confirm("NEW MESSAGE: " + json.message + " @ " + json.date);
 		
-		if(json.hasOwnProperty(sentMsgId))
+		if(json.sentMsgId != "null")
 		{
+			console.log("Has sentMsgId: " + json.sentMsgId);
 			var incomingMsg = _incomingMessage.clone();		
 			write(incomingMsg, json);
-			doSendStatus(json.sentMsgId);			
+			doSendStatus(json.sentMsgId);
 		}
-		if(json.hasOwnProperty(receivedMsgId))
+		if(json.deliveredMsgId != "null")
 		{
-			var incomingMsg = _incomingMessage.clone();		
-			writeStatus(incomingMsg, json);
+			console.log("Has deliveredMsgId: " + json.deliveredMsgId);
+			writeStatus(json.deliveredMsgId);
 		}
 		
 	}
@@ -60,11 +68,12 @@ $(document).ready(function() {
 	{
 		var json = new JSONMessage();
 		
-		json.receivedMsgId = msgId;
+		json.deliveredMsgId = msgId;
 		
 		var message = json.stringify();
 		_websocket.send(message);
 	}
+	
 	function onError(evt) {
 		console.log("ERROR: " + evt.data);
 	}
@@ -105,21 +114,31 @@ $(document).ready(function() {
 	}
 
 	function write(element, json) {
-		element.find(".messageId").html(json.sentMsgId);
+		
 		element.find(".messageContent").html(json.content);
 		element.find(".messageDateTime").html(json.date);
 		$('.messagesWrapper').append(element);
+		document.getElementById("msgnull").id = "msg"+json.sentMsgId;
+		document.getElementById("msgContentnull").id = "msgContent"+json.sentMsgId;
+		document.getElementById("msgDateTimenull").id = "msgDateTime"+json.sentMsgId;
 	}
 	
-	function writeStatus(element, json) {
-		document.getElementById("msg"+json.receivedMsgId).appendChild(find(".messageStatus")).html("V");
+	function writeStatus(deliveredMsgId) {
+		console.log("Writestatus msg"+deliveredMsgId);
+		
+		document.getElementById("msgStatusnull").innerHTML = 'V';
+		document.getElementById("msgnull").id = "msg"+deliveredMsgId;
+		document.getElementById("msgContentnull").id = "msgContent"+deliveredMsgId;
+		document.getElementById("msgDateTimenull").id = "msgDateTime"+deliveredMsgId;
+		document.getElementById("msgStatusnull").id = "msgStatus"+deliveredMsgId;
+				
 	}
 	
 	function init() {
 		
 		$.get('content/chat/outgoingMessage.jsp', function(data) {
 			_outgoingMessage = $(data);
-			element.find(".messageStatus").html('');
+			_outgoingMessage.find(".messageStatus").html('');
 		});
 		
 		$.get('content/chat/incomingMessage.jsp', function(data) {

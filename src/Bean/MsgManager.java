@@ -55,6 +55,9 @@ public class MsgManager implements Serializable{
 	{
 		return _dbmt.sendMessage(_srcUserId, _dstUserId, content);
 	}
-	
+	public Boolean setMessageDelivered(int msgId)
+	{
+		return _dbmt.setMessageDelivered(msgId);
+	}
 
 }

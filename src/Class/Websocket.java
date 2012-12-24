@@ -37,7 +37,7 @@ public class Websocket extends MessageInbound{
 		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering WebSocket.onTextMessage");
 		
 		String msg = data.toString();
-		int msgId = 0;
+		Integer msgId = 0;
 		
 		JSONObject jsonSrc = (JSONObject) JSONValue.parse(msg);
 		
@@ -46,14 +46,14 @@ public class Websocket extends MessageInbound{
 		System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg received: " + jsonSrc.toJSONString());
 
 		//Si le message est un accuse de reception
-		if(jsonSrc.get("receivedMsgId") != null)
+		if(!jsonSrc.get("deliveredMsgId").equals("null")) 
 		{
-			
+			_msgManager.setMessageDelivered(Integer.parseInt((String)jsonSrc.get("deliveredMsgId")));
 		}
 		else
 		{
 			msgId = _msgManager.sendMessage((String) jsonSrc.get("content"));
-			jsonDst.put("sentMsgId", msgId);
+			jsonDst.put("sentMsgId",  msgId.toString());
 		}
 		
 		
