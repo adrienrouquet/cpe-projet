@@ -40,12 +40,17 @@ public class SSEServlet extends HttpServlet {
 	        Bean.User user = (Bean.User) request.getSession().getAttribute("userBean");
 	        
 	        out.print("retry: 5000\n");
+	        out.print("event: newMessageReceived\n");
+	        out.print("data: " + SSE.newMessagesReceivedToJSON(user.getId()) + "\n\n");
+	        out.print("retry: 5000\n");
 	        out.print("event: messageDelivered\n");
 	        out.print("data: " + SSE.messagesDeliveredToJSON(user.getId()) + "\n\n");
+	        
 	        out.flush();
 	        out.close();
 //	        
 	        SSE.deleteUserMessagesDelivered(user.getId());
+	        SSE.deleteUserNewMessagesReceived(user.getId());
 	      }
 	      catch (IOException e) {
 	        e.printStackTrace();

@@ -129,25 +129,34 @@ $(document).ready(function() {
 
 	function writeNewMessage(element, json) {
 		console.log("WriteNewMessage ");
-		element.find(".messageContent").html(json.content);
-		element.find(".messageDateTime").html(json.date);
-		$('.messagesWrapper').append(element);
-		document.getElementById("msgnull").id = "msg"+json.sentMsgId;
-		document.getElementById("msgContentnull").id = "msgContent"+json.sentMsgId;
-		document.getElementById("msgDateTimenull").id = "msgDateTime"+json.sentMsgId;
+		if(document.getElementById("messageForm") != null)
+		{
+			element.find(".messageContent").html(json.content);
+			element.find(".messageDateTime").html(json.date);
+			$('.messagesWrapper').append(element);
+			document.getElementById("msgnull").id = "msg"+json.sentMsgId;
+			document.getElementById("msgContentnull").id = "msgContent"+json.sentMsgId;
+			document.getElementById("msgDateTimenull").id = "msgDateTime"+json.sentMsgId;
+		}
 	}
 	
 	function writeUpdateMessageId(msgId) {
-		console.log("WriteUpdateMessageId msg"+msgId);
-		document.getElementById("msgnull").id = "msg"+msgId;
-		document.getElementById("msgContentnull").id = "msgContent"+msgId;
-		document.getElementById("msgDateTimenull").id = "msgDateTime"+msgId;
-		document.getElementById("msgStatusnull").id = "msgStatus"+msgId;
+		if(document.getElementById("messageForm") != null)
+		{
+			console.log("WriteUpdateMessageId msg"+msgId);
+			document.getElementById("msgnull").id = "msg"+msgId;
+			document.getElementById("msgContentnull").id = "msgContent"+msgId;
+			document.getElementById("msgDateTimenull").id = "msgDateTime"+msgId;
+			document.getElementById("msgStatusnull").id = "msgStatus"+msgId;
+		}
 	}
 	
 	function writeUpdateStatus(msgId) {
-		console.log("WriteUpdateStatus msg"+msgId);
-		document.getElementById("msgStatus"+msgId).innerHTML = 'V';
+		if(document.getElementById("messageForm") != null)
+		{
+			console.log("WriteUpdateStatus msg"+msgId);
+			document.getElementById("msgStatus"+msgId).innerHTML = 'V';
+		}
 	}
 	
 	function init() {

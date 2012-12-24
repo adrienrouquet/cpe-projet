@@ -30,10 +30,21 @@
 						{
 							int unreadMessageCount = msgManagerBean.getNonDeliveredMessageCount(user.getId()); 
 				%>
-				<div class="contactWrapper <% if( unreadMessageCount > 0 ) { out.print("contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
-					<div class="contactName ">
+				<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
+				
+					<div class="contactName">
 						<%= user.getFirstName() %> <%= user.getLastName() %>
-						<% if( unreadMessageCount > 0 ) { out.print("( " + unreadMessageCount + " )");}%>
+						<% 
+							String unreadMessageStyle = "display: none;";
+							if( unreadMessageCount > 0 ) 
+							{
+								unreadMessageStyle = "display: inline;";
+							}
+						%>
+						<span id="contactUnreadMessageWrapper<%= user.getId() %>" style="<%= unreadMessageStyle %>">
+							(<span id="contactUnreadMessageCount<%= user.getId() %>"><%= unreadMessageCount %></span>)
+						</span>
+						
 					</div>
 					<div class="contactStatus">
 						Last login: <%= user.getLastLoginDate().toString() %>

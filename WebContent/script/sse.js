@@ -5,16 +5,28 @@ $(document).ready(function() {
 		console.log("LOADED ONCE");
 		if (window.EventSource) 
 		{
-		var eventSource = new EventSource("http://" + window.location.host + "/cpe-projet/SSEServlet");
-		eventSource.addEventListener('messageDelivered', function (e) {
-		var json = new JSONMessage();
-		json.parse(e.data);
-		for (var id in json.msgId)
-		{
-		  writeStatus(json.msgId[id]);
-		}
-		
-		});
+			var eventSource = new EventSource("http://" + window.location.host + "/cpe-projet/SSEServlet");
+			//Event messageDelivered
+			eventSource.addEventListener('messageDelivered', function (e) {
+				var json = new JSONMessageDelivered();
+				json.parse(e.data);
+				for (var id in json.msgId)
+				{
+					writeStatus(json.msgId[id]);
+				}
+			});
+			
+			//Event newMessage
+			eventSource.addEventListener('newMessageReceived', function (e) {
+				var json = new JSONNewMessageReceived();
+				json.parse(e.data);
+				for (var id in json.srcUserId)
+				{
+					writeUpdateCount(json.srcUserId[id]);
+				}
+			});
+			
+			
 		}
 		else 
 		{
@@ -25,11 +37,32 @@ $(document).ready(function() {
 	
 	function writeStatus(deliveredMsgId) {
 		console.log("Writestatus msg"+deliveredMsgId);
-		document.getElementById("msgStatus"+deliveredMsgId).innerHTML = 'V';
+		var msgStatus = document.getElementById("msgStatus"+deliveredMsgId);
+		if(msgStatus != null)
+			msgStatus.innerHTML = 'V';
+	}
+	
+	function writeUpdateCount(srcUserId) {
+		console.log("WriteUpdateCount user"+srcUserId);
+		var contactDiv = document.getElementById("contactWrapper"+srcUserId);
+		if(contactDiv)
+		{	
+			contactDiv.className = 'contactWrapper contactHasUnreadMessages';
+		}
+		var unreadMessageCountSpan = document.getElementById("contactUnreadMessageCount"+srcUserId);
+		if(unreadMessageCountSpan)
+		{
+			unreadMessageCountSpan.innerHTML= parseInt(unreadMessageCountSpan.innerHTML) + 1;
+		}
+		var unreadMessageWrapper = document.getElementById("contactUnreadMessageWrapper"+srcUserId);
+		if(unreadMessageWrapper)
+		{
+			unreadMessageWrapper.style.display = "inline";
+		}
 	}
 	
 	
-	function JSONMessage() {
+	function JSONMessageDelivered() {
 		this.msgId = "";
 		
 		this.getJSON = function () {
@@ -51,6 +84,27 @@ $(document).ready(function() {
 		};
 	}
 	
+	function JSONNewMessageReceived() {
+		this.srcUserId = "";
+		
+		this.getJSON = function () {
+			return {
+				"srcUserId": this.srcUserId				
+			};
+		};
+		
+		this.stringify = function() {
+			return JSON.stringify(this.getJSON());
+		};
+		
+		this.parse = function(jsonString) {
+			console.log(jsonString);
+			
+			var obj = JSON.parse(jsonString);
+			
+			this.srcUserId = (obj["srcUserId"]!=undefined)?obj["srcUserId"]:"";
+		};
+	}
 	
 	
 

@@ -36,7 +36,7 @@ public class WebsocketManager {
 		
 		for (Websocket websocket: _websockets) {
 			System.out.println("Browsing webSockets to get User" + dstUserId +"'s webSocket");
-			if (websocket.getMsgManager().getSrcUserId() == dstUserId)
+			if (websocket.getMsgManager().getSrcUserId() == dstUserId && websocket.getMsgManager().getDstUserId() != 0)
 			{
 				System.out.println("Found User" + dstUserId +"'s webSocket: interacting with User" + websocket.getMsgManager().getDstUserId());
 				return websocket;

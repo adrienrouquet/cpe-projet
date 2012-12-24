@@ -56,8 +56,8 @@ public class Websocket extends MessageInbound{
 		{			
 			msgId = _msgManager.sendMessage((String) jsonSrc.get("content"));			
 			jsonDst.put("newMsgId",  msgId.toString());
+			SSE.setNewMessageReceived(_msgManager.getSrcUserId(), _msgManager.getDstUserId());
 			System.out.println("User" + _msgManager.getSrcUserId() + ": added message to DB");
-			
 		}
 		
 		
