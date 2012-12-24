@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import Class.Msg;
+import Class.SSE;
 import DB.DBMsgToolbox;
 
 
@@ -57,6 +58,7 @@ public class MsgManager implements Serializable{
 	}
 	public Boolean setMessageDelivered(int msgId)
 	{
+		SSE.setMessageDelivered(_dstUserId, msgId);
 		return _dbmt.setMessageDelivered(msgId);
 	}
 

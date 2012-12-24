@@ -5,8 +5,13 @@
 <%@page import="Bean.User"%>
 
 <jsp:useBean id="userBean" class="Bean.User" scope="session" />
+<jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
 	<div class="content">			
 		<div class="header">
+		<form method="post" id="logoutForm" name="logoutForm" action="AccountServlet">
+		<input type="hidden" name="action" value="logout" />
+		<input type="button" class="logout" value="Logout" onclick="submitForm('logoutForm');"/>	
+		</form>	
 			<h1>Super Messenger</h1>
 		</div>
 		<div id="contactForm">
@@ -23,7 +28,7 @@
 						for(User user : users)
 						{
 				%>
-				<div class="contactWrapper" onclick="setValue('action','openChat');setValue('contactId','<%= user.getId() %>');submitForm();">
+				<div class="contactWrapper" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
 					<div class="contactName">
 						<%= user.getFirstName() %> <%= user.getLastName() %>
 					</div>

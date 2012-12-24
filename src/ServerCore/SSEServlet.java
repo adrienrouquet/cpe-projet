@@ -1,0 +1,65 @@
+package ServerCore;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import Class.SSE;
+
+/**
+ * Servlet implementation class SSEServlet
+ */
+@WebServlet("/SSEServlet")
+public class SSEServlet extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
+	
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SSEServlet() {
+        super();
+        
+        // TODO Auto-generated constructor stub
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	    try {
+	        response.setContentType("text/event-stream; charset=utf-8;");
+	
+	        PrintWriter out = response.getWriter();  
+
+	        Bean.User user = (Bean.User) request.getSession().getAttribute("userBean");
+	        
+	        out.print("retry: 5000\n");
+	        out.print("event: messageDelivered\n");
+	        out.print("data: " + SSE.messagesDeliveredToJSON(user.getId()) + "\n\n");
+	        out.flush();
+	        out.close();
+//	        
+	        SSE.deleteUserMessagesDelivered(user.getId());
+	      }
+	      catch (IOException e) {
+	        e.printStackTrace();
+	      }
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+	
+	
+
+}

@@ -8,6 +8,7 @@ $(document).ready(function() {
 	function JSONMessage() {
 		this.date = "";
 		this.content = "";
+		this.newMsgId = "null";
 		this.sentMsgId = "null";
 		this.deliveredMsgId = "null";
 		
@@ -15,6 +16,7 @@ $(document).ready(function() {
 			return {
 				"date": this.date,
 				"content": this.content,
+				"newMsgId": this.newMsgId,
 				"sentMsgId": this.sentMsgId,
 				"deliveredMsgId": this.deliveredMsgId
 				
@@ -32,6 +34,7 @@ $(document).ready(function() {
 			
 			this.date = (obj["date"]!=undefined)?obj["date"]:"";
 			this.content = (obj["content"]!=undefined)?obj["content"]:"";
+			this.newMsgId = (obj["newMsgId"]!=undefined)?obj["newMsgId"]:"";
 			this.sentMsgId = (obj["sentMsgId"]!=undefined)?obj["sentMsgId"]:"";
 			this.deliveredMsgId = (obj["deliveredMsgId"]!=undefined)?obj["deliveredMsgId"]:"";
 		};
@@ -47,24 +50,35 @@ $(document).ready(function() {
 		var json = new JSONMessage();
 		json.parse(evt.data);
 		
-//		confirm("NEW MESSAGE: " + json.message + " @ " + json.date);
-		
+		//Si on recoit un nouveau message
+		if(json.newMsgId != "null")
+		{
+			console.log("Has newMsgId: " + json.newMsgId);
+			var incomingMsg = _incomingMessage.clone();		
+			//Le destinataire ecrit le message dans sa page
+			writeNewMessage(incomingMsg, json);
+			//Il renvoit un accuse de reception
+			doSendDelivered(json.newMsgId);
+		}
+		//Si on recoit un id seul du message envoye
 		if(json.sentMsgId != "null")
 		{
 			console.log("Has sentMsgId: " + json.sentMsgId);
-			var incomingMsg = _incomingMessage.clone();		
-			write(incomingMsg, json);
-			doSendStatus(json.sentMsgId);
+			//L'emetteur du message complete les infos donnees par le serveur (msgId)
+			writeUpdateMessageId(json.sentMsgId);
 		}
+		//Si on recoit un accuse de reception
 		if(json.deliveredMsgId != "null")
 		{
 			console.log("Has deliveredMsgId: " + json.deliveredMsgId);
-			writeStatus(json.deliveredMsgId);
+			//L'emetteur du message change le statut de son message comme delivre
+			writeUpdateStatus(json.deliveredMsgId);
 		}
+		//
 		
 	}
 	
-	function doSendStatus(msgId)
+	function doSendDelivered(msgId)
 	{
 		var json = new JSONMessage();
 		
@@ -106,15 +120,15 @@ $(document).ready(function() {
 		
 		var outgoingMsg = _outgoingMessage.clone();
 		outgoingMsg.find(".messageStatus").html('X');
-		write(outgoingMsg, json);
+		writeNewMessage(outgoingMsg, json);
 		
 		var message = json.stringify();
 		_websocket.send(message);
 		
 	}
 
-	function write(element, json) {
-		
+	function writeNewMessage(element, json) {
+		console.log("WriteNewMessage ");
 		element.find(".messageContent").html(json.content);
 		element.find(".messageDateTime").html(json.date);
 		$('.messagesWrapper').append(element);
@@ -123,15 +137,17 @@ $(document).ready(function() {
 		document.getElementById("msgDateTimenull").id = "msgDateTime"+json.sentMsgId;
 	}
 	
-	function writeStatus(deliveredMsgId) {
-		console.log("Writestatus msg"+deliveredMsgId);
-		
-		document.getElementById("msgStatusnull").innerHTML = 'V';
-		document.getElementById("msgnull").id = "msg"+deliveredMsgId;
-		document.getElementById("msgContentnull").id = "msgContent"+deliveredMsgId;
-		document.getElementById("msgDateTimenull").id = "msgDateTime"+deliveredMsgId;
-		document.getElementById("msgStatusnull").id = "msgStatus"+deliveredMsgId;
-				
+	function writeUpdateMessageId(msgId) {
+		console.log("WriteUpdateMessageId msg"+msgId);
+		document.getElementById("msgnull").id = "msg"+msgId;
+		document.getElementById("msgContentnull").id = "msgContent"+msgId;
+		document.getElementById("msgDateTimenull").id = "msgDateTime"+msgId;
+		document.getElementById("msgStatusnull").id = "msgStatus"+msgId;
+	}
+	
+	function writeUpdateStatus(msgId) {
+		console.log("WriteUpdateStatus msg"+msgId);
+		document.getElementById("msgStatus"+msgId).innerHTML = 'V';
 	}
 	
 	function init() {

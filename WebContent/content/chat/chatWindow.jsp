@@ -11,7 +11,10 @@
 
 <div class="content">
 	<div class="header">
-		<input type="button" class="back" value="Back" onclick="setValue('action','view');submitForm();"/>		
+		<form method="post" id="backForm" name="backForm" action="ChatServlet">
+		<input type="hidden" name="action" value="<%= chatRouterBean.getAction() %>" />
+		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','view');submitForm('backForm');"/>	
+		</form>	
 		<div class="contactHeader">
 			<div class="contactName">
 				<%= UserManager.getName(msgManagerBean.getDstUserId()) %>
@@ -23,8 +26,6 @@
 	</div>
 	<div class="section">
 		<div id="messageForm">
-<!--  			<form method="post" id="mainForm" name="mainForm" action="ChatServlet"> -->
-				<input type="hidden" name="action" value="<%= chatRouterBean.getAction() %>" />
 				<div class="messagesWrapper">
 					<%
 						ArrayList<Msg> messages = msgManagerBean.getMessages(msgManagerBean.getSrcUserId(),msgManagerBean.getDstUserId());
@@ -65,7 +66,7 @@
 					%>
 					<br />	
 				</div>
-				<div class="newMessageWrapper">
+				<div class="newMessageWrapper" id="newMessageWrapper">
 					<div class="newMessageContent">
 						<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
 					</div>
@@ -73,8 +74,6 @@
 						<button class="button" onclick='doSend()'>Send</button>
 					</div>
 				</div>
-				
-<!--  			</form> -->
 		</div>
 	</div>
 </div>

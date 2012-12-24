@@ -40,21 +40,24 @@ public class Websocket extends MessageInbound{
 		Integer msgId 		= 0;
 		JSONObject jsonSrc 	= (JSONObject) JSONValue.parse(msg);
 		JSONObject jsonDst 	= (JSONObject) jsonSrc.clone();		
+		JSONObject jsonBack	= (JSONObject) jsonSrc.clone();
 		
-		System.out.println("Server: Received msg from User" + _msgManager.getSrcUserId() + " for User" + _msgManager.getSrcUserId() + ":" + jsonSrc.toJSONString());
+		System.out.println("Server: Received msg from User" + _msgManager.getSrcUserId() + " for User" + _msgManager.getDstUserId() + ":" + jsonSrc.toJSONString());
 
 		
 		//Si le message est un accuse de reception
 		if(!jsonSrc.get("deliveredMsgId").equals("null")) 
 		{
 			_msgManager.setMessageDelivered(Integer.parseInt((String)jsonSrc.get("deliveredMsgId")));
+			
 		}
 		//Si le message est un nouveau message
 		else
 		{			
 			msgId = _msgManager.sendMessage((String) jsonSrc.get("content"));			
-			jsonDst.put("sentMsgId",  msgId.toString());
+			jsonDst.put("newMsgId",  msgId.toString());
 			System.out.println("User" + _msgManager.getSrcUserId() + ": added message to DB");
+			
 		}
 		
 		
@@ -66,11 +69,21 @@ public class Websocket extends MessageInbound{
 			conn.writeTextMessage(CharBuffer.wrap(jsonDst.toJSONString()));
 			System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg sent to User" + _msgManager.getDstUserId() + ": " + jsonDst.toJSONString());
 		}
+		//L'utilisateur distant n'est pas connecte
 		else
 		{
 			System.out.println("User " + _msgManager.getSrcUserId() + " : Warning: dstUser "  + _msgManager.getDstUserId() + " is disconnected ");
+
+			
+			
 		}
 		
+		//Dans tous les cas, on donne l'ID du message au sender.
+		jsonBack.put("sentMsgId", msgId);
+		WS = WebsocketManager.getWebsocket(_msgManager.getSrcUserId());
+		WsOutbound conn = WS.getWsOutbound();
+		conn.writeTextMessage(CharBuffer.wrap(jsonBack.toJSONString()));
+		System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg sent to himself: " + jsonBack.toJSONString());
 		
 	}
 

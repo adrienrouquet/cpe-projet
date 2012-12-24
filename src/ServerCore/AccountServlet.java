@@ -62,67 +62,71 @@ public class AccountServlet extends HttpServlet {
 		if(!user.getIsConnected())
 		{	
 			System.out.println("User disconnected/No active session");
-			
-			if(req.getParameter("action") != null)
-			{
-				
-				switch(req.getParameter("action"))
-				{
-					case "login":
-					{
-						System.out.println("AccountServlet: Checking User credentials");
-							
-						String login 		= req.getParameter("login").trim().toLowerCase();
-						String password 	= req.getParameter("password").trim();
-						DBUserToolbox dbut 	= new DBUserToolbox();
-						
-						if (dbut.checkCredentials(login,password))
-						{
-							System.out.println("AccountServlet: Connecting user");
-							//On recupere le user de la database et on le set dans un bean session
-							//On set au passage le chatRouterBean en session aussi
-							
-							user = dbut.getUser(login); 
-							user.setIsConnected(true);
-							session.setAttribute("userBean", user);
-							session.setAttribute("chatRouterBean", new Bean.ChatRouter());
-							session.setAttribute("msgManagerBean", new Bean.MsgManager(user.getId()));
-							System.out.println("AccountServlet: UserId " + user.getId() + " is now connected");
-							
-//							rd = req.getRequestDispatcher("ChatServlet");
-							res.sendRedirect("ChatServlet");
-						}
-						else
-						{
-							System.out.println("AccountServlet: Wrong credentials");
-							//Par defaut, on forward sur accountLogin.jsp
-							ar.setUrl("accountLogin.jsp");
-							rd = req.getRequestDispatcher("content/account/account.jsp");
-							rd.forward(req, res);
-						}	
-					}break;
-					default:
-					{
-						
-					}break;				
-				}
-			}
-			else
-			{
-				//Par defaut, on forward sur accountLogin.jsp
-				ar.setUrl("accountLogin.jsp");
-				rd = req.getRequestDispatcher("content/account/account.jsp");
-				rd.forward(req, res);
-			}			
 		}
 		else
 		{
 			System.out.println("User exists and is already connected");
-			//Si on est deja connecte, on passe sur le ChatServlet
-//			rd = req.getRequestDispatcher("ChatServlet");
-			res.sendRedirect("ChatServlet");
 		}
-
-//		rd.forward(req, res);
+		
+		if(req.getParameter("action") != null)
+		{
+			switch(req.getParameter("action"))
+			{
+				case "login":
+				{
+					System.out.println("AccountServlet: Checking User credentials");
+						
+					String login 		= req.getParameter("login").trim().toLowerCase();
+					String password 	= req.getParameter("password").trim();
+					DBUserToolbox dbut 	= new DBUserToolbox();
+					
+					if (dbut.checkCredentials(login,password))
+					{
+						System.out.println("AccountServlet: Connecting user");
+						//On recupere le user de la database et on le set dans un bean session
+						//On set au passage le chatRouterBean en session aussi
+						
+						user = dbut.getUser(login); 
+						user.setIsConnected(true);
+						session.setAttribute("userBean", user);
+						session.setAttribute("chatRouterBean", new Bean.ChatRouter());
+						session.setAttribute("msgManagerBean", new Bean.MsgManager(user.getId()));
+						System.out.println("AccountServlet: UserId " + user.getId() + " is now connected");
+						
+//							rd = req.getRequestDispatcher("ChatServlet");
+						res.sendRedirect("ChatServlet");
+					}
+					else
+					{
+						System.out.println("AccountServlet: Wrong credentials");
+						//Par defaut, on forward sur accountLogin.jsp
+						ar.setUrl("accountLogin.jsp");
+						rd = req.getRequestDispatcher("content/account/account.jsp");
+						rd.forward(req, res);
+					}	
+				}break;
+				case "logout":
+				{
+					System.out.println("AccountServlet: Logout action received");
+					session.setAttribute("userBean", null);
+					session.setAttribute("chatRouterBean", null);
+					session.setAttribute("msgManagerBean", null);
+					session.invalidate();
+					req.getSession(true);
+					res.sendRedirect("!");
+				}break;
+				default:
+				{
+					
+				}break;				
+			}
+		}
+		else
+		{
+			//Par defaut, on forward sur accountLogin.jsp
+			ar.setUrl("accountLogin.jsp");
+			rd = req.getRequestDispatcher("content/account/account.jsp");
+			rd.forward(req, res);
+		}			
 	}
 }
