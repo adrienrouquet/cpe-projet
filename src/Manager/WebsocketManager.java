@@ -32,12 +32,15 @@ public class WebsocketManager {
 		System.out.println("User" + websocket.getMsgManager().getSrcUserId() + ": webSocket Deleted");
 	}
 	
-	public static Websocket getWebsocket(Integer userId) {
+	public static Websocket getWebsocket(Integer dstUserId) {
 		
 		for (Websocket websocket: _websockets) {
-			System.out.println("User" + websocket.getMsgManager().getSrcUserId() + ": Entering getWebSocket: DstUserId: " + websocket.getMsgManager().getDstUserId());
-			if (websocket.getMsgManager().getSrcUserId() == userId)
+			System.out.println("Browsing webSockets to get User" + dstUserId +"'s webSocket");
+			if (websocket.getMsgManager().getSrcUserId() == dstUserId)
+			{
+				System.out.println("Found User" + dstUserId +"'s webSocket: interacting with User" + websocket.getMsgManager().getDstUserId());
 				return websocket;
+			}
 		}
 		
 		return null;

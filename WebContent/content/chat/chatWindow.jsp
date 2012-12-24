@@ -32,6 +32,7 @@
 						{
 							if(msg.getSrcUserId() != userBean.getId())
 							{
+								//Si le message n'avait pas ete delivre, on le marque comme delivre maintenant
 								if (!msg.isDelivered())
 								{
 									msgManagerBean.setMessageDelivered(msg.getId());
@@ -57,7 +58,7 @@
 					<jsp:param value='<%= msg.getContent() %>' name='content'/>
 					<jsp:param value='<%= delivered %>' name='messageStatus'/>
 					<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
-				</jsp:include>			
+				</jsp:include>
 					<%
 							}
 						}

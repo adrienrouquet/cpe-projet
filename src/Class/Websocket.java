@@ -36,36 +36,35 @@ public class Websocket extends MessageInbound{
 	protected void onTextMessage(CharBuffer data) throws IOException {
 		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering WebSocket.onTextMessage");
 		
-		String msg = data.toString();
-		Integer msgId = 0;
+		String msg 			= data.toString();
+		Integer msgId 		= 0;
+		JSONObject jsonSrc 	= (JSONObject) JSONValue.parse(msg);
+		JSONObject jsonDst 	= (JSONObject) jsonSrc.clone();		
 		
-		JSONObject jsonSrc = (JSONObject) JSONValue.parse(msg);
-		
-		JSONObject jsonDst = (JSONObject) jsonSrc.clone();		
-		
-		System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg received: " + jsonSrc.toJSONString());
+		System.out.println("Server: Received msg from User" + _msgManager.getSrcUserId() + " for User" + _msgManager.getSrcUserId() + ":" + jsonSrc.toJSONString());
 
+		
 		//Si le message est un accuse de reception
 		if(!jsonSrc.get("deliveredMsgId").equals("null")) 
 		{
 			_msgManager.setMessageDelivered(Integer.parseInt((String)jsonSrc.get("deliveredMsgId")));
 		}
+		//Si le message est un nouveau message
 		else
-		{
-			msgId = _msgManager.sendMessage((String) jsonSrc.get("content"));
+		{			
+			msgId = _msgManager.sendMessage((String) jsonSrc.get("content"));			
 			jsonDst.put("sentMsgId",  msgId.toString());
+			System.out.println("User" + _msgManager.getSrcUserId() + ": added message to DB");
 		}
 		
 		
-		//System.out.println(_msgManager);
 		Websocket WS = WebsocketManager.getWebsocket(_msgManager.getDstUserId());
 		if(WS != null)
 		{
 			WsOutbound conn = WS.getWsOutbound();
 			
 			conn.writeTextMessage(CharBuffer.wrap(jsonDst.toJSONString()));
-			System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg sent: " + jsonDst.toJSONString());
-			conn.close(1, null);
+			System.out.println("User" + _msgManager.getSrcUserId() + ": JSON msg sent to User" + _msgManager.getDstUserId() + ": " + jsonDst.toJSONString());
 		}
 		else
 		{
