@@ -1,12 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<h2>Create an account</h2>
+<form method="post" action="LoginServlet">
+	<input type="text" name="firstname" value="Enter first name"/>
+	<br />
+	<input type="text" name="lastname" value="Enter last name"/>
+	<br />
+	<input type="email" name="email" value="Enter email address"/>
+	<br />
+	<input type="text" name="login" value="Enter login"/>
+	<br />
+	<input type="password" name="password" value="Enter password"/>
+	<br />
+	<input type="password" name="confirmpassword" value="Confirm password"/>
+	<br />
+	<button type="button" onclick="this.form.submit();"> Create account </button>
+</form>
