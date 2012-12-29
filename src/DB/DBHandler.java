@@ -3,6 +3,7 @@ package DB;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.sql.Connection;
 
@@ -42,24 +43,29 @@ public class DBHandler{
 		return conn;
 	}
 	
-	public ResultSet executeQueryRS(String query)
+	public ArrayList<ArrayList<String>> rsToArrayList(ResultSet rs)
 	{
-		Connection conn = null;
+		ArrayList<ArrayList<String>> _result = new ArrayList<ArrayList<String>>();
+		
+		_result.add(new ArrayList<String>());
+		
+		return _result;
+	}
+	
+	
+	public ResultSet executeQueryRS(Connection conn, String query)
+	{
 		Statement statement = null;
 		ResultSet rs = null;
 		
 		try
 		{
-			conn = getConn();
-			statement = conn.createStatement();	
+			statement = conn.createStatement();
 			rs = statement.executeQuery(query);
 
 		}
 		catch (Exception e) {
 			System.err.println("Error in executeQueryRS:" + e.getMessage());
-		}
-		finally {
-			closeConn(conn);			
 		}
 		return rs;
 	}
