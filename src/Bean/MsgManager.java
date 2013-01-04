@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import Class.Msg;
 import Class.SSE;
+import Class.Websocket;
 import DB.DBMsgToolbox;
 
 
@@ -62,9 +63,17 @@ public class MsgManager implements Serializable{
 	}
 	public Boolean setMessageDelivered(int msgId)
 	{
-		//Envoi d'un SSE a l'utilisateur distant si il est connecte
-		SSE.setMessageDelivered(_dstUserId, msgId);
 		return _dbmt.setMessageDelivered(msgId);
+//		// Récupération du message
+//		for (Msg msg : this.getMessages(_srcUserId, _dstUserId)) {
+//			if (msg.getId() == msgId) {
+//				Websocket WS = Manager.WebsocketManager.getWebsocket(_dstUserId);
+//				if (WS != null)
+//					WS.emit("updateMessageStatus" ,msg.getJsonStringifyMsg());
+//				
+//				break;
+//			}
+//		}
 	}
 
 }

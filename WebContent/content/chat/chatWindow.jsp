@@ -4,11 +4,13 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Manager.UserManager"%>
 <%@page import="Class.Msg"%>
+<%@page import="Class.Websocket"%>
 
 <jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
 <jsp:useBean id="msgManagerBean" class="Bean.MsgManager" scope="session" />
 <jsp:useBean id="userBean" class="Bean.User" scope="session" />
 
+<script type="text/javascript" src="script/websocketChat.js"></script>
 <div class="content">
 	<div class="header">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
@@ -37,29 +39,28 @@
 								if (!msg.isDelivered())
 								{
 									msgManagerBean.setMessageDelivered(msg.getId());
+									msg.setIsDelivered(true);
+									Websocket WS = Manager.WebsocketManager.getWebsocket(msgManagerBean.getDstUserId());
+									if (WS != null)
+										WS.emit("updateMessageStatus" ,msg.getJsonStringifyMsg());
 								}
 					%>
 					<jsp:include page="incomingMessage.jsp">
 						<jsp:param value='<%= msg.getId() %>' name='id'/>
 						<jsp:param value='<%= msg.getContent() %>' name='content'/>
-						<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
+						<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
 					</jsp:include>
 					<%
 							}
 							else
 							{
-							String delivered = "";
-							if (msg.isDelivered())
-								delivered = "V";
-							else
-								delivered = "X";
-				%>
-				<jsp:include page="outgoingMessage.jsp">
-					<jsp:param value='<%= msg.getId() %>' name='id'/>
-					<jsp:param value='<%= msg.getContent() %>' name='content'/>
-					<jsp:param value='<%= delivered %>' name='messageStatus'/>
-					<jsp:param value='<%= new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(msg.getSentDate()) %>' name="date"/>
-				</jsp:include>
+					%>
+					<jsp:include page="outgoingMessage.jsp">
+						<jsp:param value='<%= msg.getId() %>' name='id'/>
+						<jsp:param value='<%= msg.getContent() %>' name='content'/>
+						<jsp:param value='<%= msg.isDeliveredFormated() %>' name='messageStatus'/>
+						<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
+					</jsp:include>
 					<%
 							}
 						}

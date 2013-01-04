@@ -1,10 +1,10 @@
-<div class="messageWrapper messageTo" id="msg<%= request.getParameter("id") %>">
-	<div class="messageContent" id="msgContent<%= request.getParameter("id") %>">
+<div class="messageWrapper messageTo" id="<%= request.getParameter("id") %>">
+	<div class="messageContent">
 		<%= request.getParameter("content") %>
 	</div>
-	<div class="messageStatus" id="msgStatus<%= request.getParameter("id") %>">
+	<div class="messageStatus">
 		<%= request.getParameter("messageStatus") %>
 	</div>
 	<br/>
-	<div class="messageDateTime" id="msgDateTime<%= request.getParameter("id") %>"><%= request.getParameter("date") %></div>
+	<div class="messageDateTime"><%= request.getParameter("date") %></div>
 </div>

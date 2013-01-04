@@ -8,6 +8,7 @@
 <jsp:useBean id="userBean" class="Bean.User" scope="session" />
 <jsp:useBean id="msgManagerBean" class="Bean.MsgManager" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
+	<script type="text/javascript" src="script/websocketContact.js"></script>
 	<div class="content">			
 		<div class="header">
 		<form method="post" id="logoutForm" name="logoutForm" action="AccountServlet">

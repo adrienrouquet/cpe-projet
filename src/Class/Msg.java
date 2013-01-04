@@ -1,7 +1,10 @@
 package Class;
 
-import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import DB.DBMsgToolbox;
 
@@ -17,7 +20,7 @@ public class Msg {
 	
 	public Msg () 
 	{ 
-		_dbmt = new DBMsgToolbox();  
+		_dbmt = new DBMsgToolbox();
 	};
 	
 	public Msg (int srcUserId, int dstUserId, String content, Timestamp sentDate, Boolean isDelivered)
@@ -91,4 +94,26 @@ public class Msg {
 		this._isDelivered = isDelivered;
 	}
 
+	public String getDateFormated() {
+		return new SimpleDateFormat("MM/dd/yyyy \'at\' HH:mm").format(this._sentDate);
+	}
+	
+	public String isDeliveredFormated() {
+		return this._isDelivered?"//":"/";
+	}
+	
+	public JSONObject getJsonMsg() {
+		JSONObject jsonMsg = new JSONObject();
+		jsonMsg.put("id", this._id);
+		jsonMsg.put("content", this._content);
+		jsonMsg.put("date", this.getDateFormated());
+		jsonMsg.put("sender", Manager.UserManager.getName(_srcUserId));
+		jsonMsg.put("status", this.isDeliveredFormated());
+		
+		return jsonMsg;
+	}
+	
+	public String getJsonStringifyMsg() {
+		return getJsonMsg().toJSONString();
+	}
 }

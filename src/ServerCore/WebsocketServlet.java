@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import Class.Websocket;
-import Manager.WebsocketManager;
+import Manager.UserManager;
 
 /**
  * Servlet implementation class Test
@@ -17,8 +17,6 @@ import Manager.WebsocketManager;
 public class WebsocketServlet extends WebSocketServlet {
 	private static final long serialVersionUID = 1L;
        
-    private static WebsocketManager _websocketManager = new WebsocketManager();
-    
 	/**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,8 +33,11 @@ public class WebsocketServlet extends WebSocketServlet {
 		
 		Bean.MsgManager msgManager = (Bean.MsgManager) session.getAttribute("msgManagerBean");
 		
-		Websocket websocket = _websocketManager.addWebsocket(msgManager);
+		Websocket websocket = new Websocket(msgManager);
 		user.setWebsocket(websocket);
+		// A DEPLACER !!!
+		UserManager.addUserConnected(user);
+		System.err.println(UserManager.getUsersConnected());
 		
 		return websocket;
 	}

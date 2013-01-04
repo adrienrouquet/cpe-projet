@@ -13,6 +13,7 @@ import DB.DBUserToolbox;
 public abstract class UserManager {
 
 	private static DBUserToolbox _dbut = new DBUserToolbox();
+	private static ArrayList<User> _usersConnected = new ArrayList<User>();
 
 	public UserManager(){};
 
@@ -40,6 +41,34 @@ public abstract class UserManager {
 	{
 
 		return _dbut.getLastLogin(id);
-	}  	
+	}
 
+
+	public static ArrayList<User> getUsersConnected() {
+		return _usersConnected;
+	}
+
+
+	public static void setUsersConnected(ArrayList<User> _usersConnected) {
+		UserManager._usersConnected = _usersConnected;
+	}
+
+	public static void addUserConnected(User user) {
+		_usersConnected.add(user);
+		System.out.println("User"+ user.getId() + "("+ getName(user.getId()) +") is connected");
+	}
+	
+	public static void delUserConnected(User user) {
+		_usersConnected.remove(user);
+		System.out.println("User"+ user.getId() + "("+ getName(user.getId()) +") is disconnected");
+	}
+	
+	public static User getConnectedUser(Integer id) {
+		for (User user : _usersConnected) {
+			if (id.equals(user.getId())) {
+				return user;
+			}
+		}
+		return null;
+	}
 }
