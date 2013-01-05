@@ -67,14 +67,14 @@
 					%>
 					<br />	
 				</div>
-				<div class="newMessageWrapper" id="newMessageWrapper">
-					<div class="newMessageContent">
-						<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
-					</div>
-					<div class="newMessageSend">
-						<button class="button" onclick='doSend()'>Send</button>
-					</div>
-				</div>
+		</div>
+	</div>
+	<div class="newMessageWrapper" id="newMessageWrapper">
+		<div class="newMessageContent">
+			<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
+		</div>
+		<div class="newMessageSend">
+			<button class="button" onclick='doSend()'>Send</button>
 		</div>
 	</div>
 </div>
