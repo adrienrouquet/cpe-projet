@@ -35,6 +35,8 @@ $(document).ready(function() {
 //		outgoingMsg.find(".messageStatus").html('X');
 		writeNewMessage(outgoingMsg, json);
 		
+		$(".section").animate({scrollTop: $(".section").prop("scrollHeight")}, 0);
+		
 		var message = json.stringify();
 		_websocket.emit("sendMessage", message);
 	}
