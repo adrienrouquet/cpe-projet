@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Class.User;
 import DB.DBUserToolbox;
 
 
@@ -42,24 +43,24 @@ public class AccountServlet extends HttpServlet {
 		RequestDispatcher rd 	= null;
 		
 		//On recupere le accountRouterBean de la session
-		Bean.AccountRouter ar 	= (Bean.AccountRouter) session.getAttribute("accountRouterBean");
+		Bean.Router ar 	= (Bean.Router) session.getAttribute("accountRouterBean");
 		if(ar == null)
 		{
 			System.out.println("Warning: accountRouterBean is null in AccountServlet");
-    		ar = new Bean.AccountRouter();
+    		ar = new Bean.Router();
 			session.setAttribute("accountRouterBean", ar);
 		}
 		
 		//On recupere le UserBean de la session
-		Bean.User user 			= (Bean.User) session.getAttribute("userBean");		
-		if(user == null)
+		Bean.UserBean userBean 			= (Bean.UserBean) session.getAttribute("userBean");		
+		if(userBean == null)
 		{
 			System.out.println("Warning: userBean is null in AccountServlet");
-			user	=  new Bean.User();
-			session.setAttribute("userBean", user);
+			userBean	=  new Bean.UserBean();
+			session.setAttribute("userBean", userBean);
 		}
 		
-		if(!user.getIsConnected())
+		if(!userBean.getIsConnected())
 		{	
 			System.out.println("User disconnected/No active session");
 		}
@@ -86,12 +87,12 @@ public class AccountServlet extends HttpServlet {
 						//On recupere le user de la database et on le set dans un bean session
 						//On set au passage le chatRouterBean en session aussi
 						
-						user = dbut.getUser(login); 
+						User user = dbut.getUser(login); 
 						user.setIsConnected(true);
-						session.setAttribute("userBean", user);
-						session.setAttribute("chatRouterBean", new Bean.ChatRouter());
-						session.setAttribute("msgManagerBean", new Bean.MsgManager(user.getId()));
-						System.out.println("AccountServlet: UserId " + user.getId() + " is now connected");
+						userBean.setUser(user);
+						session.setAttribute("userBean", userBean);
+						session.setAttribute("chatRouterBean", new Bean.Router());
+						System.out.println("AccountServlet: UserId " + userBean.getId() + " is now connected");
 						
 //							rd = req.getRequestDispatcher("ChatServlet");
 						res.sendRedirect("ChatServlet");
@@ -127,6 +128,6 @@ public class AccountServlet extends HttpServlet {
 			ar.setUrl("accountLogin.jsp");
 			rd = req.getRequestDispatcher("content/account/account.jsp");
 			rd.forward(req, res);
-		}			
+		}
 	}
 }

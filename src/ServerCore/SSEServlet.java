@@ -37,7 +37,7 @@ public class SSEServlet extends HttpServlet {
 	
 	        PrintWriter out = response.getWriter();  
 
-	        Bean.User user = (Bean.User) request.getSession().getAttribute("userBean");
+	        Bean.UserBean user = (Bean.UserBean) request.getSession().getAttribute("userBean");
 	        //On publie ces infos de type event-stream sur la servlet a intervalles reguliers
 	        out.print("retry: 5000\n");
 	        out.print("event: newMessageReceived\n");

@@ -3,11 +3,11 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Manager.UserManager"%>
-<%@page import="Bean.User"%>
+<%@page import="Class.User"%>
 
-<jsp:useBean id="userBean" class="Bean.User" scope="session" />
-<jsp:useBean id="msgManagerBean" class="Bean.MsgManager" scope="session" />
-<jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
+<jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
+<jsp:useBean id="msgManagerBean" class="Class.Manager.MsgManager" scope="session" />
+<jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
 	<script type="text/javascript" src="script/websocketContact.js"></script>
 	<div class="content">			
 		<div class="header">
@@ -23,14 +23,14 @@
 					<input type="hidden" name="contactId" value="0"/>
 					<%
 						ArrayList<User> users = null;
-					
-						users = UserManager.getContacts(userBean.getId());
-						
-						if(users.size() > 0)
-						{
-							for(User user : users)
-							{
-								int unreadMessageCount = msgManagerBean.getNonDeliveredMessageCount(user.getId()); 
+								
+									users = userBean.getContacts();
+									
+									if(users.size() > 0)
+									{
+										for(User user : users)
+										{
+											int unreadMessageCount = msgManagerBean.getNonDeliveredMessageCount(user.getId());
 					%>
 					<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
 					

@@ -11,23 +11,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 
-import Bean.User;
+import Bean.UserBean;
+import Manager.MsgManager;
 import Manager.UserManager;
 import Manager.WebsocketManager;
 
 public class Websocket extends MessageInbound{
 
-	private Bean.MsgManager _msgManager = null;
+	private Class.MsgManager _msgManager = null;
 
-	public Websocket(Bean.MsgManager msgManager) {
+	public Websocket(Class.MsgManager msgManager) {
 		_msgManager = msgManager;
 	}
 	
-	public Bean.MsgManager getMsgManager() {
+	public Class.MsgManager getMsgManager() {
 		return _msgManager;
 	}
 
-	public void setMsgManager(Bean.MsgManager msgManager) {
+	public void setMsgManager(Class.MsgManager msgManager) {
 		this._msgManager = msgManager;
 	}
 
@@ -71,9 +72,9 @@ public class Websocket extends MessageInbound{
 	@Override
 	protected void onClose(int status) {
 		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering onClose: " + this.getWsOutbound());
-		for (User userBean : UserManager.getConnectedUser(_msgManager.getSrcUserId())) {
-			if (this.equals(userBean.getWebsocket())) {
-				UserManager.delUserConnected(userBean);
+		for (User user : UserManager.getConnectedUser(_msgManager.getSrcUserId())) {
+			if (this.equals(user.getWebsocket())) {
+				UserManager.delUserConnected(user);
 			}
 		}
 //		Manager.UserManager.delUserConnected(Manager.UserManager.getConnectedUser(_msgManager.getSrcUserId()));
@@ -105,9 +106,9 @@ public class Websocket extends MessageInbound{
 		//On publie un SSE qui publie une notification au user destinataire
 		this.emit("updateMessageStatus", data.toJSONString());
 		
-		ArrayList<User> userBeans = UserManager.getConnectedUser(_msgManager.getDstUserId());
-		if (userBeans.size() > 0) {			
-			for (User user : userBeans)
+		ArrayList<User> users = UserManager.getConnectedUser(_msgManager.getDstUserId());
+		if (users.size() > 0) {			
+			for (User user : users)
 				user.getWebsocket().emit("newMessage", data.toJSONString());
 		} else {
 			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");			

@@ -61,13 +61,13 @@ BEGIN
 
 	SELECT * FROM users
 	WHERE 
-		CONCAT(LOWER(firstName), ' ', LOWER(lastName)) LIKE CONCAT('%', LOWER(pName), '%')
+		CONCAT(LOWER(firstName), ' ', LOWER(lastName)) LIKE CONCAT('%', LOWER(pName), '%') AND NOT pName = "" AND pLogin = "" AND pEmail = "" AND pPhone = ""
 	OR
-		login = pLogin
+		login = pLogin AND pName = "" AND pEmail = "" AND pPhone = ""
 	OR
-		email = pEmail
+		email = pEmail AND pName = "" AND pLogin = "" AND pPhone = ""
 	OR
-		phone = pPhone
+		phone = pPhone AND pName = "" AND pLogin = "" AND pEmail = ""
 	;
    
 END //

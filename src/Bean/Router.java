@@ -3,12 +3,12 @@ package Bean;
 import java.io.Serializable;
 
 
-public class ChatRouter implements Serializable {
+public class Router implements Serializable {
 	
 	private static final long serialVersionUID = 6734150431891723390L;
 	private String _url = "";
 	private String _action = "";
-	public ChatRouter(){};
+	public Router(){};
 
 	public void setUrl(String url)
 	{

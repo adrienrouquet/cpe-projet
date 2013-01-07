@@ -1,22 +1,21 @@
-package Bean;
+package Class;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
 
 import Class.Websocket;
 import DB.DBUserToolbox;
+import Manager.MsgManager;
 
 
 /**
  * Class User
  */
-public class User implements Serializable {
+public class User{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5313606931922030655L;
 	private int _id = 0;
 	private String _login = "";
 	private String _password = "";
@@ -27,11 +26,14 @@ public class User implements Serializable {
 	private Timestamp _lastLoginDate = null;
 	private boolean _isConnected = false;
 	private Websocket _websocket = null;
+	private MsgManager _mm = null;
 	
 	private DBUserToolbox _dbut = null;
 
 	public User () { 	  
 		_dbut 	= new DBUserToolbox();
+		_mm		= new MsgManager();
+		
 	};
 	
 	public User (int id, String login, String password)
@@ -40,6 +42,7 @@ public class User implements Serializable {
 		_login 		= login;
 		_password 	= password;
 		_dbut 		= new DBUserToolbox();
+		_mm			= new MsgManager();
 	};
 	
 	public User (int id, String login, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -52,6 +55,7 @@ public class User implements Serializable {
 		_lastName 		= lastName;
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
+		_mm				= new MsgManager();
 	};
 
 	public User (int id, String login, String password, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -65,7 +69,18 @@ public class User implements Serializable {
 		_lastName 		= lastName;
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
+		_mm				= new MsgManager();
 	};
+	
+	public ArrayList<User> getContacts()
+	{
+		return _dbut.getContacts(_id);
+	}
+
+	public MsgManager getMsgManager()
+	{
+		return this._mm;
+	}
 	
 	public void setId ( int id )
 	{

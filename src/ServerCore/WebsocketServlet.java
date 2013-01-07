@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import Class.Websocket;
+import Class.User;
 import Manager.UserManager;
 
 /**
@@ -28,10 +29,10 @@ public class WebsocketServlet extends WebSocketServlet {
 	@Override
 	protected StreamInbound createWebSocketInbound(String arg0, HttpServletRequest req) {
 		HttpSession session = req.getSession(true);
-		Bean.User user = (Bean.User) session.getAttribute("userBean");
+		User user = ((Bean.UserBean) session.getAttribute("userBean")).getUser();
 		System.out.println("User" + user.getId() + ": Entering createWebSocketInbound");
 		
-		Bean.MsgManager msgManager = (Bean.MsgManager) session.getAttribute("msgManagerBean");
+		Class.MsgManager msgManager = (Class.MsgManager) session.getAttribute("msgManagerBean");
 		
 		Websocket websocket = new Websocket(msgManager);
 		user.setWebsocket(websocket);

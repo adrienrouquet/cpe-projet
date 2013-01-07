@@ -1,22 +1,18 @@
-package Bean;
+package Manager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import Class.Msg;
-import Class.SSE;
-import Class.Websocket;
 import DB.DBMsgToolbox;
 
 
 /**
  * Class MsgManager
  */
-public class MsgManager implements Serializable{
+public class MsgManager{
 
 
-	private static final long serialVersionUID = 7682107397924258436L;
-	
 	private int _srcUserId 		= 0;
 	private int _dstUserId 		= 0;
 	

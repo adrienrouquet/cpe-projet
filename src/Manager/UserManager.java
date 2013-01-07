@@ -3,7 +3,8 @@ package Manager;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import Bean.User;
+import Bean.UserBean;
+import Class.User;
 import DB.DBUserToolbox;
 
 
@@ -64,13 +65,13 @@ public abstract class UserManager {
 	}
 	
 	public static ArrayList<User> getConnectedUser(Integer id) {
-		ArrayList<User> userBeans = new ArrayList<User>();
+		ArrayList<User> users = new ArrayList<User>();
 		for (User user : _usersConnected) {
 			if (id.equals(user.getId())) {
-				userBeans.add(user);
+				users.add(user);
 			}
 		}
-		return userBeans;
+		return users;
 	}
 	
 	public static ArrayList<User> findContacts(String name, String login, String email, String phone) {
