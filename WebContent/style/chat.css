@@ -1,0 +1,118 @@
+@CHARSET "UTF-8";
+
+.messageSection{
+	bottom: 100px;
+}
+
+.messageForm{
+}
+
+.messagesWrapper{	
+}
+
+.messageWrapper{
+	width: 80%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #050505;
+	padding: 4px 8px;	
+	border: 2px solid;
+	-moz-box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	box-shadow:
+		3px 4px 3px rgba(000,000,000,0.6),
+		inset -1px -1px 1px rgba(255,255,255,0.7);
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	border-radius: 30px;
+	margin-bottom: 10px;		
+	text-align: left;
+	
+}
+
+.messageFrom{
+	float: left;
+	background: -moz-linear-gradient(
+		top,
+		rgb(210,223,237) 0%,
+		rgb(186,208,239));
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(rgb(110,203,217)),
+		to(rgb(086,158,209)));
+	border: #424242;
+	
+}
+
+.messageTo{
+	float: right;
+	background: -moz-linear-gradient(
+		top,
+		rgb(210,223,237) 0%,
+		rgb(186,208,239));
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(rgb(210,223,237)),
+		to(rgb(186,208,239)));
+	border: #424242;	
+}
+
+.messageContent{
+	
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.messageStatus{
+	font-weight: bold;
+	color: green;	
+	float: left;
+}
+
+.messageDateTime{
+	font-size: 0.8em;
+	font-style: italic;
+	opacity: 0.6;
+	filter: alpha(opacity=60); /*for Internet Explorer 6/7*/
+	filter: “alpha(opacity=60)”; /*for Internet Explorer 8*/
+}
+
+.messageTo .messageDateTime, .messageTo .messageContent{
+	float: left;
+	margin-left: 10px;
+}
+
+.messageFrom .messageDateTime,  .messageFrom .messageContent{
+	float: right;
+	margin-right: 10px;
+}
+
+.newMessageWrapper
+{
+	clear: both;
+	background: rgb(40,40,40);
+	border: 2px;
+	border-style: groove;
+	
+}
+
+.newMessageWrapper .button
+{
+	display: inline-block;
+	text-align: center;
+	width: 20%;	
+	margin-top: 5px;
+}
+
+.newMessageContent{
+}
+
+.newMessageContent textarea{
+	font-weight: bold;
+	width: 90%;
+	text-align: left;
+}

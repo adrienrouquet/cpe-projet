@@ -22,20 +22,18 @@
 
 	
 </script>
-<div class="content">
-	<div class="header">
+<div id="container">
+	<header>
 		<h1>Super Messenger</h1>
-	</div>
-	<div class="section">
-		<div class="login">
-			<form method="post" id="accountLoginForm" action="AccountServlet">
-				<input type="hidden" name="action" value="login"/>
-				<input placeholder="Enter Login..." type="text" id="login" name="login"/>
-				<br />
-				<input placeholder="Enter Password..." type="password" id="password" name="password"/>
-				<br />
-				<input type="submit" class="button" value="Login" />
-			</form>
-		</div>
-	</div>
-</div>	
+	</header>
+	<section class="login">
+		<form method="post" id="accountLoginForm" action="AccountServlet">
+			<input type="hidden" name="action" value="login"/>
+			<input placeholder="Enter Login..." type="text" id="login" name="login"/>
+			<br />
+			<input placeholder="Enter Password..." type="password" id="password" name="password"/>
+			<br />
+			<input type="submit" class="button" value="Login" />
+		</form>
+	</section>
+</div>

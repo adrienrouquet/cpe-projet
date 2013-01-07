@@ -5,15 +5,13 @@
 <%@page import="Manager.UserManager"%>
 <%@page import="Class.Msg"%>
 <%@page import="Class.User"%>
-<%@page import="Class.Websocket"%>
-<%@page import="Bean.UserBean"%>
 
 <jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
-
 <script type="text/javascript" src="script/websocketChat.js"></script>
-<div class="content">
-	<div class="header abs black">
+
+<div id="container">
+	<header class="abs black">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
 		<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
 		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
@@ -24,8 +22,8 @@
 		<div class="contactStatus">
 			Last login: <%=new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(UserManager.getLastLogin(userBean.getMsgManager().getDstUserId()))%>
 		</div>
-	</div>
-	<div class="section scroll messageSection" id="messageForm">
+	</header>
+	<section class="messageSection scroll" id="messageForm">
 		<div class="messagesWrapper">
 			<%
 				ArrayList<Msg> messages = userBean.getMsgManager().getMessages(userBean.getId(),userBean.getMsgManager().getDstUserId());
@@ -63,15 +61,15 @@
 					}
 				}
 			%>
-			<br />	
+			<br />
 		</div>
-	</div>
-	<div class="footer newMessageWrapper" id="newMessageWrapper">
+	</section>
+	<footer class="newMessageWrapper" id="newMessageWrapper">
 			<div class="newMessageContent">
 				<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
 			</div>
 			<div class="newMessageSend">
 				<button class="button" onclick='doSend()'>Send</button>
 			</div>
-	</div>
+	</footer>
 </div>
