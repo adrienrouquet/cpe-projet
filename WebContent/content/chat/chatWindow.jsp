@@ -36,7 +36,7 @@
 							{
 								userBean.getMsgManager().setMessageDelivered(msg.getId());
 								msg.setIsDelivered(true);
-								for (User user : UserManager.getConnectedUser(userBean.getMsgManager().getDstUserId())) {
+								for (User user : UserManager.getUsersConnected(userBean.getMsgManager().getDstUserId())) {
 									user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
 								}
 							}
