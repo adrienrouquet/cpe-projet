@@ -33,7 +33,6 @@ public class User{
 	public User () { 	  
 		_dbut 	= new DBUserToolbox();
 		_mm		= new MsgManager();
-		
 	};
 	
 	public User (int id, String login, String password)
@@ -42,7 +41,7 @@ public class User{
 		_login 		= login;
 		_password 	= password;
 		_dbut 		= new DBUserToolbox();
-		_mm			= new MsgManager();
+		_mm			= new MsgManager(_id);
 	};
 	
 	public User (int id, String login, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -55,7 +54,7 @@ public class User{
 		_lastName 		= lastName;
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
-		_mm				= new MsgManager();
+		_mm				= new MsgManager(_id);
 	};
 
 	public User (int id, String login, String password, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -69,7 +68,7 @@ public class User{
 		_lastName 		= lastName;
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
-		_mm				= new MsgManager();
+		_mm				= new MsgManager(_id);
 	};
 	
 	public ArrayList<User> getContacts()
@@ -85,6 +84,7 @@ public class User{
 	public void setId ( int id )
 	{
 		this._id = id;
+		_mm.setSrcUserId(id);
 	}
 	public int getId ( ) {
 		return this._id;

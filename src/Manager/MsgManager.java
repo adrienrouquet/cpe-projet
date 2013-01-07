@@ -1,6 +1,5 @@
 package Manager;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import Class.Msg;
