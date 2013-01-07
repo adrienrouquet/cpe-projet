@@ -4,12 +4,12 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Manager.UserManager"%>
 <%@page import="Class.Msg"%>
+<%@page import="Class.User"%>
 <%@page import="Class.Websocket"%>
 <%@page import="Bean.UserBean"%>
 
-<jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
-<jsp:useBean id="msgManagerBean" class="Class.Manager.MsgManager" scope="session" />
 <jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
+<jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
 
 <script type="text/javascript" src="script/websocketChat.js"></script>
 <div class="content">
@@ -19,16 +19,16 @@
 		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
 		</form>	
 		<div class="contactName">
-			<%=UserManager.getName(msgManagerBean.getDstUserId())%>
+			<%=UserManager.getName(userBean.getMsgManager().getDstUserId())%>
 		</div>
 		<div class="contactStatus">
-			Last login: <%=new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(UserManager.getLastLogin(msgManagerBean.getDstUserId()))%>
+			Last login: <%=new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(UserManager.getLastLogin(userBean.getMsgManager().getDstUserId()))%>
 		</div>
 	</div>
 	<div class="section scroll messageSection" id="messageForm">
 		<div class="messagesWrapper">
 			<%
-				ArrayList<Msg> messages = msgManagerBean.getMessages(msgManagerBean.getSrcUserId(),msgManagerBean.getDstUserId());
+				ArrayList<Msg> messages = userBean.getMsgManager().getMessages(userBean.getId(),userBean.getMsgManager().getDstUserId());
 					for( Msg msg : messages)
 					{
 						if(msg.getSrcUserId() != userBean.getId())
@@ -36,9 +36,9 @@
 							//Si le message n'avait pas ete delivre, on le marque comme delivre maintenant
 							if (!msg.isDelivered())
 							{
-								msgManagerBean.setMessageDelivered(msg.getId());
+								userBean.getMsgManager().setMessageDelivered(msg.getId());
 								msg.setIsDelivered(true);
-								for (UserBean user : UserManager.getConnectedUser(msgManagerBean.getDstUserId())) {
+								for (User user : UserManager.getConnectedUser(userBean.getMsgManager().getDstUserId())) {
 									user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
 								}
 							}

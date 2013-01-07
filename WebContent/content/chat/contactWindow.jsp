@@ -6,7 +6,6 @@
 <%@page import="Class.User"%>
 
 <jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
-<jsp:useBean id="msgManagerBean" class="Class.Manager.MsgManager" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
 	<script type="text/javascript" src="script/websocketContact.js"></script>
 	<div class="content">			
@@ -30,7 +29,7 @@
 									{
 										for(User user : users)
 										{
-											int unreadMessageCount = msgManagerBean.getNonDeliveredMessageCount(user.getId());
+											int unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
 					%>
 					<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
 					
