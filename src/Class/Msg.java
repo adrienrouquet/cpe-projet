@@ -102,18 +102,34 @@ public class Msg {
 		return this._isDelivered?"//":"/";
 	}
 	
-	public JSONObject getJsonMsg() {
+	public JSONObject getJsonMsg(String... keys) {
 		JSONObject jsonMsg = new JSONObject();
-		jsonMsg.put("id", this._id);
-		jsonMsg.put("content", this._content);
-		jsonMsg.put("date", this.getDateFormated());
-		jsonMsg.put("sender", Manager.UserManager.getName(_srcUserId));
-		jsonMsg.put("status", this.isDeliveredFormated());
+		for (String key : keys) {
+			switch (key) {
+			case "id":
+				jsonMsg.put("id", this._id);				
+				break;
+			case "content":
+				jsonMsg.put("content", this._content);
+				break;
+			case "date":
+				jsonMsg.put("date", this.getDateFormated());
+				break;
+			case "sender":
+				jsonMsg.put("sender", Manager.UserManager.getName(_srcUserId));
+				break;
+			case "status":
+				jsonMsg.put("status", this.isDeliveredFormated());
+				break;
+			default:
+				break;
+			}
+		}
 		
 		return jsonMsg;
 	}
 	
-	public String getJsonStringifyMsg() {
-		return getJsonMsg().toJSONString();
+	public String getJsonStringifyMsg(String... keys) {
+		return getJsonMsg(keys).toJSONString();
 	}
 }

@@ -63,12 +63,13 @@ public abstract class UserManager {
 		System.out.println("User"+ user.getId() + "("+ getName(user.getId()) +") is disconnected");
 	}
 	
-	public static User getConnectedUser(Integer id) {
+	public static ArrayList<User> getConnectedUser(Integer id) {
+		ArrayList<User> userBeans = new ArrayList<User>();
 		for (User user : _usersConnected) {
 			if (id.equals(user.getId())) {
-				return user;
+				userBeans.add(user);
 			}
 		}
-		return null;
+		return userBeans;
 	}
 }

@@ -5,6 +5,7 @@
 <%@page import="Manager.UserManager"%>
 <%@page import="Class.Msg"%>
 <%@page import="Class.Websocket"%>
+<%@page import="Bean.User"%>
 
 <jsp:useBean id="chatRouterBean" class="Bean.ChatRouter" scope="session" />
 <jsp:useBean id="msgManagerBean" class="Bean.MsgManager" scope="session" />
@@ -40,9 +41,13 @@
 								{
 									msgManagerBean.setMessageDelivered(msg.getId());
 									msg.setIsDelivered(true);
-									Websocket WS = Manager.WebsocketManager.getWebsocket(msgManagerBean.getDstUserId());
-									if (WS != null)
-										WS.emit("updateMessageStatus" ,msg.getJsonStringifyMsg());
+									for (User user : UserManager.getConnectedUser(msgManagerBean.getDstUserId())) {
+										user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
+									}
+									
+// 									Websocket WS = Manager.WebsocketManager.getWebsocket(msgManagerBean.getDstUserId());
+// 									if (WS != null)
+// 										WS.emit("updateMessageStatus" ,msg.getJsonStringifyMsg());
 								}
 					%>
 					<jsp:include page="incomingMessage.jsp">

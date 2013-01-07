@@ -3,12 +3,15 @@ package Class;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.util.ArrayList;
+
 import org.apache.catalina.websocket.*;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 
+import Bean.User;
 import Manager.UserManager;
 import Manager.WebsocketManager;
 
@@ -68,7 +71,12 @@ public class Websocket extends MessageInbound{
 	@Override
 	protected void onClose(int status) {
 		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering onClose: " + this.getWsOutbound());
-		Manager.UserManager.delUserConnected(Manager.UserManager.getConnectedUser(_msgManager.getSrcUserId()));
+		for (User userBean : UserManager.getConnectedUser(_msgManager.getSrcUserId())) {
+			if (this.equals(userBean.getWebsocket())) {
+				UserManager.delUserConnected(userBean);
+			}
+		}
+//		Manager.UserManager.delUserConnected(Manager.UserManager.getConnectedUser(_msgManager.getSrcUserId()));
 	}
 
 	public void onUpdateMessageStatus(JSONObject data) {
@@ -80,9 +88,9 @@ public class Websocket extends MessageInbound{
 			_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
 			// Le dst recoit le msg et update le status sur l'emetteur
 			data.put("status", "//");
-			Websocket WS =  WebsocketManager.getWebsocket(_msgManager.getDstUserId());
-			if (WS != null)
-				WS.emit("updateMessageStatus", data.toJSONString());
+			for (User user : UserManager.getConnectedUser(_msgManager.getDstUserId())) {
+				user.getWebsocket().emit("updateMessageStatus", data.toJSONString());
+			}
 		}
 	}
 
@@ -96,11 +104,14 @@ public class Websocket extends MessageInbound{
 		data.put("status", "/");
 		//On publie un SSE qui publie une notification au user destinataire
 		this.emit("updateMessageStatus", data.toJSONString());
-		Websocket WS = WebsocketManager.getWebsocket(_msgManager.getDstUserId());
-		if (WS != null)
-			WS.emit("newMessage", data.toJSONString());
-		else
-			System.err.println("Websocket NULL");
+		
+		ArrayList<User> userBeans = UserManager.getConnectedUser(_msgManager.getDstUserId());
+		if (userBeans.size() > 0) {			
+			for (User user : userBeans)
+				user.getWebsocket().emit("newMessage", data.toJSONString());
+		} else {
+			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");			
+		}
 		
 //		SSE.setNewMessageReceived(_msgManager.getSrcUserId(), _msgManager.getDstUserId());
 //		System.out.println("User" + _msgManager.getSrcUserId() + ": added message to DB");
