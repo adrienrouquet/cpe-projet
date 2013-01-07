@@ -1,20 +1,23 @@
 @CHARSET "UTF-8";
 
 body{
-	
+	overflow: hidden;
 }
 
 h1{
 	font-style:bold;
 	font-family:serif;
 	color:white;
+	font-size: 1.8em;
 }
 
-div.header{
-	
+.header{
+	position: absolute;
+	top: 0px;
+	width: 100%;
 }
 
-div.contactHeader{
+.black{
 	background: rgb(40,40,40);
 	border: 2px;
 	border-style: groove;
@@ -22,7 +25,7 @@ div.contactHeader{
 	margin-bottom: 10px;
 }
 
-div.content{
+.content{
 	position:absolute;
 	top: 0px;
 	left: 0px;
@@ -30,8 +33,7 @@ div.content{
 	bottom: 0px;
  	text-align: center;
 	height:100%;
-	width:100%;
-	
+	width:100%;	
 	background: -moz-linear-gradient(top, rgba(210,223,237,1) 0%, rgba(166,192,227,1) 27%, rgba(175,199,232,1) 62%, rgba(186,208,239,1) 75%, rgba(153,181,219,1) 88%, rgba(121,155,200,1) 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(210,223,237,1)), color-stop(27%,rgba(166,192,227,1)), color-stop(62%,rgba(175,199,232,1)), color-stop(75%,rgba(186,208,239,1)), color-stop(88%,rgba(153,181,219,1)), color-stop(100%,rgba(121,155,200,1))); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top, rgba(210,223,237,1) 0%,rgba(166,192,227,1) 27%,rgba(175,199,232,1) 62%,rgba(186,208,239,1) 75%,rgba(153,181,219,1) 88%,rgba(121,155,200,1) 100%); /* Chrome10+,Safari5.1+ */
@@ -42,8 +44,24 @@ div.content{
 }
 
 
-div.section{
-	
+.section{
+	width: 100%;
+	position: absolute;
+	top: 50px;
+}
+
+.scroll{
+	overflow-y: scroll;
+}
+
+.messageSection{
+	bottom: 100px;
+}
+
+.footer{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
 }
 
 div.login{
@@ -151,6 +169,10 @@ label.error {
 	text-shadow:
 		0px -1px 0px rgba(000,000,000,0.4),
 		0px 1px 0px rgba(255,255,255,0.3);
+}
+
+.messageForm
+{
 }
 
 .messagesWrapper {	

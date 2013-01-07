@@ -48,6 +48,31 @@ END //
 DELIMITER ;
 
 /*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS findContacts;
+DELIMITER //
+CREATE PROCEDURE findContacts
+(
+	IN pName VARCHAR(255),
+	IN pLogin VARCHAR(255),
+	IN pEmail VARCHAR(255),
+	IN pPhone VARCHAR(255)
+)
+BEGIN
+
+	SELECT * FROM users
+	WHERE 
+		CONCAT(LOWER(firstName), ' ', LOWER(lastName)) LIKE CONCAT('%', LOWER(pName), '%')
+	OR
+		login = pLogin
+	OR
+		email = pEmail
+	OR
+		phone = pPhone
+	;
+   
+END //
+DELIMITER ;
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getContacts;
 DELIMITER //
 CREATE PROCEDURE getContacts

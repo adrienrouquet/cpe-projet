@@ -88,6 +88,8 @@ Envoyer la websocket et ensuite le MsgManager enverra le message.
 ----("Vous avez un message de ...") sauf si la chatWindow ouverte est celle de l'emeteur de msg.
 ----PROBLEME: Plantage lorsqu'on utilise MsgManager.sendMessage()...
 
+
+
 24/12/2012 - Adrien pour tout le monde:
 Est-il utile de garder 2 routers (ChatRouter et AccountRouter) qui ont la même fonction ?
 --Loic: Je pense que oui, ca nous permet d'avoir un controleur par servlet, et d'eviter d'avoir des switch 
