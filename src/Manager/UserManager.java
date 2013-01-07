@@ -72,4 +72,8 @@ public abstract class UserManager {
 		}
 		return userBeans;
 	}
+	
+	public static ArrayList<User> findContacts(String name, String login, String email, String phone) {
+		return _dbut.findContacts(name, login, email, phone);
+	}
 }
