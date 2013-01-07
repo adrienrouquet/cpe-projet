@@ -11,61 +11,68 @@
 	<script type="text/javascript" src="script/websocketContact.js"></script>
 	<div class="content">			
 		<div class="header">
-		<form method="post" id="logoutForm" name="logoutForm" action="AccountServlet">
-		<input type="hidden" name="action" value="logout" />
-		<input type="button" class="logout" value="Logout" onclick="submitForm('logoutForm');"/>	
-		</form>	
-			<h1>Super Messenger</h1>
+			<form method="post" id="logoutForm" name="logoutForm" action="AccountServlet">
+			<input type="hidden" name="action" value="logout" />
+			<input type="button" class="logout" value="Logout" onclick="submitForm('logoutForm');"/>	
+			</form>
 		</div>
-		<div id="contactForm">
-			<form name="mainForm" method="post" action="ChatServlet">		
-				<input type="hidden" name="action" value="view"/>
-				<input type="hidden" name="contactId" value="0"/>
-				<%
-					ArrayList<User> users = null;
-				
-					users = UserManager.getContacts(userBean.getId());
+		<div class="section">
+			<div id="contactForm">
+				<form name="mainForm" method="post" action="ChatServlet">
+					<input type="hidden" name="action" value="view"/>
+					<input type="hidden" name="contactId" value="0"/>
+					<%
+						ArrayList<User> users = null;
 					
-					if(users.size() > 0)
-					{
-						for(User user : users)
-						{
-							int unreadMessageCount = msgManagerBean.getNonDeliveredMessageCount(user.getId()); 
-				%>
-				<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
-				
-					<div class="contactName">
-						<%= user.getFirstName() %> <%= user.getLastName() %>
-						<% 
-							String unreadMessageStyle = "display: none;";
-							if( unreadMessageCount > 0 ) 
-							{
-								unreadMessageStyle = "display: inline;";
-							}
-						%>
-						<span id="contactUnreadMessageWrapper<%= user.getId() %>" style="<%= unreadMessageStyle %>">
-							(<span id="contactUnreadMessageCount<%= user.getId() %>"><%= unreadMessageCount %></span>)
-						</span>
+						users = UserManager.getContacts(userBean.getId());
 						
+						if(users.size() > 0)
+						{
+							for(User user : users)
+							{
+								int unreadMessageCount = msgManagerBean.getNonDeliveredMessageCount(user.getId()); 
+					%>
+					<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
+					
+						<div class="contactName">
+							<%= user.getFirstName() %> <%= user.getLastName() %>
+							<% 
+								String unreadMessageStyle = "display: none;";
+								if( unreadMessageCount > 0 ) 
+								{
+									unreadMessageStyle = "display: inline;";
+								}
+							%>
+							<span id="contactUnreadMessageWrapper<%= user.getId() %>" style="<%= unreadMessageStyle %>">
+								(<span id="contactUnreadMessageCount<%= user.getId() %>"><%= unreadMessageCount %></span>)
+							</span>
+							
+						</div>
+						<div class="contactStatus">
+							Last login: <%= user.getLastLoginDate().toString() %>
+						</div>
 					</div>
-					<div class="contactStatus">
-						Last login: <%= user.getLastLoginDate().toString() %>
-					</div>
-				</div>
-				<%
+					<%
+							}
 						}
-					}
-					else
-					{
-				%>
-				<div class="contactWrapper">
-					<div class="contactName">
-						You have no contact to display yet
+						else
+						{
+					%>
+					<div class="contactWrapper">
+						<div class="contactName">
+							You have no contact to display yet
+						</div>
 					</div>
-				</div>
-				<%
-					}
-				%>			
+					<%
+						}
+					%>			
+				</form>
+			</div>
+		</div>
+		<div class="footer">
+			<form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
+			<input type="hidden" name="action" value="openAddContactWindow" />
+			<input type="button" class="logout" value="Add Contact" onclick="submitForm('addContactForm');"/>	
 			</form>
 		</div>
 	</div>	

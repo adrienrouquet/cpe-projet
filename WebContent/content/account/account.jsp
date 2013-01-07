@@ -14,16 +14,13 @@
 		
 </head>
 	<body>
-		<div class="section" style="text-align: center;">
-			<% 
+		<% 
 				if( accountRouterBean.getUrl() != "")  
 				{
 			%>  
 				<jsp:include page="<%= accountRouterBean.getUrl() %>" />
 			<% 
 				}
-			%>
-		</div>
-		
+			%>		
 	</body>
 </html>

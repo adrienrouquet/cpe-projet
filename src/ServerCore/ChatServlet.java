@@ -64,6 +64,14 @@ public class ChatServlet extends HttpServlet {
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    	}break;
+			
+			case "openAddContactWindow":
+			{    		
+				cr.setUrl("addContactWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+	    	}break;
+	    	
 	    	//Action: on est sur la chatWindow et on veut retourner a la contactWindow. Il faut donc vider le dstUserId du msgManager
 			case "backToContactView":
 			{    		
