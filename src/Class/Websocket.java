@@ -11,24 +11,23 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 
-import Bean.UserBean;
+import Class.User;
 import Manager.MsgManager;
 import Manager.UserManager;
-import Manager.WebsocketManager;
 
 public class Websocket extends MessageInbound{
 
-	private Class.MsgManager _msgManager = null;
+	private MsgManager _msgManager = null;
 
-	public Websocket(Class.MsgManager msgManager) {
+	public Websocket(MsgManager msgManager) {
 		_msgManager = msgManager;
 	}
 	
-	public Class.MsgManager getMsgManager() {
+	public MsgManager getMsgManager() {
 		return _msgManager;
 	}
 
-	public void setMsgManager(Class.MsgManager msgManager) {
+	public void setMsgManager(MsgManager msgManager) {
 		this._msgManager = msgManager;
 	}
 
@@ -101,7 +100,7 @@ public class Websocket extends MessageInbound{
 		Integer msgId = _msgManager.sendMessage((String) data.get("content"));			
 		//On ajoute l'ID dans le jsonDst pour le destinataire
 		data.put("id",  msgId.toString());
-		data.put("sender", Manager.UserManager.getName(_msgManager.getSrcUserId()));
+		data.put("sender", UserManager.getName(_msgManager.getSrcUserId()));
 		data.put("status", "/");
 		//On publie un SSE qui publie une notification au user destinataire
 		this.emit("updateMessageStatus", data.toJSONString());

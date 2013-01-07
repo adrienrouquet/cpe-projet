@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import Class.Websocket;
 import Class.User;
 import Manager.UserManager;
+import Manager.MsgManager;
 
 /**
  * Servlet implementation class Test
@@ -32,11 +33,10 @@ public class WebsocketServlet extends WebSocketServlet {
 		User user = ((Bean.UserBean) session.getAttribute("userBean")).getUser();
 		System.out.println("User" + user.getId() + ": Entering createWebSocketInbound");
 		
-		Class.MsgManager msgManager = (Class.MsgManager) session.getAttribute("msgManagerBean");
+		MsgManager msgManager = (MsgManager) session.getAttribute("msgManagerBean");
 		
 		Websocket websocket = new Websocket(msgManager);
 		user.setWebsocket(websocket);
-		// A DEPLACER !!!
 		UserManager.addUserConnected(user);
 		System.err.println(UserManager.getUsersConnected());
 		
