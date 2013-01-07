@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import Bean.UserBean;
 import Manager.MsgManager;
+import Manager.UserManager;
 
 
 @WebServlet("/ChatServlet")
@@ -99,6 +100,15 @@ public class ChatServlet extends HttpServlet {
 				
 				session.setAttribute("searchUserBean", searchUserBean);
 				cr.setUrl("addContactWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+	    	}break;
+	    	
+			case "submitAddContact":
+			{
+				session.setAttribute("searchUserBean", null);
+				UserManager.addContact(userBean.getId(), userBean.getMsgManager().getDstUserId());
+				cr.setUrl("chatWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    	}break;

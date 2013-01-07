@@ -54,7 +54,7 @@
 								{
 									int unreadMessageCount = user.getMsgManager().getNonDeliveredMessageCount(user.getId());
 				%>
-				<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
+				<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','submitAddContact');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
 				
 					<div class="contactName">
 						<%= user.getFirstName() %> <%= user.getLastName() %>

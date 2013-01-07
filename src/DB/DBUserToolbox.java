@@ -111,6 +111,26 @@ public class DBUserToolbox extends DBToolbox {
 		return users;
 	}
 	
+	public void addContact(int srcUserId, int dstUserId)
+	{
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		
+		try {
+			
+			cs = conn.prepareCall("{CALL addContact(?,?)}");
+			cs.setInt("pSrcUserId", srcUserId);
+			cs.setInt("pDstUserId", dstUserId);
+			cs.executeQuery();			
+			
+		} catch (SQLException e) {
+			System.out.println("Error in getIdFromLogin:" +e.getMessage());
+		}
+		
+		closeConn(conn);
+	}
+	
 	public String getName(Integer id)
 	{
 		Connection conn 		= getConn();
