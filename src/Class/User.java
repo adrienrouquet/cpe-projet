@@ -13,9 +13,6 @@ import Manager.MsgManager;
  */
 public class User{
 
-	/**
-	 * 
-	 */
 	private int _id = 0;
 	private String _login = "";
 	private String _password = "";

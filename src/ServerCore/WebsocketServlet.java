@@ -32,8 +32,6 @@ public class WebsocketServlet extends WebSocketServlet {
 		User user = ((Bean.UserBean) session.getAttribute("userBean")).getUser();
 		System.out.println("User" + user.getId() + ": Entering createWebSocketInbound");
 		
-//		MsgManager msgManager = (MsgManager) session.getAttribute("msgManagerBean");
-		
 		Websocket websocket = new Websocket(user.getMsgManager());
 		user.setWebsocket(websocket);
 		UserManager.addUserConnected(user);

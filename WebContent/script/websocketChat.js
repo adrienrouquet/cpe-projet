@@ -24,11 +24,11 @@ $(document).ready(function() {
 	}
 	
 	function doSend() {
-		
 		var json = new JSONMessage();
 		
 		json.date = getDate();
 		json.content = $('#content').val();
+		json.tmp = new Date().getTime();
 		$('#content').val("");
 		
 		var outgoingMsg = _outgoingMessage.clone();
@@ -49,14 +49,18 @@ $(document).ready(function() {
 	}
 	
 	function writeNewMessage(element, json) {
-		if (json.content!="")
+		if (json.content != "")
 			element.find(".messageContent").html(json.content);
 		
-		if (json.date!="")
+		if (json.date != "")
 			element.find(".messageDateTime").html(json.date);
 		
-		if (json.id!="")
+		if (json.id != "")
 			element.attr("id", json.id);
+		else {
+			if (json.tmp != "")
+				element.attr("id", json.tmp);
+		}
 		
 		$('.messagesWrapper').append(element);
 	}
@@ -89,7 +93,8 @@ $(document).ready(function() {
 			json.parse(data);
 
 			if ($("#" + json.id).html() == undefined) {
-				var element = $(".messageContent:contains('" + json.content + "')").siblings(".messageDateTime:contains('" + json.date + "')").parent(".messageTo[id=null]");
+//				var element = $(".messageContent:contains('" + json.content + "')").siblings(".messageDateTime:contains('" + json.date + "')").parent(".messageTo[id=null]");
+				var element = $("#" + json.tmp);
 				element.attr("id", json.id);
 			}
 				

@@ -3,7 +3,6 @@ package Manager;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import Bean.UserBean;
 import Class.User;
 import DB.DBUserToolbox;
 
@@ -31,7 +30,6 @@ public abstract class UserManager {
 
 	public static String getName(int id)
 	{
-
 		String name = _dbut.getName(id);
 		if(name == null)
 			return "N/A";
@@ -40,18 +38,25 @@ public abstract class UserManager {
 	
 	public static Timestamp getLastLogin(int id)
 	{
-
 		return _dbut.getLastLogin(id);
 	}
 
+	public static void setUsersConnected(ArrayList<User> _usersConnected) {
+		UserManager._usersConnected = _usersConnected;
+	}
 
 	public static ArrayList<User> getUsersConnected() {
 		return _usersConnected;
 	}
 
-
-	public static void setUsersConnected(ArrayList<User> _usersConnected) {
-		UserManager._usersConnected = _usersConnected;
+	public static ArrayList<User> getUsersConnected(Integer id) {
+		ArrayList<User> users = new ArrayList<User>();
+		for (User user : _usersConnected) {
+			if (id.equals(user.getId())) {
+				users.add(user);
+			}
+		}
+		return users;
 	}
 
 	public static void addUserConnected(User user) {
@@ -62,16 +67,6 @@ public abstract class UserManager {
 	public static void delUserConnected(User user) {
 		_usersConnected.remove(user);
 		System.out.println("User"+ user.getId() + "("+ getName(user.getId()) +") is disconnected");
-	}
-	
-	public static ArrayList<User> getConnectedUser(Integer id) {
-		ArrayList<User> users = new ArrayList<User>();
-		for (User user : _usersConnected) {
-			if (id.equals(user.getId())) {
-				users.add(user);
-			}
-		}
-		return users;
 	}
 	
 	public static void addContact(int srcUserId, int dstUserId)

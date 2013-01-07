@@ -42,9 +42,8 @@ public class Websocket extends MessageInbound{
 		
 		String msg = buffer.toString();
 		
+		// On ne recoit que des messages JSON de la forme { "event": ... "data": [...] }
 		JSONObject jsonEvent = (JSONObject) JSONValue.parse(msg);
-		
-		System.out.println(jsonEvent);
 		
 		String event = (String) jsonEvent.get("event");
 		JSONArray data = (JSONArray)  jsonEvent.get("data");
@@ -71,12 +70,12 @@ public class Websocket extends MessageInbound{
 	@Override
 	protected void onClose(int status) {
 		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering onClose: " + this.getWsOutbound());
-		for (User user : UserManager.getConnectedUser(_msgManager.getSrcUserId())) {
+		// Lorsque la websocket se ferme, on supprime l'user de la liste des users connectés
+		for (User user : UserManager.getUsersConnected(_msgManager.getSrcUserId())) {
 			if (this.equals(user.getWebsocket())) {
 				UserManager.delUserConnected(user);
 			}
 		}
-//		Manager.UserManager.delUserConnected(Manager.UserManager.getConnectedUser(_msgManager.getSrcUserId()));
 	}
 
 	public void onUpdateMessageStatus(JSONObject data) {
@@ -88,7 +87,7 @@ public class Websocket extends MessageInbound{
 			_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
 			// Le dst recoit le msg et update le status sur l'emetteur
 			data.put("status", "//");
-			for (User user : UserManager.getConnectedUser(_msgManager.getDstUserId())) {
+			for (User user : UserManager.getUsersConnected(_msgManager.getDstUserId())) {
 				user.getWebsocket().emit("updateMessageStatus", data.toJSONString());
 			}
 		}
@@ -96,40 +95,44 @@ public class Websocket extends MessageInbound{
 
 	private void onSendMessage(JSONObject data) {
 		System.err.println("EVENT: sendMessage");
-		//On ajoute le nouveau message en DB et on recupere l'ID de l'insertion
-		Integer msgId = _msgManager.sendMessage((String) data.get("content"));			
-		//On ajoute l'ID dans le jsonDst pour le destinataire
+		// On ajoute le nouveau message en DB et on recupere l'ID de l'insertion
+		Integer msgId = _msgManager.sendMessage((String) data.get("content"));
+		// On ajoute l'ID, le sender, et le status dans le json
+		// On enleve le content
 		data.put("id",  msgId.toString());
 		data.put("sender", UserManager.getName(_msgManager.getSrcUserId()));
 		data.put("status", "/");
-		//On publie un SSE qui publie une notification au user destinataire
+		String content = (String) data.get("content");
+		data.remove("content");
+		
+		// On envoit un event pour updater le status du message
 		this.emit("updateMessageStatus", data.toJSONString());
 		
-		ArrayList<User> users = UserManager.getConnectedUser(_msgManager.getDstUserId());
-		if (users.size() > 0) {			
+		// On ajoute le content
+		data.remove("tmp");
+		data.put("content", content);
+		
+		// Pour tous les users qui on le meme id (un utilisateur qui est connecté sur plusieurs interfaces), on envoit un event
+		ArrayList<User> users = UserManager.getUsersConnected(_msgManager.getDstUserId());
+		if (users.size() > 0) {
 			for (User user : users)
 				user.getWebsocket().emit("newMessage", data.toJSONString());
 		} else {
-			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");			
+			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");
 		}
-		
-//		SSE.setNewMessageReceived(_msgManager.getSrcUserId(), _msgManager.getDstUserId());
-//		System.out.println("User" + _msgManager.getSrcUserId() + ": added message to DB");
 	}
 	
 	public void emit(String event, String... datas) {
-		System.err.println("emit");
+		System.err.println("emit: " + event);
 		JSONArray jsonArray = new JSONArray();
-		for (String data : datas) {			
+		for (String data : datas) {
 			jsonArray.add(data);
 		}
-		
+		// On met en forme les données pour les envoyer: { "event": ..., "data": [...] }
 		JSONObject jsonEvent = new JSONObject();
 		jsonEvent.put("event", event);
 		jsonEvent.put("data", jsonArray);
 		
-		System.out.println("jsonEvent");
-		System.out.println(jsonEvent);
 		try {
 			WsOutbound conn = this.getWsOutbound();
 			conn.writeTextMessage(CharBuffer.wrap(jsonEvent.toJSONString()));
@@ -138,16 +141,4 @@ public class Websocket extends MessageInbound{
 //			e.printStackTrace();
 		}
 	}
-//	private void broadcast(String msg) {
-//		System.out.println("broadcast");
-//		for (WsOutbound connection : connectionsMap.values()) {
-//			try {
-//				connection.writeTextMessage(CharBuffer.wrap(msg));
-//			} catch (IOException ignore) {
-//				//Ignore
-//			}
-//		}
-//	}
-
-	
 }

@@ -5,6 +5,7 @@ $(document).ready(function() {
 	
 	function JSONMessage() {
 		this.id = "";
+		this.tmp = "";
 		this.date = "";
 		this.content = "";
 		this.sender = "";
@@ -13,6 +14,7 @@ $(document).ready(function() {
 		this.getJSON = function () {
 			return {
 				"id": this.id,
+				"tmp": this.tmp,
 				"date": this.date,
 				"content": this.content,
 				"sender": this.sender,
@@ -28,6 +30,7 @@ $(document).ready(function() {
 			var obj = JSON.parse(jsonString);
 			
 			this.id = (obj["id"]!=undefined)?obj["id"]:"";
+			this.tmp = (obj["tmp"]!=undefined)?obj["tmp"]:"";
 			this.date = (obj["date"]!=undefined)?obj["date"]:"";
 			this.content = (obj["content"]!=undefined)?obj["content"]:"";
 			this.sender = (obj["sender"]!=undefined)?obj["sender"]:"";
