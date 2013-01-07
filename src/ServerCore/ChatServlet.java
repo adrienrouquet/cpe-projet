@@ -77,12 +77,8 @@ public class ChatServlet extends HttpServlet {
 	    	
 			case "clearAddContactWindow":
 			{   
-				if(searchUserBean == null)
-				{
-					System.out.println("Warning: searchUserBean is null in ChatServlet");
-					searchUserBean	=  new Bean.UserBean();
-					session.setAttribute("searchUserBean", searchUserBean);
-				}
+				searchUserBean	=  new Bean.UserBean();
+				session.setAttribute("searchUserBean", searchUserBean);
 				cr.setUrl("addContactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");		
 
