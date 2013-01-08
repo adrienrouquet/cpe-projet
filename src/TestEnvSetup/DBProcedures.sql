@@ -31,6 +31,24 @@ END //
 DELIMITER ;
 
 /*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS userExists;
+DELIMITER //
+CREATE PROCEDURE userExists 
+(
+	IN pEmail VARCHAR(255),
+	IN pPhone VARCHAR(255),
+	IN pLogin VARCHAR(255)
+)
+BEGIN
+	
+   SELECT SUM(CASE WHEN pLogin = login THEN 1 ELSE 0 END) as loginExists, SUM(CASE WHEN pPhone = phone THEN 1 ELSE 0 END) as phoneExists, SUM(CASE WHEN pEmail = email THEN 1 ELSE 0 END) as emailExists
+   FROM users 
+   WHERE pLogin = login OR pEmail = email OR pPhone = phone
+   ;
+END
+DELIMITER ;
+
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getUser;
 DELIMITER //
 CREATE PROCEDURE getUser 

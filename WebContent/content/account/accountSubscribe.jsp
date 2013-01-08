@@ -69,11 +69,10 @@
 			<input type="phone" name="phone" placeholder="Enter phone number" value="<% if(request.getParameter("phone") != null){ out.print(request.getParameter("phone")); } %>"/>
 			<%
 			}
-			%>
-			
+			%>			
 			<br />
 			<% 
-			if(request.getParameter("error") != null && request.getParameter("error").contains("userExists"))
+			if(request.getParameter("error") != null && request.getParameter("error").contains("loginExists"))
 			{
 			%>
 			<input type="text" name="login" placeholder="Enter login" class="error"/>
