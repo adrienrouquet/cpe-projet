@@ -66,7 +66,7 @@ public class ChatServlet extends HttpServlet {
 					searchUserBean	=  new Bean.UserBean();
 					session.setAttribute("searchUserBean", searchUserBean);
 				}
-				cr.setUrl("addContactWindow.jsp");
+				cr.setUrl("addContact.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");		
 
 	    	}break;
@@ -75,15 +75,18 @@ public class ChatServlet extends HttpServlet {
 			{   
 				searchUserBean	=  new Bean.UserBean();
 				session.setAttribute("searchUserBean", searchUserBean);
-				cr.setUrl("addContactWindow.jsp");
+				cr.setUrl("addContact.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");		
 
 	    	}break;
 	    	
 			case "findContact":
 			{    		
-				System.out.println("Warning: searchUserBean is null in ChatServlet");
-				searchUserBean		=  new Bean.UserBean();				
+				// Le searchUserBean est sense etre null avant la recherche
+				if (searchUserBean != null)
+				{
+					searchUserBean		=  new Bean.UserBean();				
+				}
 				String name 		= req.getParameter("name").trim();
 				String login 		= req.getParameter("login").trim();
 				String email 		= req.getParameter("email").trim();
@@ -94,7 +97,7 @@ public class ChatServlet extends HttpServlet {
 				searchUserBean.setPhone(phone);
 				
 				session.setAttribute("searchUserBean", searchUserBean);
-				cr.setUrl("addContactWindow.jsp");
+				cr.setUrl("addContact.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    	}break;
