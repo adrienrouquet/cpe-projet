@@ -38,9 +38,7 @@
 		<form method="post" id="accountLoginForm" action="AccountServlet">
 			<input type="hidden" name="action" value="login"/>
 			<input placeholder="Enter Login..." type="text" id="login" name="login"/>
-			<br />
 			<input placeholder="Enter Password..." type="password" id="password" name="password"/>
-			<br />
 			<input type="submit" class="button" value="Login" />
 			<br /><a href="AccountServlet?action=subscribe"> Sign up </a>
 		</form>
