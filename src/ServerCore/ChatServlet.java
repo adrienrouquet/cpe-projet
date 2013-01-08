@@ -107,7 +107,8 @@ public class ChatServlet extends HttpServlet {
 			case "submitAddContact":
 			{
 				session.setAttribute("searchUserBean", null);
-				UserManager.addContact(userBean.getId(), userBean.getMsgManager().getDstUserId());
+				
+				UserBean.getUser().addContact(userBean.getId(), userBean.getMsgManager().getDstUserId());
 				cr.setUrl("chatWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
