@@ -1,11 +1,13 @@
 package Class;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import Class.Websocket;
 import DB.DBUserToolbox;
 import Manager.MsgManager;
+import Manager.UserManager;
 
 
 /**
@@ -25,7 +27,7 @@ public class User{
 	private Websocket _websocket = null;
 	private MsgManager _mm = null;
 	
-	private DBUserToolbox _dbut = null;
+	private static DBUserToolbox _dbut = null;
 
 	public User () { 	  
 		_dbut 	= new DBUserToolbox();
@@ -123,6 +125,10 @@ public class User{
 	public Timestamp getLastLoginDate() {
 		return this._lastLoginDate;
 	}
+	
+	public String getLastLoginDateFormated() {
+		return new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLoginDate());
+	}
 
 	public void setLastLoginDate(Timestamp lastLoginDate) {
 		this._lastLoginDate = lastLoginDate;
@@ -144,5 +150,36 @@ public class User{
 
 	public void setWebsocket(Websocket websocket) {
 		this._websocket = websocket;
+	}
+	
+	public String getName()
+	{
+		return _firstName + " " + _lastName;
+	}
+	
+	public void addContact(int contactId)
+	{
+		_dbut.addContact(_id, contactId);
+	}
+	
+	public static String getName(int id)
+	{
+		String name = _dbut.getName(id);
+		if(name == null)
+			return "N/A";
+		return name;
+	}
+	
+	public static String getLogin(int id) {
+		return _dbut.getLogin(id);
+	}
+	
+	public static Timestamp getLastLogin(int id)
+	{
+		return _dbut.getLastLogin(id);
+	}
+	
+	public static String getLastLoginFormated(int id) {
+		return new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLogin(id));
 	}
 }
