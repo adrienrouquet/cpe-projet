@@ -174,12 +174,12 @@ public class User{
 		return _dbut.getLogin(id);
 	}
 	
-	public static Timestamp getLastLogin(int id)
+	public static Timestamp getLastLoginDate(int id)
 	{
 		return _dbut.getLastLogin(id);
 	}
 	
-	public static String getLastLoginFormated(int id) {
-		return new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLogin(id));
+	public static String getLastLoginDateFormated(int id) {
+		return new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLoginDate(id));
 	}
 }
