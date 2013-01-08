@@ -22,19 +22,6 @@ public abstract class UserManager {
 		return _dbut.getUsers();
 	}
 	
-//	public static String getName(int id)
-//	{
-//		String name = _dbut.getName(id);
-//		if(name == null)
-//			return "N/A";
-//		return name;
-//	}
-//	
-//	public static Timestamp getLastLogin(int id)
-//	{
-//		return _dbut.getLastLogin(id);
-//	}
-
 	public static void setUsersConnected(ArrayList<User> _usersConnected) {
 		UserManager._usersConnected = _usersConnected;
 	}
@@ -54,19 +41,48 @@ public abstract class UserManager {
 	}
 
 	public static void addUserConnected(User user) {
-		_usersConnected.add(user);
 		System.out.println("User"+ user.getId() + "("+ user.getName() +") is connected");
+		if (!user.getIsConnected()) {			
+			for (User contact : user.getContacts()) {
+				for (User userConnected : _usersConnected) {
+					if (userConnected.getId() == contact.getId()) {
+						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), "Online");
+					}
+				}
+			}
+			user.setIsConnected(true);
+		}
+		_usersConnected.add(user);
 	}
 	
 	public static void delUserConnected(User user) {
-		_usersConnected.remove(user);
 		System.out.println("User"+ user.getId() + "("+ user.getName() +") is disconnected");
+		_usersConnected.remove(user);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Boolean isConnected = false;
+		for (User usr : _usersConnected) {
+			if (usr.getId() == user.getId()) {
+				isConnected = true;
+			}
+		}
+		
+		if (!isConnected) {
+			for (User contact : user.getContacts()) {
+				for (User userConnected : _usersConnected) {
+					if (userConnected.getId() == contact.getId())
+						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), "Last Login: " + user.getLastLoginDateFormated());
+				}
+			}
+			user.setIsConnected(false);
+		}
 	}
-	
-//	public static void addContact(int srcUserId, int dstUserId)
-//	{
-//		_dbut.addContact(srcUserId, dstUserId);
-//	}
 	
 	public static ArrayList<User> findContacts(String name, String login, String email, String phone) {
 		return _dbut.findContacts(name, login, email, phone);

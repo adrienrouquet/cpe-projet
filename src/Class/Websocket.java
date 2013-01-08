@@ -139,8 +139,12 @@ public class Websocket extends MessageInbound{
 		jsonEvent.put("event", event);
 		jsonEvent.put("data", jsonArray);
 		
+		System.err.println(jsonEvent.toJSONString());
+		
 		try {
 			WsOutbound conn = this.getWsOutbound();
+			System.err.println(conn);
+			if (conn != null)
 			conn.writeTextMessage(CharBuffer.wrap(jsonEvent.toJSONString()));
 		} catch (IOException e) {
 			System.err.println("ERROR IN emit");

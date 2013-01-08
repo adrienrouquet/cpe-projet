@@ -95,15 +95,16 @@ input.valid {
 .valid {
 	color: green;
 }
+label {
+	display: block;
+}
 label.error {
-	display: inline;
+	display: block;
 	color: red;
 }
-
 label.valid {
 	display: none;
 }
-
 .button {
 	width: 90%;
 	font-family: Arial, Helvetica, sans-serif;

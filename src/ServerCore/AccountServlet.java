@@ -88,7 +88,7 @@ public class AccountServlet extends HttpServlet {
 						//On set au passage le chatRouterBean en session aussi
 						
 						User user = dbut.getUser(login); 
-						user.setIsConnected(true);
+//						user.setIsConnected(true);
 						userBean.setUser(user);
 						session.setAttribute("userBean", userBean);
 						session.setAttribute("chatRouterBean", new Bean.Router());

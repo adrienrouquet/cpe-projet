@@ -50,9 +50,7 @@
 		<form method="post" action="AccountServlet" id="accountSubscribeForm">
 			<input type="hidden" name="action" value="submitSubscribe" />
 			<input type="text" name="firstName" placeholder="Enter first name" value="<% if(request.getParameter("firstName") != null){ out.print(request.getParameter("firstName")); } %>"/>
-			<br />
 			<input type="text" name="lastName" placeholder="Enter last name" value="<% if(request.getParameter("firstName") != null){ out.print(request.getParameter("lastName")); } %>"/>
-			<br />
 			<% 
 			if(request.getParameter("error") != null && request.getParameter("error").contains("emailExists"))
 			{
@@ -69,7 +67,6 @@
 			}
 			%>
 			
-			<br />
 			<% 
 			if(request.getParameter("error") != null && request.getParameter("error").contains("phoneExists"))
 			{
@@ -85,7 +82,6 @@
 			<%
 			}
 			%>
-			<br />
 			<% 
 			if(request.getParameter("error") != null && request.getParameter("error").contains("loginExists"))
 			{
@@ -101,9 +97,7 @@
 			<%
 			}
 			%>
-			<br />
 			<input type="password" id="password" name="password" placeholder="Enter password"/>
-			<br />
 			<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password"/>
 			<br />
 			<br />

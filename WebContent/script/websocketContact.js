@@ -16,6 +16,10 @@ $(document).ready(function() {
 			if(unreadMessageCountSpan.html() != undefined)
 				unreadMessageCountSpan.html(parseInt(unreadMessageCountSpan.html())+1);
 		});
+		
+		_websocket.on("updateContactStatus", function(login, message) {
+			$("#"+login).children(".contactStatus").html(message);
+		});
 	}
 	
 	(function() {
