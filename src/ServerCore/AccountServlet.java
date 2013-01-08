@@ -127,12 +127,13 @@ public class AccountServlet extends HttpServlet {
 					String firstName	= req.getParameter("firstName").trim().toLowerCase();
 					String lastName		= req.getParameter("lastName").trim().toLowerCase();
 					String login 		= req.getParameter("login").trim().toLowerCase();
+					String phone		= req.getParameter("phone").trim().toLowerCase();
 					String email		= req.getParameter("email").trim().toLowerCase();
 					String password 	= req.getParameter("password").trim();
 					
 					DBUserToolbox dbut 	= new DBUserToolbox();
 					
-					if(!dbut.userExists(login))
+					if(!dbut.userExists(email,phone,login))
 					{
 						ar.setUrl("accountSubscribeOk.jsp");
 					}
