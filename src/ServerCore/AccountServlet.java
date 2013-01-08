@@ -132,14 +132,15 @@ public class AccountServlet extends HttpServlet {
 					String password 	= req.getParameter("password").trim();
 					
 					DBUserToolbox dbut 	= new DBUserToolbox();
+					String errors 		= dbut.userExists(email,phone,login);
 					
-					if(!dbut.userExists(email,phone,login))
+					if(errors.equals(""))
 					{
 						ar.setUrl("accountSubscribeOk.jsp");
 					}
 					else
 					{
-						ar.setUrl("accountSubscribe.jsp?error=userExists");						
+						ar.setUrl("accountSubscribe.jsp?error="+errors);						
 					}
 					rd = req.getRequestDispatcher("content/account/account.jsp");
 					rd.forward(req, res);
