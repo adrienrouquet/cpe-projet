@@ -23,7 +23,7 @@ public class DBUserToolbox extends DBToolbox {
 		_dbHandler = new DBHandler(_dbName);
 	}
 
-	public Boolean userExists(String login)
+	public Boolean userExists(String email, String phone, String login)
 	{
 		
 		Connection conn 		= getConn();
@@ -32,7 +32,9 @@ public class DBUserToolbox extends DBToolbox {
 		Boolean exists			= true;
 		try {
 			
-			cs = conn.prepareCall("{CALL userExists()}");
+			cs = conn.prepareCall("{CALL userExists(?,?,?)}");
+			cs.setString("pEmail", email);
+			cs.setString("pPhone", phone);
 			cs.setString("pLogin", login);
 			rs = cs.executeQuery();		
 			
@@ -175,6 +177,32 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getName:" +e.getMessage());
+		}
+		
+		closeConn(conn);
+		
+		return name;
+	}
+	
+	public String getLogin(Integer id)
+	{
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		String name 			= "";
+		
+		try {
+			
+			cs = conn.prepareCall("{CALL getLogin(?)}");
+			cs.setInt("pUserId", id);		
+			rs = cs.executeQuery();	
+			
+			while(rs.next())
+			{
+				name = rs.getString("login");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in getLogin:" +e.getMessage());
 		}
 		
 		closeConn(conn);

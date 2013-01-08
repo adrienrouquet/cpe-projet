@@ -47,21 +47,7 @@ BEGIN
 END //
 DELIMITER ;
 
-/*---------------------------------------------------*/
-DROP PROCEDURE IF EXISTS userExists;
-DELIMITER //
-CREATE PROCEDURE userExists 
-(
-	IN pLogin VARCHAR(255)
-)
-BEGIN
-	
-   SELECT COUNT(*) as 'userExists'
-   FROM users 
-   WHERE login = pLogin;
-   
-END //
-DELIMITER ;
+
 
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS findContacts;
@@ -168,6 +154,23 @@ CREATE PROCEDURE getName
 BEGIN
 
    	SELECT CONCAT(firstName,' ',lastName) AS name FROM users 
+   	WHERE 
+   		id = pUserId 
+   	;
+   
+END //
+DELIMITER ;
+
+/*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS getLogin;
+DELIMITER //
+CREATE PROCEDURE getLogin
+(
+	IN pUserId INT
+)
+BEGIN
+
+   	SELECT login FROM users 
    	WHERE 
    		id = pUserId 
    	;
