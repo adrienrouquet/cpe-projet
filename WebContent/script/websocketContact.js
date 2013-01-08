@@ -3,8 +3,8 @@ $(document).ready(function() {
 	var JSONMessage = window._JSONMessage;
 	
 	function listeningEvents() {
-		_websocket.on('newMessage', function(data) {
-			var json = new JSONMessage();
+		_websocket.on("messageNotification", function(data) {
+			 json = new JSONMessage();
 			json.parse(data);
 			alert(json.sender + " vous a envoyé un message !");
 		});
@@ -13,4 +13,4 @@ $(document).ready(function() {
 	(function() {
 		listeningEvents();
 	})();
-})
+});

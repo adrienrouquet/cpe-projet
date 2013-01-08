@@ -107,7 +107,7 @@ public class Msg {
 		for (String key : keys) {
 			switch (key) {
 			case "id":
-				jsonMsg.put("id", this._id);				
+				jsonMsg.put("id", String.valueOf(this._id));
 				break;
 			case "content":
 				jsonMsg.put("content", this._content);

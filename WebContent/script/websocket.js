@@ -49,6 +49,7 @@ $(document).ready(function() {
 		// message doit etre un JSON du type {'event': ..., 'data': ...}
 		try {
 			message = JSON.parse(evt.data);
+			console.dir(message);
 			console.log("EVENT FROM SERVER: " + message.event);
 			var json = new JSONMessage();
 			json.parse(evt.data);

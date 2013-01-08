@@ -62,7 +62,7 @@ $(document).ready(function() {
 				element.attr("id", json.tmp);
 		}
 		
-		$('.messagesWrapper').append(element);
+		$('#messageForm').append(element);
 	}
 	
 	function init() {
@@ -81,12 +81,12 @@ $(document).ready(function() {
 		_websocket.on('newMessage', function(data) {
 			var json = new JSONMessage();
 			json.parse(data);
-			if ($(".contactName:contains("+json.sender+")").html() != undefined && $("#messageForm").html() != undefined) {
+//			if ($(".contactName:contains("+json.sender+")").html() != undefined && $("#messageForm").html() != undefined) {
 				writeNewMessage(_incomingMessage.clone(), json);
 				_websocket.emit('updateMessageStatus', json.stringify());
-			} else {				
-				alert(json.sender + " vous a envoyé un message !");
-			}
+//			} else {				
+//				alert(json.sender + " vous a envoyé un message !");
+//			}
 		});
 		
 		_websocket.on('updateMessageStatus', function(data) {
@@ -100,6 +100,12 @@ $(document).ready(function() {
 			}
 				
 			$("#" + json.id).children(".messageStatus").html(json.status);
+		});
+		
+		_websocket.on("messageNotification", function(data) {
+			 json = new JSONMessage();
+			json.parse(data);
+			alert(json.sender + " vous a envoyé un message !");
 		});
 	}
 	

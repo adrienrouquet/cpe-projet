@@ -81,42 +81,48 @@ public class Websocket extends MessageInbound{
 	public void onUpdateMessageStatus(JSONObject data) {
 		System.err.println("EVENT: updateMessageStatus");
 
-		// Simple verification: si on est ici, le status est forcement "/"
-		if ("/".equals(data.get("status"))) {
-			// MAJ en DB
-			_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
-			// Le dst recoit le msg et update le status sur l'emetteur
-			data.put("status", "//");
-			for (User user : UserManager.getUsersConnected(_msgManager.getDstUserId())) {
-				user.getWebsocket().emit("updateMessageStatus", data.toJSONString());
-			}
+		// MAJ en DB
+//		System.out.println(data.get("id").getClass());
+		_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
+		// Le dst recoit le msg et update le status sur l'emetteur
+		data.put("status", "//");
+		for (User user : UserManager.getUsersConnected(_msgManager.getDstUserId())) {
+			user.getWebsocket().emit("updateMessageStatus", data.toJSONString());
 		}
 	}
 
 	private void onSendMessage(JSONObject data) {
 		System.err.println("EVENT: sendMessage");
 		// On ajoute le nouveau message en DB et on recupere l'ID de l'insertion
-		Integer msgId = _msgManager.sendMessage((String) data.get("content"));
+//		Integer msgId = _msgManager.sendMessage((String) data.get("content"));
+		Msg msg = _msgManager.sendMessage((String) data.get("content"));
 		// On ajoute l'ID, le sender, et le status dans le json
 		// On enleve le content
-		data.put("id",  msgId.toString());
-		data.put("sender", UserManager.getName(_msgManager.getSrcUserId()));
-		data.put("status", "/");
-		String content = (String) data.get("content");
-		data.remove("content");
+//		data.put("id",  msg.getId());
+//		data.put("status", "/");
+//		String content = (String) data.get("content");
+//		data.remove("content");
+		
+		JSONObject jsonUpMsg = msg.getJsonMsg("id", "status");
+		jsonUpMsg.put("tmp", data.get("tmp"));
 		
 		// On envoit un event pour updater le status du message
-		this.emit("updateMessageStatus", data.toJSONString());
+		this.emit("updateMessageStatus", jsonUpMsg.toJSONString());
 		
-		// On ajoute le content
-		data.remove("tmp");
-		data.put("content", content);
+		// On ajoute le content et on enleve tmp
+//		data.remove("tmp");
+//		data.put("content", content);
 		
 		// Pour tous les users qui on le meme id (un utilisateur qui est connecté sur plusieurs interfaces), on envoit un event
 		ArrayList<User> users = UserManager.getUsersConnected(_msgManager.getDstUserId());
 		if (users.size() > 0) {
 			for (User user : users)
-				user.getWebsocket().emit("newMessage", data.toJSONString());
+				if (user.getMsgManager().getDstUserId() == _msgManager.getSrcUserId()) {
+					user.getWebsocket().emit("newMessage", msg.getJsonStringifyMsg("id", "content", "date"));
+				} else {
+//					data.put("sender", UserManager.getName(_msgManager.getSrcUserId()));
+					user.getWebsocket().emit("messageNotification", msg.getJsonStringifyMsg("sender"));
+				}
 		} else {
 			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");
 		}
