@@ -136,7 +136,8 @@ public class AccountServlet extends HttpServlet {
 					
 					if(errors.equals(""))
 					{
-						ar.setUrl("accountSubscribeOk.jsp");
+						dbut.addUser(firstName,lastName,email,phone,login,password);
+						ar.setUrl("accountLogin.jsp?valid=subscribe");
 					}
 					else
 					{

@@ -33,7 +33,7 @@ DELIMITER ;
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS userExists;
 DELIMITER //
-CREATE PROCEDURE userExists 
+CREATE PROCEDURE userExists
 (
 	IN pEmail VARCHAR(255),
 	IN pPhone VARCHAR(255),
@@ -45,7 +45,7 @@ BEGIN
    FROM users 
    WHERE pLogin = login OR pEmail = email OR pPhone = phone
    ;
-END
+END //
 DELIMITER ;
 
 /*---------------------------------------------------*/

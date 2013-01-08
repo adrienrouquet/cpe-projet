@@ -148,6 +148,30 @@ public class DBUserToolbox extends DBToolbox {
 		
 		return users;
 	}
+
+	public void addUser(String firstName, String lastName, String email, String phone, String login, String password)
+	{
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		
+		try {
+			
+			cs = conn.prepareCall("{CALL addUser(?,?,?,?,?,?)}");
+			cs.setString("pFirstName", firstName);
+			cs.setString("pLastName", lastName);
+			cs.setString("pEmail", email);
+			cs.setString("pPhone", phone);
+			cs.setString("pLogin", login);
+			cs.setString("pPassword", password);
+			cs.executeQuery();			
+			
+		} catch (SQLException e) {
+			System.out.println("Error in addUser:" +e.getMessage());
+		}
+		
+		closeConn(conn);
+	}
 	
 	public void addContact(int srcUserId, int dstUserId)
 	{
@@ -163,7 +187,7 @@ public class DBUserToolbox extends DBToolbox {
 			cs.executeQuery();			
 			
 		} catch (SQLException e) {
-			System.out.println("Error in getIdFromLogin:" +e.getMessage());
+			System.out.println("Error in addContact:" +e.getMessage());
 		}
 		
 		closeConn(conn);

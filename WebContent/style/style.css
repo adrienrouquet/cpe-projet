@@ -68,6 +68,10 @@ footer{
 	overflow-y: auto;
 }
 
+.block {
+	display: block;
+}
+
 .messageSection{
 	bottom: 100px;
 }
@@ -75,6 +79,7 @@ footer{
 input {
 	width:90%;
 }
+
 
 input.error {
 	border: 2px solid red;
@@ -91,7 +96,7 @@ input.valid {
 	color: green;
 }
 label.error {
-	display: inline-block;
+	display: inline;
 	color: red;
 }
 
