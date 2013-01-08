@@ -18,10 +18,10 @@
 		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
 		</form>	
 		<div class="contactName">
-			<%=UserManager.getName(userBean.getMsgManager().getDstUserId())%>
+			<%=User.getName(userBean.getMsgManager().getDstUserId())%>
 		</div>
 		<div class="contactStatus">
-			Last login: <%=new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(UserManager.getLastLogin(userBean.getMsgManager().getDstUserId()))%>
+			Last login: <%= User.getLastLoginFormated(userBean.getMsgManager().getDstUserId()) %>
 		</div>
 	</header>
 	<section class="messageSection scroll" id="messageForm">

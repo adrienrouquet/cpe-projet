@@ -10,11 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Bean.UserBean;
-import Manager.MsgManager;
-import Manager.UserManager;
-
-
 @WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -108,7 +103,7 @@ public class ChatServlet extends HttpServlet {
 			{
 				session.setAttribute("searchUserBean", null);
 				
-				UserBean.getUser().addContact(userBean.getId(), userBean.getMsgManager().getDstUserId());
+				userBean.getUser().addContact(userBean.getMsgManager().getDstUserId());
 				cr.setUrl("chatWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);

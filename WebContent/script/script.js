@@ -4,13 +4,14 @@ $(document).ready(function() {
 	function scrollDown() {
 		$(".scroll").animate({
 			scrollTop: $(".scroll").prop("scrollHeight")
-			},
-			0);
+			}, 0);
 	}
 	
 	function init() {
 		scrollDown();
-		$("#messageForm").change(scrollDown);
+		$("#messageForm").bind("DOMNodeInserted", function() {
+			scrollDown();
+		});
 	}
 	
 	function initGlobal() {

@@ -64,7 +64,7 @@ public class Websocket extends MessageInbound{
 	
 	@Override
 	protected void onOpen(WsOutbound outbound) {
-		System.out.println("User" + _msgManager.getSrcUserId() + " ("+ UserManager.getName(_msgManager.getSrcUserId()) +"): Entering onOpen: " + this.getWsOutbound());
+		System.out.println("User" + _msgManager.getSrcUserId() + " ("+ User.getName(_msgManager.getSrcUserId()) +"): Entering onOpen: " + this.getWsOutbound());
 	}
 	
 	@Override
@@ -121,7 +121,7 @@ public class Websocket extends MessageInbound{
 					user.getWebsocket().emit("newMessage", msg.getJsonStringifyMsg("id", "content", "date"));
 				} else {
 //					data.put("sender", UserManager.getName(_msgManager.getSrcUserId()));
-					user.getWebsocket().emit("messageNotification", msg.getJsonStringifyMsg("sender"));
+					user.getWebsocket().emit("messageNotification", msg.getJsonStringifyMsg("src", "sender"));
 				}
 		} else {
 			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");

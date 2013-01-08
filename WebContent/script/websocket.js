@@ -8,6 +8,7 @@ $(document).ready(function() {
 		this.tmp = "";
 		this.date = "";
 		this.content = "";
+		this.src = "";
 		this.sender = "";
 		this.status = "";
 		
@@ -17,6 +18,7 @@ $(document).ready(function() {
 				"tmp": this.tmp,
 				"date": this.date,
 				"content": this.content,
+				"src": this.src,
 				"sender": this.sender,
 				"status": this.status,
 			};
@@ -33,6 +35,7 @@ $(document).ready(function() {
 			this.tmp = (obj["tmp"]!=undefined)?obj["tmp"]:"";
 			this.date = (obj["date"]!=undefined)?obj["date"]:"";
 			this.content = (obj["content"]!=undefined)?obj["content"]:"";
+			this.sender = (obj["src"]!=undefined)?obj["src"]:"";
 			this.sender = (obj["sender"]!=undefined)?obj["sender"]:"";
 			this.status = (obj["status"]!=undefined)?obj["status"]:"";
 		};

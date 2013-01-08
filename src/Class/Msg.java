@@ -115,8 +115,11 @@ public class Msg {
 			case "date":
 				jsonMsg.put("date", this.getDateFormated());
 				break;
+			case "src":
+				jsonMsg.put("src", User.getLogin(_srcUserId));
+				break;
 			case "sender":
-				jsonMsg.put("sender", Manager.UserManager.getName(_srcUserId));
+				jsonMsg.put("sender", User.getName(_srcUserId));
 				break;
 			case "status":
 				jsonMsg.put("status", this.isDeliveredFormated());
