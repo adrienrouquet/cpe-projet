@@ -62,7 +62,7 @@
 			else
 			{
 			%>
-			<input type="text" name="email" placeholder="Enter email address" value="<% if(request.getParameter("email") != null){ out.print(request.getParameter("email")); } %>"/>
+			<input type="text" style="display: block;" name="email" placeholder="Enter email address" value="<% if(request.getParameter("email") != null){ out.print(request.getParameter("email")); } %>"/>
 			<%
 			}
 			%>
