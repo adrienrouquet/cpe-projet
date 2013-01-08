@@ -1,17 +1,16 @@
 $(document).ready(function() {
 
 
-	function onChange() {
-		$("#messageForm").change( function() {
-			$(".scroll").animate({
-				scrollTop: $(".scroll").prop("scrollHeight")
-				},
-				0);
-			});
+	function scrollDown() {
+		$(".scroll").animate({
+			scrollTop: $(".scroll").prop("scrollHeight")
+			},
+			0);
 	}
 	
 	function init() {
-		onChange();
+		scrollDown();
+		$("#messageForm").change(scrollDown);
 	}
 	
 	function initGlobal() {
