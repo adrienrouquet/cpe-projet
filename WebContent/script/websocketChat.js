@@ -35,17 +35,8 @@ $(document).ready(function() {
 //		outgoingMsg.find(".messageStatus").html('X');
 		writeNewMessage(outgoingMsg, json);
 		
-		scrollDown();
-		
 		var message = json.stringify();
 		_websocket.emit("sendMessage", message);
-	}
-	
-	function scrollDown() {
-		$(".scroll").animate({
-			scrollTop: $(".scroll").prop("scrollHeight")
-			},
-			0);
 	}
 	
 	function writeNewMessage(element, json) {
@@ -62,7 +53,15 @@ $(document).ready(function() {
 				element.attr("id", json.tmp);
 		}
 		
-		$('.messagesWrapper').append(element);
+		$('.messageSection').append(element);
+		scrollDown();
+	}
+	
+	function scrollDown() {
+		$(".scroll").animate({
+			scrollTop: $(".scroll").prop("scrollHeight")
+			},
+			0);
 	}
 	
 	function init() {

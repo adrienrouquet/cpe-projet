@@ -9,6 +9,7 @@
 <jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
 <script type="text/javascript" src="script/websocketChat.js"></script>
+<script type="text/javascript" src="script/script.js"></script>
 
 <div id="container">
 	<header class="black">
