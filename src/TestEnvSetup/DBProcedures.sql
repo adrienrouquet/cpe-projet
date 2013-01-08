@@ -48,6 +48,22 @@ END //
 DELIMITER ;
 
 /*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS userExists;
+DELIMITER //
+CREATE PROCEDURE userExists 
+(
+	IN pLogin VARCHAR(255)
+)
+BEGIN
+	
+   SELECT COUNT(*) as 'userExists'
+   FROM users 
+   WHERE login = pLogin;
+   
+END //
+DELIMITER ;
+
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS findContacts;
 DELIMITER //
 CREATE PROCEDURE findContacts

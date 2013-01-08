@@ -23,6 +23,31 @@ public class DBUserToolbox extends DBToolbox {
 		_dbHandler = new DBHandler(_dbName);
 	}
 
+	public Boolean userExists(String login)
+	{
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		Boolean exists			= true;
+		try {
+			
+			cs = conn.prepareCall("{CALL userExists()}");
+			cs.setString("pLogin", login);
+			rs = cs.executeQuery();		
+			
+			while(rs.next())
+			{
+				exists = rs.getBoolean("userExists");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in userExists:" +e.getMessage());
+		}
+		
+		closeConn(conn);
+		
+		return exists;
+	}
 	
 	public ArrayList<User> getUsers()
 	{
@@ -35,7 +60,7 @@ public class DBUserToolbox extends DBToolbox {
 		try {
 			
 			cs = conn.prepareCall("{CALL getUsers()}");
-			rs = cs.executeQuery();		
+			rs = cs.executeQuery();
 			
 			users = new ArrayList<User>();
 			

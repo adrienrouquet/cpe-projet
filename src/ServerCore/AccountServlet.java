@@ -116,6 +116,34 @@ public class AccountServlet extends HttpServlet {
 					req.getSession(true);
 					res.sendRedirect("!");
 				}break;
+				case "subscribe":
+				{
+					ar.setUrl("accountSubscribe.jsp");
+					rd = req.getRequestDispatcher("content/account/account.jsp");
+					rd.forward(req, res);
+				}break;
+				case "submitSubscribe":
+				{
+					String firstName	= req.getParameter("firstName").trim().toLowerCase();
+					String lastName		= req.getParameter("lastName").trim().toLowerCase();
+					String login 		= req.getParameter("login").trim().toLowerCase();
+					String email		= req.getParameter("email").trim().toLowerCase();
+					String password 	= req.getParameter("password").trim();
+					
+					DBUserToolbox dbut 	= new DBUserToolbox();
+					
+					if(!dbut.userExists(login))
+					{
+						ar.setUrl("accountSubscribeOk.jsp");
+					}
+					else
+					{
+						ar.setUrl("accountSubscribe.jsp?error=userExists");						
+					}
+					rd = req.getRequestDispatcher("content/account/account.jsp");
+					rd.forward(req, res);
+				}break;
+				
 				default:
 				{
 					

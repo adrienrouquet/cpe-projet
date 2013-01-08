@@ -34,6 +34,7 @@
 			<input placeholder="Enter Password..." type="password" id="password" name="password"/>
 			<br />
 			<input type="submit" class="button" value="Login" />
+			<br /><a href="AccountServlet?action=subscribe"> Sign up </a>
 		</form>
 	</section>
 </div>

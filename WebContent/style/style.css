@@ -77,12 +77,26 @@ input {
 }
 
 input.error {
-	border: 1px solid red;
+	border: 2px solid red;
 }
 
-label.error {
-	display: block;
+input.valid {
+	border: 2px solid green;
+}
+
+.error {
 	color: red;
+}
+.valid {
+	color: green;
+}
+label.error {
+	display: inline-block;
+	color: red;
+}
+
+label.valid {
+	display: none;
 }
 
 .button {
