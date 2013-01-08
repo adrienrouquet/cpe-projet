@@ -49,20 +49,41 @@
 	<section>
 		<form method="post" action="AccountServlet" id="accountSubscribeForm">
 			<input type="hidden" name="action" value="submitSubscribe" />
-			<input type="text" name="firstName" placeholder="Enter first name"/>
+			<input type="text" name="firstName" placeholder="Enter first name" value="<% if(request.getParameter("firstName") != null){ out.print(request.getParameter("firstName")); } %>"/>
 			<br />
-			<input type="text" name="lastName" placeholder="Enter last name"/>
+			<input type="text" name="lastName" placeholder="Enter last name" value="<% if(request.getParameter("firstName") != null){ out.print(request.getParameter("lastName")); } %>"/>
 			<br />
-			<input type="email" name="email" placeholder="Enter email address"/>
+			<input type="email" name="email" placeholder="Enter email address" value="<% if(request.getParameter("email") != null){ out.print(request.getParameter("email")); } %>"/>
 			<br />
-			<input type="phone" name="phone" placeholder="Enter phone number"/>
-			<br />
-			<input type="text" name="login" placeholder="Enter login"/>
 			<% 
-			if(request.getParameter("error") != null && request.getParameter("error").equals("userExists"))
+			if(request.getParameter("error") != null && request.getParameter("error").contains("phoneExists"))
 			{
 			%>
+			<input type="phone" name="phone" placeholder="Enter phone number" class="error"/>
+			<label for="login" generated="true" class="error" style="display: inline-block;">Phone already exists, please choose a different one</label>		
+			<%
+			}
+			else
+			{
+			%>
+			<input type="phone" name="phone" placeholder="Enter phone number" value="<% if(request.getParameter("phone") != null){ out.print(request.getParameter("phone")); } %>"/>
+			<%
+			}
+			%>
+			
+			<br />
+			<% 
+			if(request.getParameter("error") != null && request.getParameter("error").contains("userExists"))
+			{
+			%>
+			<input type="text" name="login" placeholder="Enter login" class="error"/>
 			<label for="login" generated="true" class="error" style="display: inline-block;">Login already exists, please choose a different one</label>		
+			<%
+			}
+			else
+			{
+			%>
+			<input type="text" name="login" placeholder="Enter login" value="<% if(request.getParameter("login") != null){ out.print(request.getParameter("login")); } %>"/>
 			<%
 			}
 			%>
