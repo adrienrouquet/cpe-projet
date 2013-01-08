@@ -42,8 +42,8 @@ $(document).ready(function() {
 	}
 	
 	function scrollDown() {
-		$(".section").animate({
-			scrollTop: $(".section").prop("scrollHeight")
+		$(".scroll").animate({
+			scrollTop: $(".scroll").prop("scrollHeight")
 			},
 			0);
 	}
@@ -74,6 +74,7 @@ $(document).ready(function() {
 		$.get('content/chat/incomingMessage.jsp', function(data) {
 			_incomingMessage = $(data);
 		});
+		//HENRI SCROLLDOWN
 	}
 	
 	function listeningEvents() {

@@ -37,6 +37,7 @@ body{
 	background: linear-gradient(to bottom, rgba(210,223,237,1) 0%,rgba(166,192,227,1) 27%,rgba(175,199,232,1) 62%,rgba(186,208,239,1) 75%,rgba(153,181,219,1) 88%,rgba(121,155,200,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2dfed', endColorstr='#799bc8',GradientType=0 ); /* IE6-9 */
 }
+
 header{
 	position: absolute;
 	top: 0px;
@@ -64,14 +65,12 @@ footer{
 }
 
 .scroll{
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .messageSection{
 	bottom: 100px;
 }
-
-
 
 input {
 	width:90%;

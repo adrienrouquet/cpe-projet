@@ -11,7 +11,7 @@
 <script type="text/javascript" src="script/websocketChat.js"></script>
 
 <div id="container">
-	<header class="abs black">
+	<header class="black">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
 		<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
 		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
@@ -24,45 +24,43 @@
 		</div>
 	</header>
 	<section class="messageSection scroll" id="messageForm">
-		<div class="messagesWrapper">
-			<%
-				ArrayList<Msg> messages = userBean.getMsgManager().getMessages(userBean.getId(),userBean.getMsgManager().getDstUserId());
-					for( Msg msg : messages)
+		<%
+			ArrayList<Msg> messages = userBean.getMsgManager().getMessages(userBean.getId(),userBean.getMsgManager().getDstUserId());
+				for( Msg msg : messages)
+				{
+					if(msg.getSrcUserId() != userBean.getId())
 					{
-						if(msg.getSrcUserId() != userBean.getId())
+						//Si le message n'avait pas ete delivre, on le marque comme delivre maintenant
+						if (!msg.isDelivered())
 						{
-							//Si le message n'avait pas ete delivre, on le marque comme delivre maintenant
-							if (!msg.isDelivered())
-							{
-								userBean.getMsgManager().setMessageDelivered(msg.getId());
-								msg.setIsDelivered(true);
-								for (User user : UserManager.getUsersConnected(userBean.getMsgManager().getDstUserId())) {
-									user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
-								}
+							userBean.getMsgManager().setMessageDelivered(msg.getId());
+							msg.setIsDelivered(true);
+							for (User user : UserManager.getUsersConnected(userBean.getMsgManager().getDstUserId())) {
+								user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
 							}
-			%>
-			<jsp:include page="incomingMessage.jsp">
-				<jsp:param value='<%= msg.getId() %>' name='id'/>
-				<jsp:param value='<%= msg.getContent() %>' name='content'/>
-				<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
-			</jsp:include>
-			<%
-					}
-					else
-					{
-			%>
-			<jsp:include page="outgoingMessage.jsp">
-				<jsp:param value='<%= msg.getId() %>' name='id'/>
-				<jsp:param value='<%= msg.getContent() %>' name='content'/>
-				<jsp:param value='<%= msg.isDeliveredFormated() %>' name='messageStatus'/>
-				<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
-			</jsp:include>
-			<%
-					}
+						}
+		%>
+		<jsp:include page="incomingMessage.jsp">
+			<jsp:param value='<%= msg.getId() %>' name='id'/>
+			<jsp:param value='<%= msg.getContent() %>' name='content'/>
+			<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
+		</jsp:include>
+		<%
 				}
-			%>
-			<br />
-		</div>
+				else
+				{
+		%>
+		<jsp:include page="outgoingMessage.jsp">
+			<jsp:param value='<%= msg.getId() %>' name='id'/>
+			<jsp:param value='<%= msg.getContent() %>' name='content'/>
+			<jsp:param value='<%= msg.isDeliveredFormated() %>' name='messageStatus'/>
+			<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
+		</jsp:include>
+		<%
+				}
+			}
+		%>
+		<br />
 	</section>
 	<footer class="newMessageWrapper" id="newMessageWrapper">
 			<div class="newMessageContent">
