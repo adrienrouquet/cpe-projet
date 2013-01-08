@@ -13,15 +13,24 @@ $(document).ready(function() {
 		this.status = "";
 		
 		this.getJSON = function () {
-			return {
-				"id": this.id,
-				"tmp": this.tmp,
-				"date": this.date,
-				"content": this.content,
-				"src": this.src,
-				"sender": this.sender,
-				"status": this.status,
-			};
+			var json = {};
+			
+			if (this.id != "")
+				json["id"] = this.id;
+			if (this.tmp != "")
+				json["tmp"] = this.tmp;
+			if (this.date != "")
+				json["date"] = this.date;
+			if (this.content != "")
+				json["content"] = this.content;
+			if (this.src != "")
+				json["src"] = this.src;
+			if (this.sender != "")
+				json["sender"] = this.sender;
+			if (this.status != "")
+				json["status"] = this.status;
+			
+			return json;
 		};
 		
 		this.stringify = function() {
@@ -35,7 +44,7 @@ $(document).ready(function() {
 			this.tmp = (obj["tmp"]!=undefined)?obj["tmp"]:"";
 			this.date = (obj["date"]!=undefined)?obj["date"]:"";
 			this.content = (obj["content"]!=undefined)?obj["content"]:"";
-			this.sender = (obj["src"]!=undefined)?obj["src"]:"";
+			this.src = (obj["src"]!=undefined)?obj["src"]:"";
 			this.sender = (obj["sender"]!=undefined)?obj["sender"]:"";
 			this.status = (obj["status"]!=undefined)?obj["status"]:"";
 		};
@@ -70,7 +79,8 @@ $(document).ready(function() {
 	}
 		
 	function onError(evt) {
-		console.log("ERROR: " + evt.data);
+		console.log("ERROR: ");
+		console.dir(evt);
 	}
 	
 	function init() {

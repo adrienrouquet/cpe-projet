@@ -35,17 +35,8 @@ $(document).ready(function() {
 //		outgoingMsg.find(".messageStatus").html('X');
 		writeNewMessage(outgoingMsg, json);
 		
-		scrollDown();
-		
 		var message = json.stringify();
 		_websocket.emit("sendMessage", message);
-	}
-	
-	function scrollDown() {
-		$(".scroll").animate({
-			scrollTop: $(".scroll").prop("scrollHeight")
-			},
-			0);
 	}
 	
 	function writeNewMessage(element, json) {
@@ -74,19 +65,14 @@ $(document).ready(function() {
 		$.get('content/chat/incomingMessage.jsp', function(data) {
 			_incomingMessage = $(data);
 		});
-		//HENRI SCROLLDOWN
 	}
 	
 	function listeningEvents() {
 		_websocket.on('newMessage', function(data) {
 			var json = new JSONMessage();
 			json.parse(data);
-//			if ($(".contactName:contains("+json.sender+")").html() != undefined && $("#messageForm").html() != undefined) {
-				writeNewMessage(_incomingMessage.clone(), json);
-				_websocket.emit('updateMessageStatus', json.stringify());
-//			} else {				
-//				alert(json.sender + " vous a envoyé un message !");
-//			}
+			writeNewMessage(_incomingMessage.clone(), json);
+			_websocket.emit('updateMessageStatus', json.stringify());
 		});
 		
 		_websocket.on('updateMessageStatus', function(data) {
@@ -94,7 +80,6 @@ $(document).ready(function() {
 			json.parse(data);
 
 			if ($("#" + json.id).html() == undefined) {
-//				var element = $(".messageContent:contains('" + json.content + "')").siblings(".messageDateTime:contains('" + json.date + "')").parent(".messageTo[id=null]");
 				var element = $("#" + json.tmp);
 				element.attr("id", json.id);
 			}

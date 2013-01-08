@@ -27,6 +27,14 @@
 		<h1>Super Messenger</h1>
 	</header>
 	<section class="login">
+		<% 
+			if(request.getParameter("valid") != null && request.getParameter("valid").contains("subscribe"))
+			{
+		%>
+		<div class="valid" style="display: inline-block;">Account created Successfully</div>		
+		<%
+			}
+		%>
 		<form method="post" id="accountLoginForm" action="AccountServlet">
 			<input type="hidden" name="action" value="login"/>
 			<input placeholder="Enter Login..." type="text" id="login" name="login"/>
