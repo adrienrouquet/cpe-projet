@@ -85,8 +85,8 @@ public abstract class UserManager {
 		}
 	}
 	
-	public static ArrayList<User> findContacts(String name, String login, String email, String phone) {
-		return _dbut.findContacts(name, login, email, phone);
+	public static ArrayList<User> findContacts(String searchString) {
+		return _dbut.findContacts(searchString);
 	}
 	
 	public static User getUser(int id) {

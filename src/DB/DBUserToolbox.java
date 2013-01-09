@@ -118,7 +118,7 @@ public class DBUserToolbox extends DBToolbox {
 		return users;
 	}
 	
-	public ArrayList<User> findContacts(String name, String login, String email, String phone)
+	public ArrayList<User> findContacts(String searchString)
 	{
 		
 		Connection conn 		= getConn();
@@ -127,11 +127,9 @@ public class DBUserToolbox extends DBToolbox {
 		ArrayList<User> users 	= null;
 		
 		try {
-			cs 		= conn.prepareCall("{CALL findContacts(?,?,?,?)}");
-			cs.setString("pName", name);
-			cs.setString("pLogin", login);
-			cs.setString("pEmail", email);
-			cs.setString("pPhone", phone);
+			cs 		= conn.prepareCall("{CALL findContacts(?)}");
+			cs.setString("pSearchString", searchString);
+			
 			rs 		= cs.executeQuery();
 			
 			users = new ArrayList<User>();
