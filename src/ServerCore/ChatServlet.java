@@ -87,14 +87,11 @@ public class ChatServlet extends HttpServlet {
 				{
 					searchUserBean		=  new Bean.UserBean();				
 				}
-				String name 		= req.getParameter("name").trim();
-				String login 		= req.getParameter("login").trim();
-				String email 		= req.getParameter("email").trim();
-				String phone		= req.getParameter("phone").trim();
-				searchUserBean.setFirstName(name);
-				searchUserBean.setLogin(login);
-				searchUserBean.setEmail(email);
-				searchUserBean.setPhone(phone);
+				String searchString 		= req.getParameter("searchString").trim();
+				
+				searchUserBean.setLogin(searchString);
+				
+				System.out.println(searchUserBean.getLogin());
 				
 				session.setAttribute("searchUserBean", searchUserBean);
 				cr.setUrl("addContact.jsp");

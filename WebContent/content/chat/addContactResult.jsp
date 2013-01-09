@@ -14,7 +14,8 @@
 <%
 	ArrayList<User> users = null;
 		
-	users = UserManager.findContacts(searchUserBean.getFirstName(),searchUserBean.getLogin(),searchUserBean.getEmail(),searchUserBean.getPhone());
+	//On remplit le champ "login" avec la "searchString" pour effectuer une recherche
+	users = UserManager.findContacts(searchUserBean.getLogin());
 	
 	if (users != null)
 	{
