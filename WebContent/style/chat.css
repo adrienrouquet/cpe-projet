@@ -63,10 +63,13 @@
 	
 }
 
-.messageStatus{
+.messageStatus {
 	float: left;
 	width: 15px;
 	height: 15px;
+}
+.messageStatus:first-child {
+	
 	background: url("../img/pending.png");
 	background-size: 100% 100%;
 }
