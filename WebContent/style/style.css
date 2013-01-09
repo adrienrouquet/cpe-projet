@@ -241,27 +241,3 @@ label.valid {
 		0px -1px 0px rgba(000,000,000,0.4),
 		0px 1px 0px rgba(255,255,255,0.3);
 }
-
-.back
-{
-	float: left;	
-	z-index: 2;
-}
-
-.add 
-{
-	float: right;
-	z-index: 2;
-}
-
-.logout
-{
-	float: left;
-	z-index: 2;
-}
-
-.settings
-{
-	float: right;
-	z-index: 2;
-}
