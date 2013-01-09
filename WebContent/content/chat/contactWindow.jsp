@@ -47,18 +47,7 @@
 					
 				</div>
 				<div class="contactStatus">
-					<%
-						if (UserManager.getUsersConnected(user.getId()).isEmpty()) {
-							%>
-								Last login: <%= user.getLastLoginDate().toString() %>
-							<%
-						} else {
-							%>
-								Online
-							<%
-						}
-					%>
-					
+					<%= user.getLastLoginDateFormated() %>
 				</div>
 			</div>
 			<%
