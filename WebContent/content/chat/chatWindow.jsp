@@ -14,14 +14,16 @@
 <div id="container">
 	<header class="black h50">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
-		<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
-		<input type="submit" class="imageButton back" value="" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
-		</form>	
-		<div class="contactName">
-			<%=User.getName(userBean.getMsgManager().getDstUserId())%>
-		</div>
-		<div class="contactStatus">
-			<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+			<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
+			<input type="button" class="imageButton back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
+		</form>
+		<div id=<%= userBean.getLogin() %>>
+			<div class="contactName">
+				<%= User.getName(userBean.getMsgManager().getDstUserId()) %>
+			</div>
+			<div class="contactStatus">
+				<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+			</div>
 		</div>
 	</header>
 	<section class="messageSection scroll" id="messageForm">

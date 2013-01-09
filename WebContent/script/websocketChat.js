@@ -92,6 +92,10 @@ $(document).ready(function() {
 			json.parse(data);
 			alert(json.sender + " vous a envoyé un message !");
 		});
+		
+		_websocket.on("updateContactStatus", function(login, message) {
+			$("#"+login).children(".contactStatus").html(message);
+		});
 	}
 	
 	function initGlobal() {

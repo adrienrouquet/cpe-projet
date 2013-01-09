@@ -42,17 +42,17 @@ public abstract class UserManager {
 
 	public static void addUserConnected(User user) {
 		System.out.println("User"+ user.getId() + "("+ user.getName() +") is connected");
+		_usersConnected.add(user);
 		if (!user.getIsConnected()) {			
+			user.setIsConnected(true);
 			for (User contact : user.getContacts()) {
 				for (User userConnected : _usersConnected) {
 					if (userConnected.getId() == contact.getId()) {
-						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), "Online");
+						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), user.getLastLoginDateFormated());
 					}
 				}
 			}
-			user.setIsConnected(true);
 		}
-		_usersConnected.add(user);
 	}
 	
 	public static void delUserConnected(User user) {
