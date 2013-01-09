@@ -139,6 +139,8 @@ public class User{
 	}
 	public void setIsConnected ( boolean isConnected ) {
 		_isConnected = isConnected;
+		if (!isConnected)
+			_dbut.updateUserLastLogin(_id);
 	}
 	public boolean getIsConnected ( ) {
 		return _isConnected;

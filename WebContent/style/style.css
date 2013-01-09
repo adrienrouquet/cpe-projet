@@ -168,3 +168,10 @@ label.valid {
 	float: left;	
 	z-index: 2;
 }
+
+.add
+{
+	width: 120px;
+	float: right;
+	z-index: 2;
+}
