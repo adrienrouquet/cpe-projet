@@ -90,12 +90,13 @@ BEGIN
 				phone LIKE searchString
 		)
 		AND NOT pSearchString = ""
-		AND id NOT IN (SELECT dstUserId FROM contacts WHERE srcUserId = pUserId)
+		AND id NOT IN (SELECT dstUserId FROM contacts WHERE srcUserId = pUserId AND approvalStatus = 1)
 		AND NOT id = pUserId
 	;
    
 END //
 DELIMITER ;
+
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getContacts;
 DELIMITER //
@@ -302,13 +303,13 @@ BEGIN
 	   );	
    ELSE
    		UPDATE contacts SET approvalStatus = 1 WHERE srcUserId = pSrcUserId AND dstUserId = pDstUserId;
-   END IF
+   END IF;
    IF pSrcUserId NOT IN (SELECT dstUserId FROM contacts WHERE srcUserId = pDstUserId AND dstUserId = pSrcUserId)
    THEN
       INSERT INTO contacts
 	   (
-	      dstUserId,
 	      srcUserId,
+	      dstUserId,	      
 	      approvalStatus
 	   ) 
 	   VALUES 
@@ -317,7 +318,7 @@ BEGIN
 	      pSrcUserId,
 	      0
 	   );
-	END IF
+	END IF;
 END //
 DELIMITER ;
 
