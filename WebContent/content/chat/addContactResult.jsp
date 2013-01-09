@@ -17,35 +17,37 @@
 
 	<%
 		ArrayList<User> users = null;
-				
-		//On remplit le champ "login" avec la "searchString" pour effectuer une recherche
-		users = UserManager.findContacts(userBean.getId(),searchUserBean.getLogin());
 		
-		if (users != null)
-		{
-			if(users.size() > 0)
+		if (searchUserBean.getLogin().compareTo("") != 0)
+		{	
+			//On remplit le champ "login" avec la "searchString" pour effectuer une recherche
+			users = UserManager.findContacts(userBean.getId(),searchUserBean.getLogin());
+			
+			if (users != null)
 			{
-				for(User user : users)
+				if(users.size() > 0)
 				{
+					for(User user : users)
+					{
 	%>
 
-	<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
-		<div class="addContactName">
-			<%= user.getFirstName() %> <%= user.getLastName() %>
-		</div>
-		<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
-	</div>
-	
-<%-- onclick="setValue('mainForm','action','submitAddContact');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');" --%>
+					<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
+						<div class="addContactName">
+							<%= user.getFirstName() %> <%= user.getLastName() %>
+						</div>
+						<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
+					</div>
 
 	<%
+					}
 				}
-			}
-		
-			else{
+			
+				else{
+											
 	%>
-	<h1>No result</h1>
-	<%		
+					<h1 >Sorry, no result found...</h1>
+	<%	
+				}
 			}
 		}
 	%>
