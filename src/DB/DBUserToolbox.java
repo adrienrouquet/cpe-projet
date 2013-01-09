@@ -55,9 +55,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in userExists:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return exists;
 	}
@@ -83,9 +83,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getUsers:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return users;
 	}
@@ -111,9 +111,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getContacts:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return users;
 	}
@@ -142,10 +142,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getContacts:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
-		
 		return users;
 	}
 
@@ -168,9 +167,9 @@ public class DBUserToolbox extends DBToolbox {
 			
 		} catch (SQLException e) {
 			System.out.println("Error in addUser:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 	}
 	
 	public void addContact(int srcUserId, int dstUserId)
@@ -188,9 +187,9 @@ public class DBUserToolbox extends DBToolbox {
 			
 		} catch (SQLException e) {
 			System.out.println("Error in addContact:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 	}
 	
 	public String getName(Integer id)
@@ -212,9 +211,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getName:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return name;
 	}
@@ -238,9 +237,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getLogin:" +e.getMessage());
+		} finally {
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return name;
 	}
@@ -265,11 +264,32 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getLastLogin:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
-		
+
 		return lastLogin;
+	}
+	
+	
+	
+	public void updateUserLastLogin(Integer id)
+	{
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		
+		try {
+			
+			cs = conn.prepareCall("{CALL updateUserLastLogin(?)}");
+			cs.setInt("pUserId", id);
+			cs.executeQuery();
+			
+		} catch (SQLException e) {
+			System.out.println("Error in updateUserLastLogin:" +e.getMessage());
+		} finally {
+			closeConn(conn);
+		}
 	}
 	
 	public boolean checkCredentials(String login, String password)
@@ -293,9 +313,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in checkCredentials:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return match;
 	}
@@ -321,9 +341,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getIdFromLogin:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return id;
 	}
@@ -349,9 +369,9 @@ public class DBUserToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getUser:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
 		}
-		
-		closeConn(conn);
 		
 		return user;
 	}

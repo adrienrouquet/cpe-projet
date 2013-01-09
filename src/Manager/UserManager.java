@@ -73,14 +73,15 @@ public abstract class UserManager {
 			}
 		}
 		
-		if (!isConnected) {
+		if (!isConnected) {			
+			user.setIsConnected(false);
 			for (User contact : user.getContacts()) {
 				for (User userConnected : _usersConnected) {
 					if (userConnected.getId() == contact.getId())
-						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), "Last Login: " + user.getLastLoginDateFormated());
+						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), user.getLastLoginDateFormated());
 				}
 			}
-			user.setIsConnected(false);
+			
 		}
 	}
 	

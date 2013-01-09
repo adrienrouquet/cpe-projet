@@ -258,6 +258,21 @@ END //
 DELIMITER ;
 
 /*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS updateUserLastLogin;
+DELIMITER //
+CREATE PROCEDURE updateUserLastLogin 
+(
+   IN pUserId INT
+)
+BEGIN
+
+   UPDATE users SET lastLoginDate = NOW()
+   WHERE id = pUserId
+   ;
+END //
+DELIMITER ;
+
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS addContact;
 DELIMITER //
 CREATE PROCEDURE addContact 
