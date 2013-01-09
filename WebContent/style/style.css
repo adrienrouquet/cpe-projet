@@ -64,6 +64,19 @@ footer{
 	color: rgb(220,220,220);	
 }
 
+.floatLeft{
+	float: left;
+}
+
+.floatRight{
+	float: right;
+}
+
+.h30
+{
+	height: 30px;
+}
+
 .h50
 {
 	height: 50px;
@@ -74,6 +87,14 @@ footer{
 	height: 80px;
 }
 
+.w30
+{
+	width: 30px;
+}
+.w50
+{
+	width: 50px;
+}
 .w80
 {
 	width: 80px;
@@ -96,34 +117,21 @@ input {
 }
 
 input.back {
-	float: left;
-	width: 50px;
-	height: 50px;
 	background: url("../img/back.png");
 	background-size: 100% 100%;
 }
 
-
 input.add {
-	float: left;
-	width: 80px;
-	height: 80px;
 	background: url("../img/add.png");
 	background-size: 100% 100%;
 }
 
 input.logout {
-	float: right;
-	width: 80px;
-	height: 80px;
 	background: url("../img/logout.png");
 	background-size: 100% 100%;
 }
 
 input.settings {
-	float: right;
-	width: 80px;
-	height: 80px;
 	background: url("../img/settings.png");
 	background-size: 100% 100%;
 }
@@ -236,28 +244,24 @@ label.valid {
 
 .back
 {
-	width: 80px;
 	float: left;	
 	z-index: 2;
 }
 
 .add 
 {
-	width: 80px;
 	float: right;
 	z-index: 2;
 }
 
 .logout
 {
-	width: 80px;
 	float: left;
 	z-index: 2;
 }
 
 .settings
 {
-	width: 80px;
 	float: right;
 	z-index: 2;
 }

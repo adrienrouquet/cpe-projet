@@ -10,45 +10,42 @@
 <script type="text/javascript" src="script/websocketContact.js"></script>
 
 <h1>Search results</h1>
+<form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
+	<input type="hidden" name="action" value="addContact" />
+	<input type="hidden" name="contactId" value="0"/>
 
-<%
-	ArrayList<User> users = null;
+	<%
+		ArrayList<User> users = null;
+			
+		//On remplit le champ "login" avec la "searchString" pour effectuer une recherche
+		users = UserManager.findContacts(searchUserBean.getLogin());
 		
-	//On remplit le champ "login" avec la "searchString" pour effectuer une recherche
-	users = UserManager.findContacts(searchUserBean.getLogin());
-	
-	if (users != null)
-	{
-		if(users.size() > 0)
+		if (users != null)
 		{
-			for(User user : users)
-			{	
-%>
+			if(users.size() > 0)
+			{
+				for(User user : users)
+				{
+	%>
 
-<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
-	<div class="contactName">
-		<%= user.getFirstName() %> <%= user.getLastName() %>
-		<div class="add">
-			<form method="post" id="addContactForm<%= user.getId() %>" name="addContactForm<%= user.getId() %>" action="ChatServlet">
-				<input type="hidden" name="action" value="addContact" />
-				<input type="hidden" name="contactId" value="0"/>
-		
-				<input type="button" value="Add Contact" onclick="setValue('addContactForm<%= user.getId() %>','action','addContact');setValue('addContactForm<%= user.getId() %>','contactId','<%= user.getId() %>');submitForm('addContactForm<%= user.getId() %>');"/>	
-			</form>
-		</div>	
+	<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
+		<div class="addContactName">
+			<%= user.getFirstName() %> <%= user.getLastName() %>
+		</div>
+			<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
 	</div>
-</div>
 
 <%-- onclick="setValue('mainForm','action','submitAddContact');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');" --%>
 
-<%
+	<%
+				}
+			}
+		
+			else{
+	%>
+	<h1>No result</h1>
+	<%		
 			}
 		}
-		
-		else{
-%>
-		<h1>TESTEMPTY</h1>
-<%		
-		}
-	}
-%>
+	%>
+	</form>

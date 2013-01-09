@@ -7,13 +7,9 @@
 	$(document).ready(function() {
 		$("#mainForm").validate({
 			rules: {
-				login: {
-					minlength: 4
-				},
-				name: {
-					minlength: 4
-				}
-				
+				searchString: {
+					minlength: 3
+				}				
 			}
 		});
 	});		
