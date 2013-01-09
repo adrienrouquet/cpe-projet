@@ -70,7 +70,7 @@
 		</form>
 		<form method="post" id="contactRequestsForm" name="contactRequestsForm" action="ChatServlet">
 		<input type="hidden" name="action" value="openContactRequestsWindow" />
-		<input type="submit" class="imageButton contactRequests floatLeft w80 h80 " value="1" onclick="submitForm('contactRequestsForm');"/>	
+		<input type="submit" class="imageButton contactRequests floatLeft w80 h80 " value="<%= userBean.getContactRequestsCount() %>" onclick="submitForm('contactRequestsForm');"/>	
 		</form>
 		<form method="post" id="logoutForm" name="logoutForm" action="AccountServlet">
 		<input type="hidden" name="action" value="logout" />

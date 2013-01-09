@@ -51,6 +51,15 @@ public class UserBean implements Serializable {
 		return _user.getContacts();
 	}
 	
+	public ArrayList<User> getContactRequests() {
+		return _user.getContactRequests();
+	}
+	
+	public int getContactRequestsCount()
+	{
+		return _user.getContactRequestsCount();
+	}
+	
 	public MsgManager getMsgManager() {
 		return _user.getMsgManager();
 	}
