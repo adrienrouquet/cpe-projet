@@ -26,6 +26,21 @@
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7FAAAAAA', EndColorStr='#7FAAAAAA');
 }
 
+.contactWrapperNoHover{
+	color: rgb(20,20,20);
+	
+	text-align: left;
+	border: 2px;
+	border-style: groove;	
+	background-color: rgba(200,200,200,0.5);
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7FAAAAAA', EndColorStr='#7FAAAAAA');
+}
+
+.contactWrapperNoHover:nth-child(odd){
+	background-color: rgba(255,255,255,0.5);
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7FFFFFFF', EndColorStr='#7FFFFFFF');
+}
+
 .contactHasUnreadMessages{
 	color: rgb(20,20,220);
 }

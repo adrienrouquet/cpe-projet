@@ -27,42 +27,30 @@
 	
 %>
 
-<div id="contactWrapper<%= user.getId() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','submitAddContact');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
+<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
 	<div class="contactName">
 		<%= user.getFirstName() %> <%= user.getLastName() %>
-		<% 
-				String unreadMessageStyle = "display: none;";
-				if( unreadMessageCount > 0 ) 
-				{
-					unreadMessageStyle = "display: inline;";
-				}
-		%>
-		<span id="contactUnreadMessageWrapper<%= user.getId() %>" style="<%= unreadMessageStyle %>">
-			(<span id="contactUnreadMessageCount<%= user.getId() %>"><%= unreadMessageCount %></span>)
-		</span>
+		<div class="add">
+			<form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
+				<input type="hidden" name="action" value="addContact" />
+				<input type="hidden" name="contactId" value="0"/>
 		
+				<input type="button" value="Add Contact" onclick="setValue('addContactForm','action','addContact');setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
+			</form>
+		</div>	
 	</div>
-	<div class="contactStatus">
-		Last login: <%= user.getLastLoginDate().toString() %>
-	</div>
-	<form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
-			<input type="hidden" name="action" value="addContact" />
-			<input type="button" class="add" value="Add Contact" onclick="submitForm('addContactForm');"/>	
-	</form>
 </div>
+
+<%-- onclick="setValue('mainForm','action','submitAddContact');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');" --%>
+
 <%
 			}
 		}
 		
 		else{
 %>
-		
+		<h1>TESTEMPTY</h1>
 <%		
 		}
-	}else
-	{
-%>
-		<h1>TESTEMPTY</h1>
-<%
 	}
 %>

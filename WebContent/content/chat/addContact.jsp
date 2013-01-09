@@ -27,11 +27,4 @@
 			
 		</div>
 	</section>
-	
-	<footer>
-		<form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
-			<input type="hidden" name="action" value="addContact" />
-			<input type="button" class="logout" value="Add Contact" onclick="submitForm('addContactForm');"/>	
-		</form>
-	</footer>
 </div>
