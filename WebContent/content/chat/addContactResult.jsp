@@ -1,3 +1,4 @@
+<%@page import="java.util.Vector"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.util.ArrayList"%>
@@ -15,8 +16,16 @@
 	<input type="hidden" name="contactId" value="0"/>
 
 	<%
+		ArrayList<User> contacts = userBean.getContacts();
 		ArrayList<User> users = null;
-			
+		
+		ArrayList<Integer> contactIds = new ArrayList<Integer>();
+		
+		for (User contact : contacts)
+		{
+			contactIds.add(contact.getId());
+		}
+		
 		//On remplit le champ "login" avec la "searchString" pour effectuer une recherche
 		users = UserManager.findContacts(searchUserBean.getLogin());
 		
@@ -32,9 +41,18 @@
 		<div class="addContactName">
 			<%= user.getFirstName() %> <%= user.getLastName() %>
 		</div>
-			<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
+		
+	<%
+		if (!(contacts.contains((Integer)(user.getId()))))
+		{
+	%>
+		<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
+	<%
+		}
+	%>
+	
 	</div>
-
+	
 <%-- onclick="setValue('mainForm','action','submitAddContact');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');" --%>
 
 	<%
