@@ -283,13 +283,28 @@ BEGIN
    INSERT INTO contacts
    (
       srcUserId,
-      dstUserId
+      dstUserId,
+      approvalStatus
    ) 
    VALUES 
    (
       pSrcUserId,
-      pDstUserId
+      pDstUserId,
+      1
    );
+   INSERT INTO contacts
+   (
+      dstUserId,
+      srcUserId,
+      approvalStatus
+   ) 
+   VALUES 
+   (
+      pDstUserId,
+      pSrcUserId,
+      0
+   );
+   
 
    SET tempIdentity = LAST_INSERT_ID();
    
