@@ -86,6 +86,7 @@ public class Websocket extends MessageInbound{
 		_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
 		// Le dst recoit le msg et update le status sur l'emetteur
 		data.put("status", "//");
+//		data.remove("content");
 		for (User user : UserManager.getUsersConnected(_msgManager.getDstUserId())) {
 			user.getWebsocket().emit("updateMessageStatus", data.toJSONString());
 		}
@@ -93,16 +94,10 @@ public class Websocket extends MessageInbound{
 
 	private void onSendMessage(JSONObject data) {
 		System.err.println("EVENT: sendMessage");
-		// On ajoute le nouveau message en DB et on recupere l'ID de l'insertion
-//		Integer msgId = _msgManager.sendMessage((String) data.get("content"));
+		// On ajoute le nouveau message en DB et on recupere le msg
 		Msg msg = _msgManager.sendMessage((String) data.get("content"));
-		// On ajoute l'ID, le sender, et le status dans le json
-		// On enleve le content
-//		data.put("id",  msg.getId());
-//		data.put("status", "/");
-//		String content = (String) data.get("content");
-//		data.remove("content");
 		
+		// On cree un nouveau json avec l'id, le status et le timestamp
 		JSONObject jsonUpMsg = msg.getJsonMsg("id", "status");
 		jsonUpMsg.put("tmp", data.get("tmp"));
 		

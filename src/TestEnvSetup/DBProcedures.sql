@@ -72,22 +72,19 @@ DROP PROCEDURE IF EXISTS findContacts;
 DELIMITER //
 CREATE PROCEDURE findContacts
 (
-	IN pName VARCHAR(255),
-	IN pLogin VARCHAR(255),
-	IN pEmail VARCHAR(255),
-	IN pPhone VARCHAR(255)
+	IN pSearchString VARCHAR(255)
 )
 BEGIN
 
 	SELECT * FROM users
 	WHERE 
-		CONCAT(LOWER(firstName), ' ', LOWER(lastName)) LIKE CONCAT('%', LOWER(pName), '%') AND NOT pName = "" AND pLogin = "" AND pEmail = "" AND pPhone = ""
+		CONCAT(LOWER(firstName), ' ', LOWER(lastName)) LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
 	OR
-		login = pLogin AND pName = "" AND pEmail = "" AND pPhone = ""
+		login LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
 	OR
-		email = pEmail AND pName = "" AND pLogin = "" AND pPhone = ""
+		email LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
 	OR
-		phone = pPhone AND pName = "" AND pLogin = "" AND pEmail = ""
+		phone LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
 	;
    
 END //
