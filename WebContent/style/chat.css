@@ -69,17 +69,22 @@
 	height: 15px;
 }
 .messageStatus:first-child {
-	
+	width: 15px;
+	height: 15px;	
 	background: url("../img/pending.png");
 	background-size: 100% 100%;
 }
 
 .messageStatusSent{
+	width: 15px;
+	height: 15px;
 	background: url("../img/check1.png");
 	background-size: 100% 100%;
 }
 
 .messageStatusReceived{
+	width: 15px;
+	height: 15px;
 	background: url("../img/check2.png");
 	background-size: 100% 100%;
 }
