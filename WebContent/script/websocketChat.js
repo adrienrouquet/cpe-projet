@@ -91,8 +91,8 @@ $(document).ready(function() {
 				var element = $("#" + json.tmp);
 				element.attr("id", json.id);
 			}
-				
-			$("#" + json.id).children(".messageStatus").html(json.status);
+			
+			$("#" + json.id).children(".messageStatus").removeClass().addClass("messageStatus " + json.status);
 		});
 		
 		_websocket.on("messageNotification", function(data) {

@@ -2,16 +2,7 @@
 	<div class="messageContent">
 		<%= request.getParameter("content") %>
 	</div>
-	<div class="messageStatus<% 
-		if(request.getParameter("messageStatus").equals("/"))
-		{
-			out.print(" messageStatusSent");
-		}
-		else if(request.getParameter("messageStatus").equals("//"))
-		{
-			out.print(" messageStatusReceived");
-		}
-	%>">
+	<div class="messageStatus <%= request.getParameter("messageStatus") %>">
 	
 	</div>
 	<br/>

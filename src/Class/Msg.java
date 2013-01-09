@@ -99,7 +99,7 @@ public class Msg {
 	}
 	
 	public String isDeliveredFormated() {
-		return this._isDelivered?"//":"/";
+		return this._isDelivered?"messageStatusReceived":"messageStatusSent";
 	}
 	
 	public JSONObject getJsonMsg(String... keys) {

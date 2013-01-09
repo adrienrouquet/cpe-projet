@@ -85,7 +85,7 @@ public class Websocket extends MessageInbound{
 //		System.out.println(data.get("id").getClass());
 		_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
 		// Le dst recoit le msg et update le status sur l'emetteur
-		data.put("status", "//");
+		data.put("status", "messageStatusReceived");
 //		data.remove("content");
 		for (User user : UserManager.getUsersConnected(_msgManager.getDstUserId())) {
 			user.getWebsocket().emit("updateMessageStatus", data.toJSONString());
