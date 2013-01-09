@@ -22,21 +22,18 @@
 		if(users.size() > 0)
 		{
 			for(User user : users)
-			{
-				int unreadMessageCount = user.getMsgManager().getNonDeliveredMessageCount(user.getId());
-	
-	
+			{	
 %>
 
 <div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
 	<div class="contactName">
 		<%= user.getFirstName() %> <%= user.getLastName() %>
 		<div class="add">
-			<form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
+			<form method="post" id="addContactForm<%= user.getId() %>" name="addContactForm<%= user.getId() %>" action="ChatServlet">
 				<input type="hidden" name="action" value="addContact" />
 				<input type="hidden" name="contactId" value="0"/>
 		
-				<input type="button" value="Add Contact" onclick="setValue('addContactForm','action','addContact');setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
+				<input type="button" value="Add Contact" onclick="setValue('addContactForm<%= user.getId() %>','action','addContact');setValue('addContactForm<%= user.getId() %>','contactId','<%= user.getId() %>');submitForm('addContactForm<%= user.getId() %>');"/>	
 			</form>
 		</div>	
 	</div>

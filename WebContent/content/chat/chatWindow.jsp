@@ -70,7 +70,7 @@
 				<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
 			</div>
 			<div class="newMessageSend">
-				<input type="submit" class="button" onclick='doSend()' value="Send" />
+				<input type="button" class="button" onclick='doSend()' value="Send" />
 			</div>
 	</footer>
 </div>

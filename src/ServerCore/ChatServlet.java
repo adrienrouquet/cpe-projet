@@ -102,7 +102,7 @@ public class ChatServlet extends HttpServlet {
 			case "addContact":
 			{
 				session.setAttribute("searchUserBean", null);
-				
+								
 				userBean.getUser().addContact(userBean.getMsgManager().getDstUserId());
 				cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");

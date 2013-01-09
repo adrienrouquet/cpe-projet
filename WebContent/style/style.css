@@ -212,8 +212,8 @@ label.valid {
 	cursor: pointer;
 }
 
-
 .imageButton {
+	border: none;
 	opacity: 0.7;
 }
 
