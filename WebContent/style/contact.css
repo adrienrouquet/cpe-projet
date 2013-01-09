@@ -1,8 +1,13 @@
 @CHARSET "UTF-8";
 
 .contactSection{
-	bottom: 80px;
+	bottom: 84px;
 }
+
+.addContactSection{
+	padding-top: 10px;
+}
+
 .contactName{
 	text-size: 1.2em;
 	font-weight: bold;

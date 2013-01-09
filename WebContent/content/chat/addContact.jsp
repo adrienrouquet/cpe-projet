@@ -17,7 +17,7 @@
 		Find Contact
 	</header>
 
-	<section id="search">
+	<section id="search" class="addContactSection">
 		<div class="searchForm">
 			<jsp:include page="addContactForm.jsp" />
 		</div>

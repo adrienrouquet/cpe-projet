@@ -72,19 +72,26 @@ DROP PROCEDURE IF EXISTS findContacts;
 DELIMITER //
 CREATE PROCEDURE findContacts
 (
+	IN pUserId INT,	
 	IN pSearchString VARCHAR(255)
 )
 BEGIN
-
+	DECLARE searchString VARCHAR(255);
+	SET searchString = CONCAT('%', LOWER(pSearchString), '%');
 	SELECT * FROM users
 	WHERE 
-		CONCAT(LOWER(firstName), ' ', LOWER(lastName)) LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
-	OR
-		login LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
-	OR
-		email LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
-	OR
-		phone LIKE CONCAT('%', LOWER(pSearchString), '%') AND NOT pSearchString = ""
+		(
+			CONCAT(LOWER(firstName), ' ', LOWER(lastName)) LIKE searchString
+			OR
+				login LIKE searchString
+			OR
+				email LIKE searchString
+			OR
+				phone LIKE searchString
+		)
+		AND NOT pSearchString = ""
+		AND id NOT IN (SELECT dstUserId FROM contacts WHERE srcUserId = pUserId)
+		AND NOT id = pUserId
 	;
    
 END //
