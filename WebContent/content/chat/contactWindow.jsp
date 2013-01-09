@@ -9,13 +9,10 @@
 <jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
 <script type="text/javascript" src="script/websocketContact.js"></script>
 <div id="container">
-	<header>
-		<form method="post" id="logoutForm" name="logoutForm" action="AccountServlet">
-		<input type="hidden" name="action" value="logout" />
-		<input type="button" class="logout" value="Logout" onclick="submitForm('logoutForm');"/>	
-		</form>
+	<header class="black h50">
+		<h2><%= userBean.getFirstName() + " " + userBean.getLastName() %></h2>
 	</header>
-	<section id="contactForm">
+	<section id="contactForm" class="contactSection scroll">
 		<form name="mainForm" method="post" action="ChatServlet">
 			<input type="hidden" name="action" value="view"/>
 			<input type="hidden" name="contactId" value="0"/>
@@ -31,7 +28,7 @@
 						int unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
 			%>
 			<div id="<%= user.getLogin() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
-			
+				<div class="contactImg<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessagesImg"); } %>"></div>
 				<div class="contactName">
 					<%= user.getName() %>
 					<% 
@@ -66,10 +63,18 @@
 			%>			
 		</form>
 	</section>
-	<footer>
+	<footer class="black">
+		<form method="post" id="logoutForm" name="logoutForm" action="AccountServlet">
+		<input type="hidden" name="action" value="logout" />
+		<input type="button" class="imageButton logout" value="" onclick="submitForm('logoutForm');"/>	
+		</form>
+		<form method="post" id="settingsForm" name="settingsForm" action="AccountServlet">
+		<input type="hidden" name="action" value="openSettingsWindow" />
+		<input type="button" class="imageButton settings" value="" onclick="submitForm('settingsForm');"/>	
+		</form>
 		<form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
 		<input type="hidden" name="action" value="openAddContactWindow" />
-		<input type="button" class="logout" value="Add Contact" onclick="submitForm('addContactForm');"/>	
+		<input type="submit" class="imageButton add" value="" onclick="submitForm('addContactForm');"/>	
 		</form>
 	</footer>
 </div>

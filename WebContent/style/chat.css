@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
 
 .messageSection{
+	top: 60px;
 	bottom: 100px;
 }
 
@@ -60,14 +61,24 @@
 
 .messageContent{
 	
-	margin-left: 20px;
-	margin-right: 20px;
 }
 
 .messageStatus{
-	font-weight: bold;
-	color: green;	
 	float: left;
+	width: 15px;
+	height: 15px;
+	background: url("../img/pending.png");
+	background-size: 100% 100%;
+}
+
+.messageStatusSent{
+	background: url("../img/check1.png");
+	background-size: 100% 100%;
+}
+
+.messageStatusReceived{
+	background: url("../img/check2.png");
+	background-size: 100% 100%;
 }
 
 .messageDateTime{
@@ -94,6 +105,7 @@
 	background: rgb(40,40,40);
 	border: 2px;
 	border-style: groove;
+	height: 60px;
 	
 }
 
@@ -101,15 +113,24 @@
 {
 	display: inline-block;
 	text-align: center;
-	width: 20%;	
 	margin-top: 5px;
 }
 
 .newMessageContent{
+	text-align: left;
+	width: 70%;
+	display: inline-block;
 }
 
 .newMessageContent textarea{
 	font-weight: bold;
-	width: 90%;
 	text-align: left;
+	width: 100%;
+	resize: none;
+	
+}
+
+.newMessageSend{
+	float: right;
+	width: 80px;
 }

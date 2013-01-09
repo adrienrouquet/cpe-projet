@@ -1,5 +1,8 @@
 @CHARSET "UTF-8";
 
+.contactSection{
+	bottom: 80px;
+}
 .contactName{
 	text-size: 1.2em;
 	font-weight: bold;
@@ -22,7 +25,7 @@
 
 .contactWrapper:hover *{
 	cursor: pointer;
-	background-color: rgba(180,180,180,0.8);
+	background-color: rgba(160,180,200,0.7);
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7FAAAAAA', EndColorStr='#7FAAAAAA');
 }
 
@@ -40,9 +43,21 @@
 	background-color: rgba(255,255,255,0.5);
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7FFFFFFF', EndColorStr='#7FFFFFFF');
 }
-
+.contactImg{
+	background: url("../img/msgRead.png");
+	width: 40px;
+	height: 40px;
+	background-size: 100%;
+	float: left;
+}
+.contactHasUnreadMessagesImg{
+	background: url("../img/msgUnread.png");
+	background-size: 100%;
+}
 .contactHasUnreadMessages{
 	color: rgb(20,20,220);
 }
+
+
 
 

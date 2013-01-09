@@ -12,16 +12,18 @@
 <script type="text/javascript" src="script/script.js"></script>
 
 <div id="container">
-	<header class="black">
+	<header class="black h50">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
-		<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
-		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
-		</form>	
-		<div class="contactName">
-			<%=User.getName(userBean.getMsgManager().getDstUserId())%>
-		</div>
-		<div class="contactStatus">
-			<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+			<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
+			<input type="button" class="imageButton back" value="" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
+		</form>
+		<div id=<%= userBean.getLogin() %>>
+			<div class="contactName">
+				<%= User.getName(userBean.getMsgManager().getDstUserId()) %>
+			</div>
+			<div class="contactStatus">
+				<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+			</div>
 		</div>
 	</header>
 	<section class="messageSection scroll" id="messageForm">
@@ -68,7 +70,7 @@
 				<textarea placeholder="Enter Message..." id="content" name="content" rows="2" wrap="soft" class="messageContent"></textarea>			
 			</div>
 			<div class="newMessageSend">
-				<button class="button" onclick='doSend()'>Send</button>
+				<input type="submit" class="button" onclick='doSend()' value="Send" />
 			</div>
 	</footer>
 </div>
