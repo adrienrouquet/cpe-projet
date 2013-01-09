@@ -80,6 +80,11 @@ public class User{
 		return _dbut.getContactRequests(_id);
 	}
 
+	public int getContactRequestsCount()
+	{
+		return _dbut.getContactRequestsCount(_id);
+	}
+
 	public MsgManager getMsgManager()
 	{
 		return this._mm;

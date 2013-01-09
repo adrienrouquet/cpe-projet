@@ -146,6 +146,32 @@ public class DBUserToolbox extends DBToolbox {
 		return users;
 	}
 	
+	public int getContactRequestsCount(int id)
+	{
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		int count			 	= 0;
+		
+		try {
+			cs 		= conn.prepareCall("{CALL getContactRequestsCount(?)}");
+			cs.setInt("pUserId", id);
+			rs 		= cs.executeQuery();
+			
+			while(rs.next())
+			{
+				count = rs.getInt("contactRequestsCount");
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in getContactRequestsCount:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
+		}
+		
+		return count;
+	}
+	
 	public ArrayList<User> findContacts(int userId, String searchString)
 	{
 		

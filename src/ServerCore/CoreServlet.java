@@ -33,7 +33,7 @@ public class CoreServlet extends HttpServlet {
 		System.out.println("======================================================");
 		System.out.println("CoreServlet: Entering doGet");
 		//Pour le test
-		if(req.getParameter("action") == "resetDB")
+		if("resetDB".equals(req.getParameter("action")))
 		{
 			try {
 				DBReset.resetDatabase();

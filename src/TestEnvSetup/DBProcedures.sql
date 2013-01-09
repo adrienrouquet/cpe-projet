@@ -136,6 +136,25 @@ END //
 DELIMITER ;
 
 /*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS getContactRequestsCount;
+DELIMITER //
+CREATE PROCEDURE getContactRequestsCount
+(
+	IN pUserId INT
+)
+BEGIN
+
+	SELECT COUNT(*) AS countactRequestsCount FROM users
+	WHERE id IN 
+	(
+   		SELECT dstUserId FROM contacts
+   		WHERE srcUserId = pUserId AND approvalStatus = 0
+   	);
+   
+END //
+DELIMITER ;
+
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getUsers;
 DELIMITER //
 CREATE PROCEDURE getUsers
