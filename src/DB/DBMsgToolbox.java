@@ -50,12 +50,12 @@ public class DBMsgToolbox extends DBToolbox {
 		return messages;
 	}
 	
-	public Msg sendMessage(int srcUserId, int dstUserId, String content)
+	public int sendMessage(int srcUserId, int dstUserId, String content)
 	{
 		Connection conn 		= getConn();
 		CallableStatement cs 	= null;
 		ResultSet rs 			= null;
-		Msg msg					= null;
+		int id					= 0;
 		
 		try {
 			cs = conn.prepareCall("{CALL sendMessage(?,?,?,?)}");
@@ -67,7 +67,7 @@ public class DBMsgToolbox extends DBToolbox {
 			rs = cs.executeQuery();
 			while(rs.next())
 			{
-				msg = new Msg(rs.getInt("id"),rs.getInt("srcUserId"),rs.getInt("dstUserId"),rs.getString("content"),rs.getTimestamp("sentDate"),rs.getBoolean("isDelivered"));
+				id = rs.getInt("id");
 			}
 			
 		} catch (SQLException e) {
@@ -75,7 +75,7 @@ public class DBMsgToolbox extends DBToolbox {
 		}
 		closeConn(conn);
 		
-		return msg;
+		return id;
 	}
 	
 	public int getNonDeliveredMessageCount(int srcUserId, int dstUserId)

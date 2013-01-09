@@ -25,7 +25,7 @@ BEGIN
       pContent
    );
 
-   SELECT * FROM messages WHERE id = LAST_INSERT_ID();
+   SELECT LAST_INSERT_ID() AS id;
    
 END //
 DELIMITER ;
