@@ -118,6 +118,34 @@ public class DBUserToolbox extends DBToolbox {
 		return users;
 	}
 	
+	public ArrayList<User> getContactRequests(int id)
+	{
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 			= null;
+		ArrayList<User> users 	= null;
+		
+		try {
+			cs 		= conn.prepareCall("{CALL getContactRequests(?)}");
+			cs.setInt("pUserId", id);
+			rs 		= cs.executeQuery();
+			
+			users = new ArrayList<User>();
+			
+			while(rs.next())
+			{
+				users.add(new User(rs.getInt("id"),rs.getString("login"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate")));
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in getContactRequests:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
+		}
+		
+		return users;
+	}
+	
 	public ArrayList<User> findContacts(int userId, String searchString)
 	{
 		

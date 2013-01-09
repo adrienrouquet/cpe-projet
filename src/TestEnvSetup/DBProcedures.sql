@@ -110,12 +110,30 @@ BEGIN
 	WHERE id IN 
 	(
    		SELECT dstUserId FROM contacts
-   		WHERE srcUserId = pUserId
+   		WHERE srcUserId = pUserId AND approvalStatus = 1
    	);
    
 END //
 DELIMITER ;
 
+/*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS getContactRequests;
+DELIMITER //
+CREATE PROCEDURE getContactRequests
+(
+	IN pUserId INT
+)
+BEGIN
+
+	SELECT * FROM users
+	WHERE id IN 
+	(
+   		SELECT dstUserId FROM contacts
+   		WHERE srcUserId = pUserId AND approvalStatus = 0
+   	);
+   
+END //
+DELIMITER ;
 
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getUsers;

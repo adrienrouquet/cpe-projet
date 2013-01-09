@@ -27,6 +27,7 @@
 		</div>
 	</header>
 	<section class="messageSection scroll" id="messageForm">
+		<br />
 		<%
 			ArrayList<Msg> messages = userBean.getMsgManager().getMessages(userBean.getId(),userBean.getMsgManager().getDstUserId());
 				for( Msg msg : messages)

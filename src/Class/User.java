@@ -74,6 +74,11 @@ public class User{
 	{
 		return _dbut.getContacts(_id);
 	}
+	
+	public ArrayList<User> getContactRequests()
+	{
+		return _dbut.getContactRequests(_id);
+	}
 
 	public MsgManager getMsgManager()
 	{
