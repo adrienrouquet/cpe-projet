@@ -24,19 +24,20 @@ $(document).ready(function() {
 	}
 	
 	function doSend() {
-		var json = new JSONMessage();
-		
-		json.date = getDate();
-		json.content = $('#content').val();
-		json.tmp = new Date().getTime();
-		$('#content').val("");
-		
-		var outgoingMsg = _outgoingMessage.clone();
-//		outgoingMsg.find(".messageStatus").html('X');
-		writeNewMessage(outgoingMsg, json);
-		
-		var message = json.stringify();
-		_websocket.emit("sendMessage", message);
+		if (jQuery.trim($('#content').val()).length > 0) {
+			var json = new JSONMessage();
+			
+			json.date = getDate();
+			json.content = $('#content').val();
+			json.tmp = new Date().getTime();
+			$('#content').val("");
+			
+			var outgoingMsg = _outgoingMessage.clone();
+			writeNewMessage(outgoingMsg, json);
+			
+			var message = json.stringify();
+			_websocket.emit("sendMessage", message);
+		}
 	}
 	
 	function writeNewMessage(element, json) {
@@ -64,6 +65,13 @@ $(document).ready(function() {
 		
 		$.get('content/chat/incomingMessage.jsp', function(data) {
 			_incomingMessage = $(data);
+		});
+		
+		$("#content").keypress(function(e){
+			if( e.keyCode == '\r'.charCodeAt() || e.keyCode == '\n'.charCodeAt()){
+				e.preventDefault();
+				doSend();
+			}
 		});
 	}
 	
