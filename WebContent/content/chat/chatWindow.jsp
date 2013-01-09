@@ -21,7 +21,7 @@
 			<%=User.getName(userBean.getMsgManager().getDstUserId())%>
 		</div>
 		<div class="contactStatus">
-			Last login: <%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+			<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
 		</div>
 	</header>
 	<section class="messageSection scroll" id="messageForm">

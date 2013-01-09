@@ -127,7 +127,7 @@ public class User{
 	}
 	
 	public String getLastLoginDateFormated() {
-		return new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLoginDate());
+		return getLastLoginDateFormated(this._id);
 	}
 
 	public void setLastLoginDate(Timestamp lastLoginDate) {
@@ -180,6 +180,13 @@ public class User{
 	}
 	
 	public static String getLastLoginDateFormated(int id) {
-		return new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLoginDate(id));
+		if(UserManager.getUsersConnected(id).isEmpty())
+		{
+			return "Last seen: " + new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLoginDate(id));
+		}
+		else
+		{
+			return "Online";
+		}
 	}
 }

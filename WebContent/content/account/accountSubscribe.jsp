@@ -56,7 +56,7 @@
 			{
 			%>
 			<input type="text" name="email" placeholder="Enter email address" class="error" value="<% if(request.getParameter("email") != null){ out.print(request.getParameter("email")); } %>"/>
-			<label for="email" generated="true" class="error" style="display: inline;">Email already exists, please choose a different one</label>		
+			<label for="email" generated="true" class="error">Email already exists, please choose a different one</label>		
 			<%
 			}
 			else
@@ -72,7 +72,7 @@
 			{
 			%>
 			<input type="text" name="phone" placeholder="Enter phone number" class="error" value="<% if(request.getParameter("phone") != null){ out.print(request.getParameter("phone")); } %>"/>
-			<label for="phone" generated="true" class="block error" style="display: inline;">Phone already exists, please choose a different one</label>		
+			<label for="phone" generated="true" class="error">Phone already exists, please choose a different one</label>		
 			<%
 			}
 			else
@@ -87,7 +87,7 @@
 			{
 			%>
 			<input type="text" name="login" placeholder="Enter login" class="error" value="<% if(request.getParameter("login") != null){ out.print(request.getParameter("login")); } %>"/>
-			<label for="login" generated="true" class="block error" style="display: inline;">Login already exists, please choose a different one</label>		
+			<label for="login" generated="true" class="error">Login already exists, please choose a different one</label>		
 			<%
 			}
 			else
