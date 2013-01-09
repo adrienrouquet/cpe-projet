@@ -59,13 +59,14 @@ public class ChatServlet extends HttpServlet {
 	    	}break;
 			
 			case "openAddContactWindow":
-			{   
-				if(searchUserBean == null)
+			{ 
+				//Chaque fois qu'on ouvre la page de recherche, le searchUserBean doit etre vide
+				if(searchUserBean != null)
 				{
-					System.out.println("Warning: searchUserBean is null in ChatServlet");
 					searchUserBean	=  new Bean.UserBean();
 					session.setAttribute("searchUserBean", searchUserBean);
 				}
+				
 				cr.setUrl("addContact.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");		
 
@@ -91,12 +92,11 @@ public class ChatServlet extends HttpServlet {
 				
 				searchUserBean.setLogin(searchString);
 				
-				System.out.println(searchUserBean.getLogin());
-				
 				session.setAttribute("searchUserBean", searchUserBean);
 				cr.setUrl("addContact.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
+	    		
 	    	}break;
 	    	
 			case "addContact":
