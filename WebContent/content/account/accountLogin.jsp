@@ -24,7 +24,7 @@
 </script>
 <div id="container">
 	<header>
-		<h1>Super Messenger</h1>
+		<h1>MyaM</h1>
 	</header>
 	<section class="login">
 		<% 
