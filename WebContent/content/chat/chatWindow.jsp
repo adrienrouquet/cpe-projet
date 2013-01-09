@@ -14,14 +14,26 @@
 <div id="container">
 	<header class="black">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
-		<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
-		<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
-		</form>	
-		<div class="contactName">
-			<%=User.getName(userBean.getMsgManager().getDstUserId())%>
-		</div>
-		<div class="contactStatus">
-			<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+			<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
+			<input type="button" class="back" value="Back" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
+		</form>
+		<%
+			Integer dstId = userBean.getMsgManager().getDstUserId();
+		%>
+		<jsp:include page="contactWrapper.jsp">
+			<jsp:param value='<%= User.getLogin(dstId) %>' name='login'/>
+			<jsp:param value='<%= User.getName(dstId) %>' name="name"/>
+			<jsp:param value='<%= User.getLastLoginDate(dstId) %>' name="status"/>
+			<jsp:param value='<%= 0 %>' name="unreadMessageCount"/>
+		</jsp:include>
+		
+		<div id=<%= userBean.getLogin() %>>
+			<div class="contactName">
+				<%= User.getName(userBean.getMsgManager().getDstUserId()) %>
+			</div>
+			<div class="contactStatus">
+				<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+			</div>
 		</div>
 	</header>
 	<section class="messageSection scroll" id="messageForm">
