@@ -32,16 +32,22 @@ public class CoreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("======================================================");
 		System.out.println("CoreServlet: Entering doGet");
-//		RequestDispatcher rd = req.getRequestDispatcher("AccountServlet");
-//		rd.forward(req, res);
+		//Pour le test
+		if(req.getParameter("action") == "resetDB")
+		{
+			try {
+				DBReset.resetDatabase();
+			} catch (SQLException e) {
+				System.out.println("Error in CoreServlet: resetDatabase failed");
+			}
+		}
+	
 		res.sendRedirect("AccountServlet");
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("======================================================");
 		System.out.println("CoreServlet: Entering doPost");
-//		RequestDispatcher rd = req.getRequestDispatcher("AccountServlet");
-//		rd.forward(req, res);
 		res.sendRedirect("AccountServlet");
 	}
 

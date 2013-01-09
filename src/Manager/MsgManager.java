@@ -48,7 +48,7 @@ public class MsgManager{
 	public void setDstUserId(int dstUserId) {
 		this._dstUserId = dstUserId;
 	}
-	public Msg sendMessage(String content)
+	public int sendMessage(String content)
 	{
 		return _dbmt.sendMessage(_srcUserId, _dstUserId, content);
 	}

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import TestEnvSetup.DBReset;
+
 import Class.User;
 import DB.DBUserToolbox;
 
@@ -88,13 +90,11 @@ public class AccountServlet extends HttpServlet {
 						//On set au passage le chatRouterBean en session aussi
 						
 						User user = dbut.getUser(login); 
-//						user.setIsConnected(true);
 						userBean.setUser(user);
 						session.setAttribute("userBean", userBean);
 						session.setAttribute("chatRouterBean", new Bean.Router());
 						System.out.println("AccountServlet: UserId " + userBean.getId() + " is now connected");
 						
-//							rd = req.getRequestDispatcher("ChatServlet");
 						res.sendRedirect("ChatServlet");
 					}
 					else

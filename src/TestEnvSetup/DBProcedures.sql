@@ -25,7 +25,7 @@ BEGIN
       pContent
    );
 
-   SELECT * FROM messages WHERE id = LAST_INSERT_ID();
+   SELECT LAST_INSERT_ID() AS id;
    
 END //
 DELIMITER ;
@@ -90,12 +90,13 @@ BEGIN
 				phone LIKE searchString
 		)
 		AND NOT pSearchString = ""
-		AND id NOT IN (SELECT dstUserId FROM contacts WHERE srcUserId = pUserId)
+		AND id NOT IN (SELECT dstUserId FROM contacts WHERE srcUserId = pUserId AND approvalStatus = 1)
 		AND NOT id = pUserId
 	;
    
 END //
 DELIMITER ;
+
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getContacts;
 DELIMITER //
@@ -286,38 +287,38 @@ CREATE PROCEDURE addContact
 )
 BEGIN
 
-   DECLARE tempIdentity INT;
-   INSERT INTO contacts
-   (
-      srcUserId,
-      dstUserId,
-      approvalStatus
-   ) 
-   VALUES 
-   (
-      pSrcUserId,
-      pDstUserId,
-      1
-   );
-   INSERT INTO contacts
-   (
-      dstUserId,
-      srcUserId,
-      approvalStatus
-   ) 
-   VALUES 
-   (
-      pDstUserId,
-      pSrcUserId,
-      0
-   );
-   
-
-   SET tempIdentity = LAST_INSERT_ID();
-   
-   SELECT tempIdentity;
-   
-   
+	IF pSrcUserId NOT IN (SELECT srcUserId FROM contacts WHERE dstUserId = pDstUserId AND srcUserId = pSrcUserId)
+	THEN
+		INSERT INTO contacts
+	   (
+	      srcUserId,
+	      dstUserId,
+	      approvalStatus
+	   ) 
+	   VALUES 
+	   (
+	      pSrcUserId,
+	      pDstUserId,
+	      1
+	   );	
+   ELSE
+   		UPDATE contacts SET approvalStatus = 1 WHERE srcUserId = pSrcUserId AND dstUserId = pDstUserId;
+   END IF;
+   IF pSrcUserId NOT IN (SELECT dstUserId FROM contacts WHERE srcUserId = pDstUserId AND dstUserId = pSrcUserId)
+   THEN
+      INSERT INTO contacts
+	   (
+	      srcUserId,
+	      dstUserId,	      
+	      approvalStatus
+	   ) 
+	   VALUES 
+	   (
+	      pDstUserId,
+	      pSrcUserId,
+	      0
+	   );
+	END IF;
 END //
 DELIMITER ;
 
