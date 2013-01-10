@@ -21,7 +21,7 @@
 		<h1>Contact requests</h1>
 		
 		<form method="post" id="contactRequestsForm" name="contactRequestsForm" action="ChatServlet">
-			<input type="hidden" name="action" value="contactRequests" />
+			<input type="hidden" name="action" value="submitContactRequests" />
 			<input type="hidden" name="contactId" value="0"/>
 			<input type="hidden" name="acceptRequest" value="false"/>
 			
