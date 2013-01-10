@@ -3,9 +3,8 @@
 		<%= request.getParameter("content") %>
 	</div>
 	<div class="messageStatus">
-		<div class="<%= request.getParameter("messageStatus") %>">
-		</div>
+		<%= request.getParameter("status") %>
 	</div>
 	<br/>
-	<div class="messageDateTime"><%= request.getParameter("date") %></div>
+	<div class="messageDateTime"><%= request.getParameter("sentDate") %></div>
 </div>

@@ -5,8 +5,8 @@ $(document).ready(function() {
 	var _incomingMessage = null;
 	var _outgoingMessage = null;
 	
-	function getDate() {
-		var d = new Date();
+	function getDate(timestamp) {
+		var d = new Date(timestamp);
 		
 		var date = d.getDate();
 		var month = d.getMonth()+1;
@@ -14,29 +14,27 @@ $(document).ready(function() {
 		var hour = d.getHours();
 		var min = d.getMinutes();
 		
-		date = (date>10?'':'0') + date;
-		month = (month>10?'':'0') + month;
+		date = (date>=10?'':'0') + date;
+		month = (month>=10?'':'0') + month;
 		year = '' + year;
-		hour = (hour>10?'':'0') + hour;
-		min = (min>10?'':'0') + min;
+		hour = (hour>=10?'':'0') + hour;
+		min = (min>=10?'':'0') + min;
 		
-		return date + "/" + month + "/" + year + " at " + hour + ":" + min;
+		return month + "/" + date + "/" + year + " at " + hour + ":" + min;
 	}
 	
 	function doSend() {
 		if (jQuery.trim($('#content').val()).length > 0) {
 			var json = new JSONMessage();
 			
-			json.date = getDate();
+			json.sentDate = new Date().getTime();
 			json.content = $('#content').val();
-			json.tmp = new Date().getTime();
 			$('#content').val("");
 			
 			var outgoingMsg = _outgoingMessage.clone();
 			writeNewMessage(outgoingMsg, json);
 			
-			var message = json.stringify();
-			_websocket.emit("sendMessage", message);
+			_websocket.emit("sendMessage", json.stringify());
 		}
 	}
 	
@@ -44,14 +42,14 @@ $(document).ready(function() {
 		if (json.content != "")
 			element.find(".messageContent").html(json.content);
 		
-		if (json.date != "")
-			element.find(".messageDateTime").html(json.date);
+		if (json.sentDate != "")
+			element.find(".messageDateTime").html(getDate(json.sentDate));
 		
 		if (json.id != "")
 			element.attr("id", json.id);
 		else {
-			if (json.tmp != "")
-				element.attr("id", json.tmp);
+			if (json.sentDate != 0)
+				element.attr("id", json.sentDate);
 		}
 		
 		$('#messageForm').append(element);
@@ -60,7 +58,7 @@ $(document).ready(function() {
 	function init() {
 		$.get('content/chat/outgoingMessage.jsp', function(data) {
 			_outgoingMessage = $(data);
-			_outgoingMessage.find(".messageStatus").html('');
+			_outgoingMessage.find(".messageStatus").html('<div><div/>');
 		});
 		
 		$.get('content/chat/incomingMessage.jsp', function(data) {
@@ -84,25 +82,26 @@ $(document).ready(function() {
 		});
 		
 		_websocket.on('updateMessageStatus', function(data) {
+			console.log("ON updateMessageStatus");
 			var json = new JSONMessage();
 			json.parse(data);
 
 			if ($("#" + json.id).html() == undefined) {
-				var element = $("#" + json.tmp);
+				var element = $("#" + json.sentDate);
 				element.attr("id", json.id);
 			}
 			
-			$("#" + json.id).children(".messageStatus").removeClass().addClass("messageStatus " + json.status);
+			$("#" + json.id).children(".messageStatus").html(json.status);
 		});
 		
 		_websocket.on("messageNotification", function(data) {
 			 json = new JSONMessage();
 			json.parse(data);
-			alert(json.sender + " vous a envoyé un message !");
+			alert(json.srcName + " vous a envoyé un message !");
 		});
 		
-		_websocket.on("updateContactStatus", function(login, message) {
-			$("#"+login).children(".contactStatus").html(message);
+		_websocket.on("updateContactStatus", function(dstLogin, message) {
+			$("#"+dstLogin).children(".contactStatus").html(message);
 		});
 	}
 	

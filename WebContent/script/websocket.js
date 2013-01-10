@@ -5,11 +5,10 @@ $(document).ready(function() {
 	
 	function JSONMessage() {
 		this.id = "";
-		this.tmp = "";
-		this.date = "";
+		this.sentDate = 0;
 		this.content = "";
-		this.src = "";
-		this.sender = "";
+		this.srcLogin = "";
+		this.srcName = "";
 		this.status = "";
 		
 		this.getJSON = function () {
@@ -17,16 +16,14 @@ $(document).ready(function() {
 			
 			if (this.id != "")
 				json["id"] = this.id;
-			if (this.tmp != "")
-				json["tmp"] = this.tmp;
-			if (this.date != "")
-				json["date"] = this.date;
+			if (this.sentDate != "")
+				json["sentDate"] = this.sentDate;
 			if (this.content != "")
 				json["content"] = this.content;
-			if (this.src != "")
-				json["src"] = this.src;
-			if (this.sender != "")
-				json["sender"] = this.sender;
+			if (this.srcLogin != "")
+				json["srcLogin"] = this.srcLogin;
+			if (this.srcName != "")
+				json["srcName"] = this.srcName;
 			if (this.status != "")
 				json["status"] = this.status;
 			
@@ -41,11 +38,10 @@ $(document).ready(function() {
 			var obj = JSON.parse(jsonString);
 			
 			this.id = (obj["id"]!=undefined)?obj["id"]:"";
-			this.tmp = (obj["tmp"]!=undefined)?obj["tmp"]:"";
-			this.date = (obj["date"]!=undefined)?obj["date"]:"";
+			this.sentDate = (obj["sentDate"]!=undefined)?obj["sentDate"]:"";
 			this.content = (obj["content"]!=undefined)?obj["content"]:"";
-			this.src = (obj["src"]!=undefined)?obj["src"]:"";
-			this.sender = (obj["sender"]!=undefined)?obj["sender"]:"";
+			this.srcLogin = (obj["srcLogin"]!=undefined)?obj["srcLogin"]:"";
+			this.srcName = (obj["srcName"]!=undefined)?obj["srcName"]:"";
 			this.status = (obj["status"]!=undefined)?obj["status"]:"";
 		};
 	}
@@ -61,15 +57,14 @@ $(document).ready(function() {
 		// message doit etre un JSON du type {'event': ..., 'data': ...}
 		try {
 			message = JSON.parse(evt.data);
-			console.dir(message);
 			console.log("EVENT FROM SERVER: " + message.event);
 			var json = new JSONMessage();
 			json.parse(evt.data);
 			
-			var params =[];
+			var params = [];
 			params.push(message.event);
 			params = params.concat(message.data);
-			params.push(false);
+			params.push("ServerEvent");
 
 			_websocket.emit.apply(_websocket, params);
 		} catch(err) {
@@ -95,10 +90,11 @@ $(document).ready(function() {
 		// UTILISATION: websocket.emit(event, [arg0], [arg1], ..., [argN])
 		WebSocket.prototype.emit = function(eventName) {
 			console.log("EVENT: " + eventName);
-			
-			var sendToServer = true;
-			if (arguments[arguments.length-1] === false) {
-				sendToServer = Array.prototype.pop.call(arguments);
+			console.dir(arguments);
+			var serverEvent = false;
+			if (arguments[arguments.length-1] === "ServerEvent") {
+				Array.prototype.pop.call(arguments);
+				serverEvent = true;
 			}
 			
 			var jsonEvent = {
@@ -106,7 +102,7 @@ $(document).ready(function() {
 					'data': Array.prototype.slice.call(arguments, 1)
 			};
 			
-			if (sendToServer) {
+			if (!serverEvent) {
 				console.log("SEND EVENT TO SERVER: " + eventName);
 				this.send(JSON.stringify(jsonEvent));
 			}

@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import DB.DBMsgToolbox;
+import Manager.UserManager;
 
 public class Msg {
 
@@ -45,6 +46,21 @@ public class Msg {
 		_dbmt = new DBMsgToolbox();  
 	};
 	
+	public Msg (JSONObject json) {
+		if (json.containsKey("id"))
+			this._id = Integer.parseInt((String) json.get("id"));
+		
+		if (json.containsKey("content"))
+			this._content = (String) json.get("content");
+		
+		if (json.containsKey("sentDate"))
+			this._sentDate = new Timestamp((Long) json.get("sentDate"));
+		
+		if (json.containsKey("status")) {
+			if (!(this.isDeliveredFormated().equals((String) json.get("status"))))
+				this._isDelivered = true;
+		}
+	}
 	
 	public int getId() {
 		return _id;
@@ -99,7 +115,12 @@ public class Msg {
 	}
 	
 	public String isDeliveredFormated() {
-		return this._isDelivered?"messageStatusReceived":"messageStatusSent";
+		String cl = this._isDelivered?"messageStatusReceived":"messageStatusSent";
+		
+		String statusHtml = "<div class='"
+				+ cl
+				+ "'></div>";
+		return statusHtml;
 	}
 	
 	public JSONObject getJsonMsg(String... keys) {
@@ -112,14 +133,14 @@ public class Msg {
 			case "content":
 				jsonMsg.put("content", this._content);
 				break;
-			case "date":
-				jsonMsg.put("date", this.getDateFormated());
+			case "sentDate":
+				jsonMsg.put("sentDate", this.getSentDate().getTime());
 				break;
-			case "src":
-				jsonMsg.put("src", User.getLogin(_srcUserId));
+			case "srcLogin":
+				jsonMsg.put("srcLogin", User.getLogin(_srcUserId));
 				break;
-			case "sender":
-				jsonMsg.put("sender", User.getName(_srcUserId));
+			case "srcName":
+				jsonMsg.put("srcName", User.getName(_srcUserId));
 				break;
 			case "status":
 				jsonMsg.put("status", this.isDeliveredFormated());
