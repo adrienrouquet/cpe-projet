@@ -47,6 +47,15 @@ public class UserBean implements Serializable {
 		this._user = user;
 	}
 
+	public Boolean getApprovalStatus()
+	{
+		return this._user.getApprovalStatus();
+	}
+	public void setApprovalStatus(Boolean approvalStatus)
+	{
+		this._user.setApprovalStatus(approvalStatus);
+	}	
+	
 	public ArrayList<User> getContacts() {
 		return _user.getContacts();
 	}

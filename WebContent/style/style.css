@@ -64,6 +64,10 @@ footer{
 	color: rgb(220,220,220);	
 }
 
+.greyed *{
+	background: rgb(120,120,120);
+}
+
 .floatLeft{
 	float: left;
 }

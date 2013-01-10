@@ -25,7 +25,10 @@
 				{
 					for(User user : users)
 					{
-						int unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
+						
+						if(user.getApprovalStatus())
+						{
+							int unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
 			%>
 			<div id="<%= user.getLogin() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
 				<div class="contactImg<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessagesImg"); } %>"></div>
@@ -48,6 +51,21 @@
 				</div>
 			</div>
 			<%
+						}
+						else
+						{
+			%>
+			<div id="<%= user.getLogin() %>" class="contactWrapperNoHover greyed">
+				<div class="contactImg"></div>
+				<div class="contactName">
+					<%= user.getName() %>
+				</div>
+				<div class="contactStatus">
+					Offline
+				</div>
+			</div>
+			<%
+						}
 					}
 				}
 				else

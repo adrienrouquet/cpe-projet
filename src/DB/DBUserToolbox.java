@@ -107,7 +107,12 @@ public class DBUserToolbox extends DBToolbox {
 			
 			while(rs.next())
 			{
-				users.add(new User(rs.getInt("id"),rs.getString("login"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate")));
+				
+				User user = new User(rs.getInt("id"),rs.getString("login"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate"));
+				if(!rs.getBoolean("approvalStatus"))
+					user.setApprovalStatus(false);
+				users.add(user);
+					
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getContacts:" +e.getMessage());

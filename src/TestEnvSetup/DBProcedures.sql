@@ -65,8 +65,6 @@ BEGIN
 END //
 DELIMITER ;
 
-
-
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS findContacts;
 DELIMITER //
@@ -106,12 +104,17 @@ CREATE PROCEDURE getContacts
 )
 BEGIN
 
-	SELECT * FROM users
-	WHERE id IN 
-	(
-   		SELECT dstUserId FROM contacts
-   		WHERE srcUserId = pUserId AND approvalStatus = 1
-   	);
+	SELECT users.*, contacts2.approvalStatus AS approvalStatus FROM users 
+		INNER JOIN contacts AS contacts1 ON users.id = contacts1.dstUserId
+		LEFT JOIN contacts AS contacts2 ON contacts1.dstUserId = contacts2.srcUserId
+	WHERE 
+		contacts1.srcUserId = pUserId
+	AND
+		contacts1.approvalStatus = 1
+	AND 
+		contacts2.dstUserId = pUserId
+	ORDER BY users.firstName ASC
+	;
    
 END //
 DELIMITER ;
@@ -144,12 +147,9 @@ CREATE PROCEDURE getContactRequestsCount
 )
 BEGIN
 
-	SELECT COUNT(*) AS countactRequestsCount FROM users
-	WHERE id IN 
-	(
-   		SELECT dstUserId FROM contacts
-   		WHERE srcUserId = pUserId AND approvalStatus = 0
-   	);
+	SELECT COUNT(*) as contactRequestsCount FROM contacts
+   	WHERE srcUserId = pUserId AND approvalStatus = 0
+   	;
    
 END //
 DELIMITER ;

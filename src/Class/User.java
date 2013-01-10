@@ -24,6 +24,7 @@ public class User{
 	private String _lastName = "";
 	private Timestamp _lastLoginDate = null;
 	private boolean _isConnected = false;
+	private boolean _approvalStatus = true;
 	private Websocket _websocket = null;
 	private MsgManager _mm = null;
 	
@@ -69,6 +70,15 @@ public class User{
 		_dbut 			= new DBUserToolbox();
 		_mm				= new MsgManager(_id);
 	};
+	
+	public void setApprovalStatus(Boolean approvalStatus)
+	{
+		this._approvalStatus = approvalStatus;
+	}
+	public Boolean getApprovalStatus()
+	{
+		return this._approvalStatus;
+	}
 	
 	public ArrayList<User> getContacts()
 	{

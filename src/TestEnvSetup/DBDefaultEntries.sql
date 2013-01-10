@@ -8,7 +8,6 @@ CALL addUser("jane","jane","jane.doe@gmail.com","0606060606","Jane","Doe");
 /*---------------------------------------------------*/
 //CALL addContact(2,2);
 CALL addContact(2,3);
-CALL addContact(2,4);
 CALL addContact(2,5);
 CALL addContact(2,6);
 CALL addContact(3,2);
@@ -16,7 +15,6 @@ CALL addContact(3,4);
 CALL addContact(3,5);
 CALL addContact(4,2);
 CALL addContact(4,3);
-CALL addContact(5,2);
 CALL addContact(5,3);
 CALL addContact(6,2);
 CALL addContact(5,4);
