@@ -67,7 +67,7 @@ public class ChatServlet extends HttpServlet {
 					session.setAttribute("searchUserBean", searchUserBean);
 				}
 				
-				cr.setUrl("addContact.jsp");
+				cr.setUrl("addContactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");		
 
 	    	}break;
@@ -76,7 +76,7 @@ public class ChatServlet extends HttpServlet {
 			{   
 				searchUserBean	=  new Bean.UserBean();
 				session.setAttribute("searchUserBean", searchUserBean);
-				cr.setUrl("addContact.jsp");
+				cr.setUrl("addContactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");		
 
 	    	}break;
@@ -93,7 +93,7 @@ public class ChatServlet extends HttpServlet {
 				searchUserBean.setLogin(searchString);
 				
 				session.setAttribute("searchUserBean", searchUserBean);
-				cr.setUrl("addContact.jsp");
+				cr.setUrl("addContactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    		
@@ -106,6 +106,36 @@ public class ChatServlet extends HttpServlet {
 				userBean.getUser().addContact(userBean.getMsgManager().getDstUserId());
 				cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+	    	}break;
+	    	
+			case "openContactRequestsWindow":
+			{
+				cr.setUrl("contactRequestsWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+			}
+	    	
+			case "contactRequests":
+			{
+				String answer = req.getParameter("acceptRequest");
+				
+				if ((answer != null) && (answer != "")) 
+				{
+					boolean acceptRequest = Boolean.parseBoolean(answer);
+					
+					if (acceptRequest)
+					{
+						userBean.getUser().addContact(userBean.getMsgManager().getDstUserId());
+						cr.setUrl("contactWindow.jsp");
+					}
+					else
+					{
+						//delete request of DstUserId?
+					}
+				}
+				
+				rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    	}break;
 	    	

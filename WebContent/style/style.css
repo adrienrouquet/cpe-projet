@@ -126,6 +126,11 @@ input.add {
 	background-size: 100% 100%;
 }
 
+input.ignore {
+	background: url("../img/ignore.png");
+	background-size: 100% 100%;
+}
+
 input.contactRequests, input.contactRequests:hover{
 	font-size: 1.6em;
 	color: rgb(200,220,220);

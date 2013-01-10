@@ -19,6 +19,7 @@ CALL addContact(4,3);
 CALL addContact(5,2);
 CALL addContact(5,3);
 CALL addContact(6,2);
+CALL addContact(5,4);
 
 /*---------------------------------------------------*/
 CALL sendMessage(2,3,1,"Salut Adrien, dis moi tu te rappelles je crois qu on a un projet de fin dannee a faire");
