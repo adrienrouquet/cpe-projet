@@ -17,12 +17,15 @@
 			<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
 			<input type="button" class="imageButton back w50 h50 floatLeft" value="" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
 		</form>
-		<div id=<%= userBean.getLogin() %>>
+		<%
+		int dstId = userBean.getMsgManager().getDstUserId();
+		%>
+		<div id=<%= User.getLogin(dstId) %>>
 			<div class="contactName">
-				<%= User.getName(userBean.getMsgManager().getDstUserId()) %>
+				<%= User.getName(dstId) %>
 			</div>
 			<div class="contactStatus">
-				<%= User.getLastLoginDateFormated(userBean.getMsgManager().getDstUserId()) %>
+				<%= User.getLastLoginDateFormated(dstId) %>
 			</div>
 		</div>
 	</header>
@@ -40,14 +43,15 @@
 							userBean.getMsgManager().setMessageDelivered(msg.getId());
 							msg.setIsDelivered(true);
 							for (User user : UserManager.getUsersConnected(userBean.getMsgManager().getDstUserId())) {
-								user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
+								if (user.getMsgManager().getDstUserId() == userBean.getId())
+									user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
 							}
 						}
 		%>
 		<jsp:include page="incomingMessage.jsp">
 			<jsp:param value='<%= msg.getId() %>' name='id'/>
 			<jsp:param value='<%= msg.getContent() %>' name='content'/>
-			<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
+			<jsp:param value='<%= msg.getDateFormated() %>' name="sentDate"/>
 		</jsp:include>
 		<%
 				}
@@ -57,8 +61,8 @@
 		<jsp:include page="outgoingMessage.jsp">
 			<jsp:param value='<%= msg.getId() %>' name='id'/>
 			<jsp:param value='<%= msg.getContent() %>' name='content'/>
-			<jsp:param value='<%= msg.isDeliveredFormated() %>' name='messageStatus'/>
-			<jsp:param value='<%= msg.getDateFormated() %>' name="date"/>
+			<jsp:param value='<%= msg.isDeliveredFormated() %>' name='status'/>
+			<jsp:param value='<%= msg.getDateFormated() %>' name="sentDate"/>
 		</jsp:include>
 		<%
 				}

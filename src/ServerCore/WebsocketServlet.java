@@ -35,7 +35,6 @@ public class WebsocketServlet extends WebSocketServlet {
 		Websocket websocket = new Websocket(user.getMsgManager());
 		user.setWebsocket(websocket);
 		UserManager.addUserConnected(user);
-		System.err.println(UserManager.getUsersConnected());
 		
 		return websocket;
 	}

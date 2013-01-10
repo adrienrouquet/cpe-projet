@@ -7,12 +7,12 @@ $(document).ready(function() {
 			 json = new JSONMessage();
 			json.parse(data);
 			
-			$("#"+json.src).addClass('contactHasUnreadMessages');
-			var unreadMessageWrapper = $("#contactUnreadMessageWrapper"+json.src);
+			$("#"+json.srcLogin).addClass('contactHasUnreadMessages');
+			var unreadMessageWrapper = $("#contactUnreadMessageWrapper"+json.srcLogin);
 			if(unreadMessageWrapper.html() != undefined)
 				unreadMessageWrapper.css("display", "inline");
 			
-			var unreadMessageCountSpan = $("#contactUnreadMessageCount"+json.src);
+			var unreadMessageCountSpan = $("#contactUnreadMessageCount"+json.srcLogin);
 			if(unreadMessageCountSpan.html() != undefined)
 				unreadMessageCountSpan.html(parseInt(unreadMessageCountSpan.html())+1);
 		});
