@@ -250,6 +250,26 @@ public class DBUserToolbox extends DBToolbox {
 		}
 	}
 	
+	public void deleteContact(int srcUserId, int dstUserId)
+	{
+		
+		Connection conn 		= getConn();
+		CallableStatement cs 	= null;
+		
+		try {
+			
+			cs = conn.prepareCall("{CALL deleteContact(?,?)}");
+			cs.setInt("pSrcUserId", srcUserId);
+			cs.setInt("pDstUserId", dstUserId);
+			cs.executeQuery();			
+			
+		} catch (SQLException e) {
+			System.out.println("Error in deleteContact:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
+		}
+	}
+	
 	public String getName(Integer id)
 	{
 		Connection conn 		= getConn();

@@ -184,6 +184,11 @@ public class User{
 		_dbut.addContact(_id, contactId);
 	}
 	
+	public void deleteContact(int contactId)
+	{
+		_dbut.deleteContact(_id, contactId);
+	}
+	
 	public static String getName(int id)
 	{
 		String name = _dbut.getName(id);

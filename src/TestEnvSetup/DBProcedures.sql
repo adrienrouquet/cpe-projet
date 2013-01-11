@@ -360,6 +360,21 @@ END //
 DELIMITER ;
 
 /*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS deleteContact;
+DELIMITER //
+CREATE PROCEDURE deleteContact 
+(
+   IN pSrcUserId INT,
+   IN pDstUserId INT
+)
+BEGIN
+
+	DELETE FROM contacts WHERE srcUserId = pSrcUserId AND dstUserId = pDstUserId;
+
+END //
+DELIMITER ;
+
+/*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS checkCredentials;
 DELIMITER //
 CREATE PROCEDURE checkCredentials 
