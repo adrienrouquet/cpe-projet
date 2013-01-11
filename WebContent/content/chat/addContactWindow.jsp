@@ -19,11 +19,11 @@
 
 	<section id="search" class="addContactSection">
 		<div class="searchForm">
-			<jsp:include page="addContactForm.jsp" />
+			<jsp:include page="include/addContactForm.jsp" />
 		</div>
 		
 		<div class="searchResult">
-			<jsp:include page="addContactResult.jsp" />
+			<jsp:include page="include/addContactResult.jsp" />
 			
 		</div>
 	</section>

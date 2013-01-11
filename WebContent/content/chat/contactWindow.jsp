@@ -21,18 +21,19 @@
 				{
 					for(User user : users)
 					{
-						
-						String onClickContent		= "";
-						String contactWrapperClass 	= "";
-						int unreadMessageCount 		= 0;
+						System.out.println(user.getFirstName());						
+						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
+						String onClickDeleteContent = "setValue('mainForm','action','deleteContact');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
+						String contactWrapperClass 	= "contactWrapper";
+						String contactStatusClass	= "contactStatus";
 						String unreadMessageStyle 	= "display: none;";
+						String contactStatus		= user.getLastLoginDateFormated();
+						int unreadMessageCount 		= 0;
 						
 						unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
 						
 						if(user.getApprovalStatus())
 						{
-							contactWrapperClass = "contactWrapper";
-							onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 							if( unreadMessageCount > 0 )
 							{
 								contactWrapperClass += " contactHasUnreadMessages";
@@ -42,6 +43,9 @@
 						else
 						{
 							contactWrapperClass = "contactWrapperNoHover greyed";
+							contactStatusClass 	= "";
+							contactStatus		= "Offline";
+							onClickContent		= "";
 						}							
 			%>
 			
@@ -52,14 +56,16 @@
 			<jsp:param value='<%= unreadMessageCount %>' name='unreadMessageCount'/>
 			<jsp:param value='<%= unreadMessageStyle %>' name='unreadMessageStyle'/>
 			<jsp:param value='<%= onClickContent %>' name='onClickContent'/>
-			<jsp:param value='<%= user.getLastLoginDateFormated() %>' name='contactStatus'/>
+			<jsp:param value='<%= onClickDeleteContent %>' name='onClickDeleteContent'/>
+			<jsp:param value='<%= contactStatusClass %>' name='contactStatusClass'/>
+			<jsp:param value='<%= contactStatus %>' name='contactStatus'/>
 			</jsp:include>
 			
 			<%
+					}
 				}
-			}
-			else
-			{
+				else
+				{
 			%>
 			<div class="contactWrapper">
 				<div class="contactName">
@@ -67,7 +73,7 @@
 				</div>
 			</div>
 			<%
-			}
+				}
 			%>			
 		</form>
 	</section>

@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Class.User;
+import Class.Websocket;
+import Manager.UserManager;
+
+
 @WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -59,6 +64,15 @@ public class ChatServlet extends HttpServlet {
 //	    		rd.forward(req, res);
 	    	}break;
 			
+			case "deleteContact":
+			{
+				userBean.getUser().deleteContact(userBean.getMsgManager().getDstUserId());
+				
+				cr.setUrl("contactWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+			}break;
+	    	
 			case "openAddContactWindow":
 			{ 
 				//Chaque fois qu'on ouvre la page de recherche, le searchUserBean doit etre vide
@@ -127,6 +141,12 @@ public class ChatServlet extends HttpServlet {
 					if (acceptRequest)
 					{
 						userBean.getUser().addContact(contactId);
+						User user = UserManager.getUserConnected(userBean.getMsgManager().getDstUserId());
+						if (user != null) {
+							for(Websocket WS : user.getWebsockets()) {
+								WS.emit("contactApprovedNotification", userBean.getLogin());
+							}
+						}
 						cr.setUrl("contactWindow.jsp");
 					}
 					else

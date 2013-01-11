@@ -1,12 +1,15 @@
 <div id="<%= request.getParameter("contactLogin") %>" class="<%= request.getParameter("contactWrapperClass") %>" onclick="<%= request.getParameter("onClickContent") %>">
-	<div class="contactImg"></div>
-	<div class="contactName">
-		<%= request.getParameter("contactName") %>
-		<span id="contactUnreadMessageWrapper<%= request.getParameter("contactLogin") %>" style="<%= request.getParameter("unreadMessageStyle") %>">
-			(<span id="contactUnreadMessageCount<%= request.getParameter("login") %>"><%= request.getParameter("unreadMessageCount") %></span>)
-		</span>		
+	<div class="contactInfo">
+		<div class="contactImg"></div>
+		<div class="contactName">
+			<%= request.getParameter("contactName") %>
+			<span id="contactUnreadMessageWrapper" style="<%= request.getParameter("unreadMessageStyle") %>">
+			(<span id="contactUnreadMessageCount"><%= request.getParameter("unreadMessageCount") %></span>)
+			</span>		
+		</div>
+		<div class="<%= request.getParameter("contactStatusClass") %>">
+			<%= request.getParameter("contactStatus") %>
+		</div>
 	</div>
-	<div class="contactStatus">
-		<%= request.getParameter("contactStatus") %>
-	</div>
+	<input type="button" class="imageButton ignore floatRight w30 h30" value="" onclick="<%= request.getParameter("onClickDeleteContent") %>"/>
 </div>
