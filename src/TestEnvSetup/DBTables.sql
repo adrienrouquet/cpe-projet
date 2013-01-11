@@ -31,5 +31,5 @@ DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE IF NOT EXISTS `contacts` (
   `srcUserId` int(11) NOT NULL,
   `dstUserId` int(11) NOT NULL,
-  `approvalStatus` tinyint(1) NOT NULL DEFAULT '0'
+  `approvalStatus` int(2) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
