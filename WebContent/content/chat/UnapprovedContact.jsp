@@ -26,43 +26,50 @@
 					for(User user : users)
 					{
 						
-						String onClickContent		= "";
-						String contactWrapperClass 	= "";
-						int unreadMessageCount 		= 0;
-						String unreadMessageStyle 	= "display: none;";
-						
-						unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
-						
 						if(user.getApprovalStatus())
 						{
-							contactWrapperClass = "contactWrapper";
-							onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
-							if( unreadMessageCount > 0 )
-							{
-								contactWrapperClass += " contactHasUnreadMessages";
-								unreadMessageStyle = "display: inline;";
-							}
+							int unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
+			%>
+			<div id="<%= user.getLogin() %>" class="contactWrapper<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessages"); } %>" onclick="setValue('mainForm','action','openChat');setValue('mainForm','contactId','<%= user.getId() %>');submitForm('mainForm');">
+				<div class="contactImg<% if( unreadMessageCount > 0 ) { out.print(" contactHasUnreadMessagesImg"); } %>"></div>
+				<div class="contactName">
+					<%= user.getName() %>
+					<% 
+						String unreadMessageStyle = "display: none;";
+						if( unreadMessageCount > 0 ) 
+						{
+							unreadMessageStyle = "display: inline;";
+						}
+					%>
+					<span id="contactUnreadMessageWrapper<%= user.getLogin() %>" style="<%= unreadMessageStyle %>">
+						(<span id="contactUnreadMessageCount<%= user.getLogin() %>"><%= unreadMessageCount %></span>)
+					</span>
+					
+				</div>
+				<div class="contactStatus">
+					<%= user.getLastLoginDateFormated() %>
+				</div>
+			</div>
+			<%
 						}
 						else
 						{
-							contactWrapperClass = "contactWrapperNoHover greyed";
-						}							
 			%>
-			
-			<jsp:include page="include/contact.jsp">
-			<jsp:param value='<%= contactWrapperClass %>' name='contactWrapperClass'/>
-			<jsp:param value='<%= user.getLogin() %>' name="contactLogin"/>
-			<jsp:param value='<%= user.getName() %>' name="contactName"/>
-			<jsp:param value='<%= unreadMessageCount %>' name='unreadMessageCount'/>
-			<jsp:param value='<%= unreadMessageStyle %>' name='unreadMessageStyle'/>
-			<jsp:param value='<%= onClickContent %>' name='onClickContent'/>
-			<jsp:param value='<%= user.getLastLoginDateFormated() %>' name='contactStatus'/>
-			</jsp:include>
+			<div id="<%= user.getLogin() %>" class="contactWrapperNoHover greyed">
+				<div class="contactImg"></div>
+				<div class="contactName">
+					<%= user.getName() %>
+				</div>
+				<div class="contactStatus">
+					Offline
+				</div>
+			</div>
 			<%
+						}
+					}
 				}
-			}
-			else
-			{
+				else
+				{
 			%>
 			<div class="contactWrapper">
 				<div class="contactName">
@@ -70,7 +77,7 @@
 				</div>
 			</div>
 			<%
-			}
+				}
 			%>			
 		</form>
 	</section>

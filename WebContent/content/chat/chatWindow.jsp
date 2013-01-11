@@ -48,7 +48,7 @@
 							}
 						}
 		%>
-		<jsp:include page="incomingMessage.jsp">
+		<jsp:include page="include/incomingMessage.jsp">
 			<jsp:param value='<%= msg.getId() %>' name='id'/>
 			<jsp:param value='<%= msg.getContent() %>' name='content'/>
 			<jsp:param value='<%= msg.getDateFormated() %>' name="sentDate"/>
@@ -58,7 +58,7 @@
 				else
 				{
 		%>
-		<jsp:include page="outgoingMessage.jsp">
+		<jsp:include page="include/outgoingMessage.jsp">
 			<jsp:param value='<%= msg.getId() %>' name='id'/>
 			<jsp:param value='<%= msg.getContent() %>' name='content'/>
 			<jsp:param value='<%= msg.isDeliveredFormated() %>' name='status'/>

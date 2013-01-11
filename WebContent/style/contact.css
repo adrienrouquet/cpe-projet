@@ -61,7 +61,7 @@
 	background-size: 100%;
 	float: left;
 }
-.contactHasUnreadMessagesImg{
+.contactHasUnreadMessages .contactImg{
 	background: url("../img/msgUnread.png");
 	background-size: 100%;
 }
