@@ -104,20 +104,18 @@ CREATE PROCEDURE getContacts
 )
 BEGIN
 
-	SELECT users.*, contacts2.approvalStatus AS approvalStatus FROM users 
-		INNER JOIN contacts AS contacts1 ON users.id = contacts1.dstUserId
-		LEFT JOIN contacts AS contacts2 ON contacts1.dstUserId = contacts2.srcUserId
+	SELECT users.*, contacts.approvalStatus AS approvalStatus FROM contacts
+	INNER JOIN users ON users.id = contacts.srcUserId
 	WHERE 
-		contacts1.srcUserId = pUserId
+		contacts.dstUserId = pUserId
 	AND
-		contacts1.approvalStatus = 1
-	AND 
-		contacts2.dstUserId = pUserId
+		contacts.srcUserId IN (SELECT dstUserId FROM contacts WHERE srcUserId = pUserId AND approvalStatus = 1)
 	ORDER BY users.firstName ASC
 	;
    
 END //
 DELIMITER ;
+
 
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getContactRequests;
