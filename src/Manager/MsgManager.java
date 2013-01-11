@@ -17,7 +17,7 @@ public class MsgManager{
 	
 	private DBMsgToolbox _dbmt	= null;
 	
-	public MsgManager () { 
+	public MsgManager () {
 		_dbmt 		= new DBMsgToolbox();
 	};
 	

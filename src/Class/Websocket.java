@@ -86,6 +86,9 @@ public class Websocket extends MessageInbound{
 		System.err.println("EVENT: updateMessageStatus");
 		
 		Msg msg = new Msg(data);
+		msg.setSrcUserId(_msgManager.getDstUserId());
+		msg.setDstUserId(_msgManager.getSrcUserId());
+		
 		msg.setIsDelivered(true);
 		
 //		User user = UserManager.getUserConnected(_msgManager.getDstUserId());

@@ -57,7 +57,7 @@ public class ChatServlet extends HttpServlet {
 		switch(cr.getAction())
 		{
 			case "openChat":
-			{    		
+			{
 				userBean.getMsgManager().setDstUserId(contactId);
 				cr.setUrl("chatWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");

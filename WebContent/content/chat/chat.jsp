@@ -14,6 +14,7 @@
 		<script type="text/javascript" src="script/jquery-1.8.3.js"></script>
 		<script type="text/javascript" src="script/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="script/jquery.defaultvalue.js"></script>
+		<script type="text/javascript" src="script/script.js"></script>
 		<script type="text/javascript" src="script/websocket.js"></script>
 	</head>
 	<body>		

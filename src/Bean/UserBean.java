@@ -18,7 +18,7 @@ public class UserBean implements Serializable {
 	private MsgManager _msgManager = null;
 	
 	public UserBean () {
-//		_user = new User();
+		_user = new User();
 		_msgManager = new MsgManager();
 	};
 	

@@ -190,8 +190,10 @@ public class User{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (_websockets.size() == 0)
+		if (_websockets.size() == 0) {
+			this.setIsConnected(false);
 			UserManager.delUserConnected(this);
+		}
 	}
 	
 	public String getName()

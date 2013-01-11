@@ -2,6 +2,7 @@ package Class;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -26,24 +27,23 @@ public class Msg {
 	
 	public Msg (int srcUserId, int dstUserId, String content, Timestamp sentDate, Boolean isDelivered)
 	{ 
-		setSrcUserId(srcUserId);
-		setDstUserId(dstUserId);
-		setContent(content);
-		setSentDate(sentDate);
-		setIsDelivered(isDelivered);
-		
+		this._srcUserId = srcUserId;
+		this._dstUserId = dstUserId;
+		this._content = content;
+		this._sentDate = sentDate;
+		this._isDelivered = isDelivered;
 		_dbmt = new DBMsgToolbox();  
 	};
 	
 	public Msg (int id, int srcUserId, int dstUserId, String content, Timestamp sentDate, Boolean isDelivered)
 	{ 
-		setId(id);
-		setSrcUserId(srcUserId);
-		setDstUserId(dstUserId);
-		setContent(content);
-		setSentDate(sentDate);
-		setIsDelivered(isDelivered);
-		_dbmt = new DBMsgToolbox();  
+		this._id = id;
+		this._srcUserId = srcUserId;
+		this._dstUserId = dstUserId;
+		this._content = content;
+		this._sentDate = sentDate;
+		this._isDelivered = isDelivered;
+		_dbmt = new DBMsgToolbox();
 	};
 	
 	public Msg (JSONObject json) {
@@ -60,6 +60,7 @@ public class Msg {
 			if (!(this.isDeliveredFormated().equals((String) json.get("status"))))
 				this._isDelivered = true;
 		}
+		_dbmt = new DBMsgToolbox();
 	}
 	
 	public int getId() {
@@ -109,15 +110,16 @@ public class Msg {
 	public void setIsDelivered(Boolean isDelivered) {
 		this._isDelivered = isDelivered;
 		
-		if (isDelivered) {
-			_dbmt.setMessageDelivered(this._id);
-			User user = UserManager.getUserConnected(this._dstUserId);
-			if (user != null) {
+		User user = UserManager.getUserConnected(this._srcUserId);
+		if (user != null) {
+			ArrayList<Websocket> websockets = user.getWebsockets();
+			if (websockets != null && websockets.size() > 0) {
 				for (Websocket WS : user.getWebsockets()) {
 					WS.emit("updateMessageStatus" ,this.getJsonStringifyMsg("id", "status"));
 				}
 			}
 		}
+		_dbmt.setMessageDelivered(this._id);
 	}
 
 	public String getDateFormated() {
