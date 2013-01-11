@@ -133,6 +133,7 @@ input.add {
 input.ignore {
 	background: url("../img/ignore.png");
 	background-size: 100% 100%;
+	display: inline;
 }
 
 input.contactRequests, input.contactRequests:hover{

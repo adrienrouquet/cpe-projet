@@ -20,13 +20,14 @@
 }
 
 .contactWrapper{
-	color: rgb(20,20,20);
-	
+	color: rgb(20,20,20);	
 	text-align: left;
 	border: 2px;
 	border-style: groove;	
 	background-color: rgba(200,200,200,0.5);
 	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7FAAAAAA', EndColorStr='#7FAAAAAA');
+	overflow: auto;
+	white-space:nowrap;
 }
 
 .contactWrapper:nth-child(odd){
