@@ -1,7 +1,4 @@
 
-<%@page import="java.sql.Timestamp"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="Manager.UserManager"%>
 <%@page import="Class.User"%>
 
