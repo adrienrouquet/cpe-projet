@@ -368,8 +368,21 @@ CREATE PROCEDURE deleteContact
    IN pDstUserId INT
 )
 BEGIN
-
-	DELETE FROM contacts WHERE srcUserId = pSrcUserId AND dstUserId = pDstUserId;
+	
+	UPDATE contacts
+	SET
+		approvalStatus = 2
+	WHERE
+		srcUserId = pSrcUserId AND dstUserId = pDstUserId
+	;
+		
+	IF pSrcUserId IN (SELECT dstUserId FROM contacts WHERE srcUserId = pDstUserId AND dstUserId = pSrcUserId AND approvalStatus = 2)
+	THEN
+		DELETE FROM contacts WHERE srcUserId = pSrcUserId AND dstUserId = pDstUserId;
+		DELETE FROM contacts WHERE srcUserId = pDstUserId AND dstUserId = pSrcUserId;
+		DELETE FROM messages WHERE srcUserId = pSrcUserId AND dstUserId = pDstUserId;
+		DELETE FROM messages WHERE srcUserId = pDstUserId AND dstUserId = pSrcUserId;
+	END IF;
 
 END //
 DELIMITER ;
