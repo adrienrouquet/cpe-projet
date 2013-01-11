@@ -145,6 +145,7 @@ public class ChatServlet extends HttpServlet {
 						if (user != null) {
 							for(Websocket WS : user.getWebsockets()) {
 								WS.emit("contactApprovedNotification", userBean.getLogin());
+								WS.emit("updateContactStatus" , userBean.getLogin(), userBean.getUser().getLastLoginDateFormated());
 							}
 						}
 						cr.setUrl("contactWindow.jsp");

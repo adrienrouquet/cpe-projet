@@ -109,8 +109,7 @@ public class DBUserToolbox extends DBToolbox {
 			{
 				
 				User user = new User(rs.getInt("id"),rs.getString("login"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate"));
-				if(!rs.getBoolean("approvalStatus"))
-					user.setApprovalStatus(false);
+					user.setApprovalStatus(rs.getInt("approvalStatus"));
 				users.add(user);
 					
 			}

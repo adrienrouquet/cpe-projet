@@ -31,7 +31,7 @@
 						
 						unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
 						
-						if(user.getApprovalStatus())
+						if(user.getApprovalStatus() == 1)
 						{
 							onClickContent += "submitForm('mainForm');";
 							if( unreadMessageCount > 0 )
@@ -43,7 +43,7 @@
 						else
 						{
 							contactWrapperClass = "contactWrapperNoHover greyed";
-							contactStatusClass 	= "";
+							contactStatusClass 	= "contactStatusOffline";
 							contactStatus		= "Offline";
 						}							
 			%>

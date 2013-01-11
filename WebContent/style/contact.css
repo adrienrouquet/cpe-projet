@@ -71,7 +71,7 @@
 }
 
 .contactWrapperNoHover .contactImg{
-	background: url("../img/blocked.png");
+	background: url("../img/msgUnApproved.png");
 	background-size: 100%;
 }
 
