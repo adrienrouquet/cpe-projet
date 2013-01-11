@@ -57,10 +57,10 @@
 			</jsp:include>
 			
 			<%
+					}
 				}
-			}
-			else
-			{
+				else
+				{
 			%>
 			<div class="contactWrapper">
 				<div class="contactName">
@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<%
-			}
+				}
 			%>			
 		</form>
 	</section>

@@ -56,12 +56,12 @@ $(document).ready(function() {
 	}
 	
 	function init() {
-		$.get('content/chat/outgoingMessage.jsp', function(data) {
+		$.get('content/chat/include/outgoingMessage.jsp', function(data) {
 			_outgoingMessage = $(data);
 			_outgoingMessage.find(".messageStatus").html('<div><div/>');
 		});
 		
-		$.get('content/chat/incomingMessage.jsp', function(data) {
+		$.get('content/chat/include/incomingMessage.jsp', function(data) {
 			_incomingMessage = $(data);
 		});
 		
