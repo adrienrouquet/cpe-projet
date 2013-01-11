@@ -24,7 +24,7 @@ public class User{
 	private String _lastName = "";
 	private Timestamp _lastLoginDate = null;
 	private boolean _isConnected = false;
-	private boolean _approvalStatus = true;
+	private int _approvalStatus = 1;
 	private ArrayList<Websocket> _websockets = null;
 //	private MsgManager _mm = null;
 	
@@ -75,11 +75,11 @@ public class User{
 //		_mm				= new MsgManager(_id);
 	};
 	
-	public void setApprovalStatus(Boolean approvalStatus)
+	public void setApprovalStatus(int i)
 	{
-		this._approvalStatus = approvalStatus;
+		this._approvalStatus = i;
 	}
-	public Boolean getApprovalStatus()
+	public int getApprovalStatus()
 	{
 		return this._approvalStatus;
 	}
@@ -185,7 +185,7 @@ public class User{
 	public void delWebsocket(Websocket websocket) {
 		_websockets.remove(websocket);
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

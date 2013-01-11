@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import Bean.UserBean;
 import DB.DBHandler;
 import Class.User;
 

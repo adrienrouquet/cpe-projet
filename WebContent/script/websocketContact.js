@@ -18,16 +18,19 @@ $(document).ready(function() {
 				unreadMessageCountSpan.html(parseInt(unreadMessageCountSpan.html())+1);
 		});
 		
+		_websocket.on("contactRequestNotification", function() {
+			var element = $("#contactRequestSubmit");
+			if(element.val() != undefined)
+				element.val(parseInt(element.val())+1);				
+		});
+		
 		_websocket.on("contactApprovedNotification", function(login) {
 			 
 			var contactWrapper = $("#"+login);
 			contactWrapper.removeClass();
 			contactWrapper.addClass('contactWrapper');
 			contactWrapper.find('.contactStatusOffline').addClass('contactStatus');
-			contactWrapper.attr('onClick',contactWrapper.attr('onClick')+"submitForm('mainForm');");
-			
-			
-			
+			contactWrapper.attr('onClick',contactWrapper.attr('onClick')+"submitForm('mainForm');");		
 		});
 		
 		_websocket.on("updateContactStatus", function(login, message) {

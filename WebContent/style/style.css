@@ -86,10 +86,16 @@ footer{
 	height: 50px;
 }
 
+.h60
+{
+	height: 60px;
+}
+
 .h80
 {
 	height: 80px;
 }
+
 
 .w30
 {
@@ -98,6 +104,10 @@ footer{
 .w50
 {
 	width: 50px;
+}
+.w60
+{
+	width: 60px;
 }
 .w80
 {

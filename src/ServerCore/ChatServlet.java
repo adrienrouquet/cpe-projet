@@ -20,8 +20,7 @@ public class ChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     public ChatServlet() {
-        super();
-        
+        super();        
     }
     
     private void chatRouting(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
@@ -66,7 +65,7 @@ public class ChatServlet extends HttpServlet {
 			
 			case "deleteContact":
 			{
-				userBean.getUser().deleteContact(userBean.getMsgManager().getDstUserId());
+				userBean.getUser().deleteContact(contactId);
 				
 				cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
@@ -118,9 +117,16 @@ public class ChatServlet extends HttpServlet {
 			{
 				session.setAttribute("searchUserBean", null);
 				userBean.getUser().addContact(contactId);
-				cr.setUrl("contactWindow.jsp");
-	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
+				
+				User user = UserManager.getUserConnected(contactId);
+				if (user != null) {
+					for(Websocket WS : user.getWebsockets()) {
+						WS.emit("contactRequestNotification");
+					}
+				}
+					
+					cr.setUrl("contactWindow.jsp");
+					rd = req.getRequestDispatcher("content/chat/chat.jsp");
 	    	}break;
 	    	
 			case "openContactRequestsWindow":
@@ -140,8 +146,9 @@ public class ChatServlet extends HttpServlet {
 					
 					if (acceptRequest)
 					{
+						
 						userBean.getUser().addContact(contactId);
-						User user = UserManager.getUserConnected(userBean.getMsgManager().getDstUserId());
+						User user = UserManager.getUserConnected(contactId);
 						if (user != null) {
 							for(Websocket WS : user.getWebsockets()) {
 								WS.emit("contactApprovedNotification", userBean.getLogin());

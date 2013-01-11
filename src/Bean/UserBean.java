@@ -22,20 +22,6 @@ public class UserBean implements Serializable {
 		_msgManager = new MsgManager();
 	};
 	
-//	public UserBean (int id, String login, String password)
-//	{ 
-//		_user = new User(id,login,password);
-//	};
-//	
-//	public UserBean (int id, String login, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
-//	{ 
-//		_user = new User(id,login,email,phone,firstName,lastName,lastLoginDate);
-//	};
-//
-//	public UserBean (int id, String login, String password, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
-//	{ 
-//		_user = new User(id,login,password,email,phone,firstName,lastName,lastLoginDate);
-//	};
 	
 	public User getUser() {
 		return _user;
@@ -46,11 +32,11 @@ public class UserBean implements Serializable {
 		this._msgManager.setSrcUserId(this._user.getId());
 	}
 
-	public Boolean getApprovalStatus()
+	public int getApprovalStatus()
 	{
 		return this._user.getApprovalStatus();
 	}
-	public void setApprovalStatus(Boolean approvalStatus)
+	public void setApprovalStatus(int approvalStatus)
 	{
 		this._user.setApprovalStatus(approvalStatus);
 	}	
