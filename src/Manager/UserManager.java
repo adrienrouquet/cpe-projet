@@ -92,4 +92,21 @@ public abstract class UserManager {
 	public static User getUser(int id) {
 		return _dbut.getUser(id);
 	}
+	
+	public static User getUser(String login) {
+		return _dbut.getUser(login);
+	}
+	
+	public static Boolean checkCredentials(String login, String password) {
+		return _dbut.checkCredentials(login, password);
+	}
+	
+	public static String userExists(String email, String phone, String login) {
+		return _dbut.userExists(email,phone,login);
+	}
+	
+	public static void addUser(String firstName,String lastName,String email,String phone,String login,String password) {
+		_dbut.addUser(firstName,lastName,email,phone,login,password);
+	}
+	
 }

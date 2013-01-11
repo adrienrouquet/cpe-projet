@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import TestEnvSetup.DBReset;
-
+import Manager.UserManager;
 import Class.User;
-import DB.DBUserToolbox;
 
 
 @WebServlet("/AccountServlet")
@@ -81,15 +79,14 @@ public class AccountServlet extends HttpServlet {
 						
 					String login 		= req.getParameter("login").trim().toLowerCase();
 					String password 	= req.getParameter("password").trim();
-					DBUserToolbox dbut 	= new DBUserToolbox();
 					
-					if (dbut.checkCredentials(login,password))
+					if (UserManager.checkCredentials(login,password))
 					{
 						System.out.println("AccountServlet: Connecting user");
 						//On recupere le user de la database et on le set dans un bean session
 						//On set au passage le chatRouterBean en session aussi
 						
-						User user = dbut.getUser(login); 
+						User user = UserManager.getUser(login); 
 						userBean.setUser(user);
 						session.setAttribute("userBean", userBean);
 						session.setAttribute("chatRouterBean", new Bean.Router());
@@ -131,12 +128,11 @@ public class AccountServlet extends HttpServlet {
 					String email		= req.getParameter("email").trim().toLowerCase();
 					String password 	= req.getParameter("password").trim();
 					
-					DBUserToolbox dbut 	= new DBUserToolbox();
-					String errors 		= dbut.userExists(email,phone,login);
+					String errors 		= UserManager.userExists(email,phone,login);
 					
 					if(errors.equals(""))
 					{
-						dbut.addUser(firstName,lastName,email,phone,login,password);
+						UserManager.addUser(firstName,lastName,email,phone,login,password);
 						ar.setUrl("accountLogin.jsp?valid=subscribe");
 					}
 					else
