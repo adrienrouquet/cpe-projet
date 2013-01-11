@@ -131,8 +131,8 @@ public class ChatServlet extends HttpServlet {
 					}
 					else
 					{
-						//delete request of DstUserId?
-						//6userBean.getUser().
+						userBean.getUser().deleteContact(userBean.getMsgManager().getDstUserId());
+						cr.setUrl("contactRequestsWindow.jsp");
 					}
 				}
 				
