@@ -21,7 +21,7 @@
 				{
 					for(User user : users)
 					{
-						
+						System.out.println(user.getFirstName());
 						String onClickContent		= "";
 						String contactWrapperClass 	= "";
 						int unreadMessageCount 		= 0;
@@ -47,6 +47,7 @@
 			
 			<jsp:include page="include/contact.jsp">
 			<jsp:param value='<%= contactWrapperClass %>' name='contactWrapperClass'/>
+			<jsp:param value='<%= user.getId() %>' name="contactId"/>
 			<jsp:param value='<%= user.getLogin() %>' name="contactLogin"/>
 			<jsp:param value='<%= user.getName() %>' name="contactName"/>
 			<jsp:param value='<%= unreadMessageCount %>' name='unreadMessageCount'/>

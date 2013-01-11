@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Manager.UserManager;
+
 @WebServlet("/ChatServlet")
 public class ChatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,6 +59,15 @@ public class ChatServlet extends HttpServlet {
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    	}break;
+	    	
+			case "deleteContact":
+			{
+				userBean.getUser().deleteContact(userBean.getMsgManager().getDstUserId());
+				
+				cr.setUrl("contactWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+			}break;
 			
 			case "openAddContactWindow":
 			{ 
@@ -114,7 +125,7 @@ public class ChatServlet extends HttpServlet {
 				cr.setUrl("contactRequestsWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
-			}
+			}break;
 	    	
 			case "submitContactRequests":
 			{
