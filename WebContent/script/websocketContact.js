@@ -20,9 +20,11 @@ $(document).ready(function() {
 		
 		_websocket.on("contactApprovedNotification", function(login) {
 			 
+			var contactWrapper = $("#"+login);
+			contactWrapper.removeClass();
+			contactWrapper.addClass('contactWrapper');
+			contactWrapper.attr('onClick',contactWrapper.attr('onClick')+"submitForm('mainForm');");
 			
-			$("#"+login).removeClass();
-			$("#"+login).addClass('contactWrapper');
 			
 		});
 		
