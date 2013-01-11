@@ -20,8 +20,7 @@
 				if(users.size() > 0)
 				{
 					for(User user : users)
-					{
-						System.out.println(user.getFirstName());						
+					{					
 						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');";
 						String onClickDeleteContent = "setValue('mainForm','action','deleteContact');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 						String contactWrapperClass 	= "contactWrapper";
