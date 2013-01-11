@@ -112,7 +112,7 @@ BEGIN
 	AND
 		contacts1.approvalStatus = 1
 	AND 
-		contacts2.dstUserId = pUserId OR contacts2.dstUserId IS NULL
+		contacts2.dstUserId = pUserId
 	ORDER BY users.firstName ASC
 	;
    

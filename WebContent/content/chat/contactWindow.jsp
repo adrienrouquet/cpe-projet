@@ -22,7 +22,7 @@
 					for(User user : users)
 					{
 						System.out.println(user.getFirstName());						
-						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
+						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');";
 						String onClickDeleteContent = "setValue('mainForm','action','deleteContact');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 						String contactWrapperClass 	= "contactWrapper";
 						String contactStatusClass	= "contactStatus";
@@ -34,6 +34,7 @@
 						
 						if(user.getApprovalStatus())
 						{
+							onClickContent += "submitForm('mainForm');";
 							if( unreadMessageCount > 0 )
 							{
 								contactWrapperClass += " contactHasUnreadMessages";
@@ -45,7 +46,6 @@
 							contactWrapperClass = "contactWrapperNoHover greyed";
 							contactStatusClass 	= "";
 							contactStatus		= "Offline";
-							onClickContent		= "";
 						}							
 			%>
 			
