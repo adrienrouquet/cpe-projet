@@ -2,11 +2,11 @@
 	<div class="contactImg"></div>
 	<div class="contactName">
 		<%= request.getParameter("contactName") %>
-		<span id="contactUnreadMessageWrapper<%= request.getParameter("contactLogin") %>" style="<%= request.getParameter("unreadMessageStyle") %>">
-			(<span id="contactUnreadMessageCount<%= request.getParameter("contactLogin") %>"><%= request.getParameter("unreadMessageCount") %></span>)
+		<span id="contactUnreadMessageWrapper" style="<%= request.getParameter("unreadMessageStyle") %>">
+			(<span id="contactUnreadMessageCount"><%= request.getParameter("unreadMessageCount") %></span>)
 		</span>		
 	</div>
-	<div class="contactStatus">
+	<div class="<%= request.getParameter("contactStatusClass") %>">
 		<%= request.getParameter("contactStatus") %>
 	</div>
 </div>

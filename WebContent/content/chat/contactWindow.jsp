@@ -22,17 +22,17 @@
 					for(User user : users)
 					{
 						
-						String onClickContent		= "";
-						String contactWrapperClass 	= "";
-						int unreadMessageCount 		= 0;
+						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
+						String contactWrapperClass 	= "contactWrapper";
+						String contactStatusClass	= "contactStatus";
 						String unreadMessageStyle 	= "display: none;";
+						String contactStatus		= user.getLastLoginDateFormated();
+						int unreadMessageCount 		= 0;
 						
 						unreadMessageCount = userBean.getMsgManager().getNonDeliveredMessageCount(user.getId());
 						
 						if(user.getApprovalStatus())
 						{
-							contactWrapperClass = "contactWrapper";
-							onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 							if( unreadMessageCount > 0 )
 							{
 								contactWrapperClass += " contactHasUnreadMessages";
@@ -42,6 +42,9 @@
 						else
 						{
 							contactWrapperClass = "contactWrapperNoHover greyed";
+							contactStatusClass 	= "";
+							contactStatus		= "Offline";
+							onClickContent		= "";
 						}							
 			%>
 			
@@ -52,7 +55,8 @@
 			<jsp:param value='<%= unreadMessageCount %>' name='unreadMessageCount'/>
 			<jsp:param value='<%= unreadMessageStyle %>' name='unreadMessageStyle'/>
 			<jsp:param value='<%= onClickContent %>' name='onClickContent'/>
-			<jsp:param value='<%= user.getLastLoginDateFormated() %>' name='contactStatus'/>
+			<jsp:param value='<%= contactStatusClass %>' name='contactStatusClass'/>
+			<jsp:param value='<%= contactStatus %>' name='contactStatus'/>
 			</jsp:include>
 			
 			<%
