@@ -18,7 +18,7 @@
 	<%
 		ArrayList<User> users = null;
 		
-		if (searchUserBean.getLogin().compareTo("") != 0)
+		if (!("".equals(searchUserBean.getLogin())))
 		{	
 			//On remplit le champ "login" avec la "searchString" pour effectuer une recherche
 			users = UserManager.findContacts(userBean.getId(),searchUserBean.getLogin());
@@ -31,9 +31,9 @@
 					{
 	%>
 
-					<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
+					<div class="contactWrapperNoHover" >
 						<div class="addContactName">
-							<%= user.getFirstName() %> <%= user.getLastName() %>
+							<%= user.getName() %>
 						</div>
 						<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
 					</div>

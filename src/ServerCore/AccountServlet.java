@@ -60,14 +60,14 @@ public class AccountServlet extends HttpServlet {
 			session.setAttribute("userBean", userBean);
 		}
 		
-		if(!userBean.getIsConnected())
-		{	
-			System.out.println("User disconnected/No active session");
-		}
-		else
-		{
-			System.out.println("User exists and is already connected");
-		}
+//		if(!userBean.getIsConnected())
+//		{	
+//			System.out.println("User disconnected/No active session");
+//		}
+//		else
+//		{
+//			System.out.println("User exists and is already connected");
+//		}
 		
 		if(req.getParameter("action") != null)
 		{
@@ -85,14 +85,19 @@ public class AccountServlet extends HttpServlet {
 						System.out.println("AccountServlet: Connecting user");
 						//On recupere le user de la database et on le set dans un bean session
 						//On set au passage le chatRouterBean en session aussi
+						User user = UserManager.getUserConnected(login);
+						if (user == null) {
+							user = UserManager.getUser(login);
+							UserManager.addUserConnected(user);
+						}
 						
-						User user = UserManager.getUser(login); 
 						userBean.setUser(user);
 						session.setAttribute("userBean", userBean);
 						session.setAttribute("chatRouterBean", new Bean.Router());
 						System.out.println("AccountServlet: UserId " + userBean.getId() + " is now connected");
 						
 						res.sendRedirect("ChatServlet");
+						return;
 					}
 					else
 					{
@@ -111,7 +116,7 @@ public class AccountServlet extends HttpServlet {
 					session.setAttribute("msgManagerBean", null);
 					session.invalidate();
 					req.getSession(true);
-					res.sendRedirect("!");
+					res.sendRedirect("AccountServlet");
 				}break;
 				case "subscribe":
 				{

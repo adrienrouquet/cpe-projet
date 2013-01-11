@@ -1,8 +1,10 @@
 package Manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Class.User;
+import Class.Websocket;
 import DB.DBUserToolbox;
 
 
@@ -13,6 +15,7 @@ public abstract class UserManager {
 
 	private static DBUserToolbox _dbut = new DBUserToolbox();
 	private static ArrayList<User> _usersConnected = new ArrayList<User>();
+//	private static HashMap<String, User> _usersConnected = new HashMap<String, User>();
 
 	public UserManager(){};
 
@@ -30,25 +33,47 @@ public abstract class UserManager {
 		return _usersConnected;
 	}
 
-	public static ArrayList<User> getUsersConnected(Integer id) {
-		ArrayList<User> users = new ArrayList<User>();
+//	public static ArrayList<User> getUsersConnected(Integer id) {
+//		ArrayList<User> users = new ArrayList<User>();
+//		for (User user : _usersConnected) {
+//			if (id.equals(user.getId())) {
+//				users.add(user);
+//			}
+//		}
+//		return users;
+//	}
+
+	public static User getUserConnected(String login) {
 		for (User user : _usersConnected) {
-			if (id.equals(user.getId())) {
-				users.add(user);
+			if (login.equals(user.getLogin())) {
+				return user;
 			}
 		}
-		return users;
+		return null;
 	}
-
+	
+	public static User getUserConnected(Integer id) {
+		for (User user : _usersConnected) {
+			if (id.equals(user.getId())) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
 	public static void addUserConnected(User user) {
 		System.out.println("User"+ user.getId() + "("+ user.getName() +") is connected");
 		_usersConnected.add(user);
+		System.err.println(_usersConnected);
+		
 		if (!user.getIsConnected()) {			
 			user.setIsConnected(true);
 			for (User contact : user.getContacts()) {
 				for (User userConnected : _usersConnected) {
 					if (userConnected.getId() == contact.getId()) {
-						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), user.getLastLoginDateFormated());
+						for (Websocket WS : userConnected.getWebsockets()) {
+							WS.emit("updateContactStatus", user.getLogin(), user.getLastLoginDateFormated());
+						}
 					}
 				}
 			}
@@ -58,30 +83,16 @@ public abstract class UserManager {
 	public static void delUserConnected(User user) {
 		System.out.println("User"+ user.getId() + "("+ user.getName() +") is disconnected");
 		_usersConnected.remove(user);
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Boolean isConnected = false;
-		for (User usr : _usersConnected) {
-			if (usr.getId() == user.getId()) {
-				isConnected = true;
-			}
-		}
-		
-		if (!isConnected) {			
-			user.setIsConnected(false);
-			for (User contact : user.getContacts()) {
-				for (User userConnected : _usersConnected) {
-					if (userConnected.getId() == contact.getId())
-						userConnected.getWebsocket().emit("updateContactStatus", user.getLogin(), user.getLastLoginDateFormated());
+		System.err.println(_usersConnected);
+		user.setIsConnected(false);
+		for (User contact : user.getContacts()) {
+			for (User userConnected : _usersConnected) {
+				if (userConnected.getId() == contact.getId()) {
+					for (Websocket WS : userConnected.getWebsockets()) {
+						WS.emit("updateContactStatus", user.getLogin(), user.getLastLoginDateFormated());
+					}
 				}
 			}
-			
 		}
 	}
 	

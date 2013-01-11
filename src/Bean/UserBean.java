@@ -13,31 +13,29 @@ import Manager.MsgManager;
  */
 public class UserBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5313606931922030655L;
 	private User _user = null;
-
-	public UserBean () { 	  
-		_user = new User();
+	private MsgManager _msgManager = null;
+	
+	public UserBean () {
+//		_user = new User();
+		_msgManager = new MsgManager();
 	};
 	
-	public UserBean (int id, String login, String password)
-	{ 
-		_user = new User(id,login,password);
-		
-	};
-	
-	public UserBean (int id, String login, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
-	{ 
-		_user = new User(id,login,email,phone,firstName,lastName,lastLoginDate);
-	};
-
-	public UserBean (int id, String login, String password, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
-	{ 
-		_user = new User(id,login,password,email,phone,firstName,lastName,lastLoginDate);
-	};
+//	public UserBean (int id, String login, String password)
+//	{ 
+//		_user = new User(id,login,password);
+//	};
+//	
+//	public UserBean (int id, String login, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
+//	{ 
+//		_user = new User(id,login,email,phone,firstName,lastName,lastLoginDate);
+//	};
+//
+//	public UserBean (int id, String login, String password, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
+//	{ 
+//		_user = new User(id,login,password,email,phone,firstName,lastName,lastLoginDate);
+//	};
 	
 	public User getUser() {
 		return _user;
@@ -45,6 +43,7 @@ public class UserBean implements Serializable {
 		
 	public void setUser(User user) {
 		this._user = user;
+		this._msgManager.setSrcUserId(this._user.getId());
 	}
 
 	public Boolean getApprovalStatus()
@@ -70,12 +69,13 @@ public class UserBean implements Serializable {
 	}
 	
 	public MsgManager getMsgManager() {
-		return _user.getMsgManager();
+		return this._msgManager;
 	}
 	
 	public void setId ( int id )
 	{
 		this._user.setId(id);
+		this._msgManager.setSrcUserId(id);
 	}
 	public int getId ( ) {
 		return this._user.getId();
@@ -111,6 +111,10 @@ public class UserBean implements Serializable {
 		this._user.setLastName(lastName);
 	}
 
+	public String getName() {
+		return _user.getName();
+	}
+	
 	public Timestamp getLastLoginDate() {
 		return this._user.getLastLoginDate();
 	}
@@ -125,7 +129,7 @@ public class UserBean implements Serializable {
 	public void setIsConnected ( boolean isConnected ) {
 		this._user.setIsConnected(isConnected);
 	}
-	public boolean getIsConnected ( ) {
+	public boolean getIsConnected () {
 		return this._user.getIsConnected();
 	}
 }

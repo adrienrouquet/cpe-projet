@@ -40,9 +40,9 @@
 							{
 			%>
 		
-							<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
+							<div class="contactWrapperNoHover" >
 								<div class="addContactName">
-									<%= user.getFirstName() %> <%= user.getLastName() %>
+									<%= user.getName() %>
 								</div>
 								<input type="button" class="imageButton ignore floatRight w30 h30" value="" onclick="setValue('contactRequestsForm','contactId','<%= user.getId() %>');setValue('contactRequestsForm','acceptRequest','false');submitForm('contactRequestsForm');"/>
 								<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('contactRequestsForm','contactId','<%= user.getId() %>');setValue('contactRequestsForm','acceptRequest','true');submitForm('contactRequestsForm');"/>	

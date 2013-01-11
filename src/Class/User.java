@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import Class.Websocket;
 import DB.DBUserToolbox;
-import Manager.MsgManager;
+//import Manager.MsgManager;
 import Manager.UserManager;
 
 
@@ -25,14 +25,15 @@ public class User{
 	private Timestamp _lastLoginDate = null;
 	private boolean _isConnected = false;
 	private boolean _approvalStatus = true;
-	private Websocket _websocket = null;
-	private MsgManager _mm = null;
+	private ArrayList<Websocket> _websockets = null;
+//	private MsgManager _mm = null;
 	
 	private static DBUserToolbox _dbut = null;
 
 	public User () { 	  
 		_dbut 	= new DBUserToolbox();
-		_mm		= new MsgManager();
+		_websockets = new ArrayList<Websocket>();
+//		_mm		= new MsgManager();
 	};
 	
 	public User (int id, String login, String password)
@@ -41,7 +42,8 @@ public class User{
 		_login 		= login;
 		_password 	= password;
 		_dbut 		= new DBUserToolbox();
-		_mm			= new MsgManager(_id);
+		_websockets = new ArrayList<Websocket>();
+//		_mm			= new MsgManager(_id);
 	};
 	
 	public User (int id, String login, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -54,7 +56,8 @@ public class User{
 		_lastName 		= lastName;
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
-		_mm				= new MsgManager(_id);
+		_websockets = new ArrayList<Websocket>();
+//		_mm				= new MsgManager(_id);
 	};
 
 	public User (int id, String login, String password, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -68,7 +71,8 @@ public class User{
 		_lastName 		= lastName;
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
-		_mm				= new MsgManager(_id);
+		_websockets = new ArrayList<Websocket>();
+//		_mm				= new MsgManager(_id);
 	};
 	
 	public void setApprovalStatus(Boolean approvalStatus)
@@ -95,15 +99,15 @@ public class User{
 		return _dbut.getContactRequestsCount(_id);
 	}
 
-	public MsgManager getMsgManager()
-	{
-		return this._mm;
-	}
+//	public MsgManager getMsgManager()
+//	{
+//		return this._mm;
+//	}
 	
 	public void setId ( int id )
 	{
 		this._id = id;
-		_mm.setSrcUserId(id);
+//		_mm.setSrcUserId(id);
 	}
 	public int getId ( ) {
 		return this._id;
@@ -166,12 +170,28 @@ public class User{
 		return _isConnected;
 	}
 
-	public Websocket getWebsocket() {
-		return _websocket;
+	public ArrayList<Websocket> getWebsockets() {
+		return _websockets;
 	}
 
-	public void setWebsocket(Websocket websocket) {
-		this._websocket = websocket;
+	public void setWebsocket(ArrayList<Websocket> websockets) {
+		this._websockets = websockets;
+	}
+	
+	public void addWebsocket(Websocket websocket) {
+		_websockets.add(websocket);
+	}
+	
+	public void delWebsocket(Websocket websocket) {
+		_websockets.remove(websocket);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (_websockets.size() == 0)
+			UserManager.delUserConnected(this);
 	}
 	
 	public String getName()
@@ -207,7 +227,7 @@ public class User{
 	}
 	
 	public static String getLastLoginDateFormated(int id) {
-		if(UserManager.getUsersConnected(id).isEmpty())
+		if(UserManager.getUserConnected(id) == null)
 		{
 			return "Last seen: " + new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm").format(getLastLoginDate(id));
 		}

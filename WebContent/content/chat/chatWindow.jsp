@@ -1,10 +1,8 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.sql.Timestamp"%>
-<%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Manager.UserManager"%>
 <%@page import="Class.Msg"%>
 <%@page import="Class.User"%>
+<%@page import="Class.Websocket"%>
 
 <jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />
@@ -32,7 +30,7 @@
 	<section class="messageSection scroll" id="messageForm">
 		<br />
 		<%
-			ArrayList<Msg> messages = userBean.getMsgManager().getMessages(userBean.getId(),userBean.getMsgManager().getDstUserId());
+			ArrayList<Msg> messages = userBean.getMsgManager().getMessages(userBean.getId(),dstId);
 				for( Msg msg : messages)
 				{
 					if(msg.getSrcUserId() != userBean.getId())
@@ -40,12 +38,14 @@
 						//Si le message n'avait pas ete delivre, on le marque comme delivre maintenant
 						if (!msg.isDelivered())
 						{
-							userBean.getMsgManager().setMessageDelivered(msg.getId());
 							msg.setIsDelivered(true);
-							for (User user : UserManager.getUsersConnected(userBean.getMsgManager().getDstUserId())) {
-								if (user.getMsgManager().getDstUserId() == userBean.getId())
-									user.getWebsocket().emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
-							}
+// 							userBean.getMsgManager().setMessageDelivered(msg.getId());
+// 							User user = UserManager.getUserConnected(userBean.getMsgManager().getDstUserId());
+// 							if (user != null) {
+// 								for (Websocket WS : user.getWebsockets()) {
+// 									WS.emit("updateMessageStatus" ,msg.getJsonStringifyMsg("id", "status"));
+// 								}
+// 							}
 						}
 		%>
 		<jsp:include page="include/incomingMessage.jsp">

@@ -41,10 +41,10 @@ public class MsgManager{
 	public int getDstUserId() {
 		return this._dstUserId;
 	}
-	public void setDstUserId(String dstUserId) {
-		if(dstUserId != null)
-			this._dstUserId = Integer.parseInt(dstUserId);
-	}
+//	public void setDstUserId(String dstUserId) {
+//		if(dstUserId != null)
+//			this._dstUserId = Integer.parseInt(dstUserId);
+//	}
 	public void setDstUserId(int dstUserId) {
 		this._dstUserId = dstUserId;
 	}
@@ -59,16 +59,6 @@ public class MsgManager{
 	public Boolean setMessageDelivered(int msgId)
 	{
 		return _dbmt.setMessageDelivered(msgId);
-//		// Récupération du message
-//		for (Msg msg : this.getMessages(_srcUserId, _dstUserId)) {
-//			if (msg.getId() == msgId) {
-//				Websocket WS = Manager.WebsocketManager.getWebsocket(_dstUserId);
-//				if (WS != null)
-//					WS.emit("updateMessageStatus" ,msg.getJsonStringifyMsg());
-//				
-//				break;
-//			}
-//		}
 	}
 
 }

@@ -71,11 +71,15 @@ public class Websocket extends MessageInbound{
 	protected void onClose(int status) {
 		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering onClose: " + this.getWsOutbound());
 		// Lorsque la websocket se ferme, on supprime l'user de la liste des users connectés
-		for (User user : UserManager.getUsersConnected(_msgManager.getSrcUserId())) {
-			if (this.equals(user.getWebsocket())) {
-				UserManager.delUserConnected(user);
-			}
-		}
+		
+		User user = UserManager.getUserConnected(_msgManager.getSrcUserId());
+		user.delWebsocket(this);
+		
+//		for (User user : UserManager.getUsersConnected(_msgManager.getSrcUserId())) {
+//			if (this.equals(user.getWebsocket())) {
+//				UserManager.delUserConnected(user);
+//			}
+//		}
 	}
 
 	public void onUpdateMessageStatus(JSONObject data) {
@@ -83,12 +87,16 @@ public class Websocket extends MessageInbound{
 		
 		Msg msg = new Msg(data);
 		msg.setIsDelivered(true);
-		for (User user : UserManager.getUsersConnected(_msgManager.getDstUserId())) {
-			user.getWebsocket().emit("updateMessageStatus", msg.getJsonStringifyMsg("id", "status"));
-		}
 		
-		// MAJ en DB
-		_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
+//		User user = UserManager.getUserConnected(_msgManager.getDstUserId());
+//		if (user != null) {
+//			for (Websocket WS : user.getWebsockets()) {
+//				WS.emit("updateMessageStatus", msg.getJsonStringifyMsg("id", "status"));
+//			}
+//		}
+//		
+//		// MAJ en DB
+//		_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
 	}
 
 	private void onSendMessage(JSONObject data) {
@@ -108,13 +116,13 @@ public class Websocket extends MessageInbound{
 		this.emit("updateMessageStatus", msg.getJsonStringifyMsg("id", "status", "sentDate"));
 		
 		// Pour tous les users qui on le meme id (un utilisateur qui est connecté sur plusieurs interfaces), on envoit un event
-		ArrayList<User> users = UserManager.getUsersConnected(_msgManager.getDstUserId());
-		if (users.size() > 0) {
-			for (User user : users)
-				if (user.getMsgManager().getDstUserId() == _msgManager.getSrcUserId()) {
-					user.getWebsocket().emit("newMessage", msg.getJsonStringifyMsg("id", "content", "sentDate"));
+		User user = UserManager.getUserConnected(_msgManager.getDstUserId());
+		if (user != null) {
+			for (Websocket WS : user.getWebsockets())
+				if (WS.getMsgManager().getDstUserId() == _msgManager.getSrcUserId()) {
+					WS.emit("newMessage", msg.getJsonStringifyMsg("id", "content", "sentDate"));
 				} else {
-					user.getWebsocket().emit("messageNotification", msg.getJsonStringifyMsg("srcLogin", "srcName"));
+					WS.emit("messageNotification", msg.getJsonStringifyMsg("srcLogin", "srcName"));
 				}
 		} else {
 			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");

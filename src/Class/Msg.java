@@ -108,6 +108,16 @@ public class Msg {
 
 	public void setIsDelivered(Boolean isDelivered) {
 		this._isDelivered = isDelivered;
+		
+		if (isDelivered) {
+			_dbmt.setMessageDelivered(this._id);
+			User user = UserManager.getUserConnected(this._dstUserId);
+			if (user != null) {
+				for (Websocket WS : user.getWebsockets()) {
+					WS.emit("updateMessageStatus" ,this.getJsonStringifyMsg("id", "status"));
+				}
+			}
+		}
 	}
 
 	public String getDateFormated() {

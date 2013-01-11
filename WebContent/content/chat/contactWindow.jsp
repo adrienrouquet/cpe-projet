@@ -6,7 +6,7 @@
 <script type="text/javascript" src="script/websocketContact.js"></script>
 <div id="container">
 	<header class="black h50">
-		<h2><%= userBean.getFirstName() + " " + userBean.getLastName() %></h2>
+		<h2><%= userBean.getName() %></h2>
 	</header>
 	<section id="contactForm" class="contactSection scroll">
 		<form name="mainForm" method="post" action="ChatServlet">

@@ -29,8 +29,8 @@ public class ChatServlet extends HttpServlet {
 		if(userBean == null)
 		{
 			System.out.println("Warning: userBean is null in ChatServlet");
-			userBean	=  new Bean.UserBean();
-			session.setAttribute("userBean", userBean);
+			res.sendRedirect("AccountServlet");
+			return;
 		}
     	
 		//On recupere le searchBean de la session    
@@ -47,12 +47,13 @@ public class ChatServlet extends HttpServlet {
     	cr.setAction(req.getParameter("action"));
     	
     	//On recupere le msgManagerBean de la session    	
-    	userBean.getMsgManager().setDstUserId(req.getParameter("contactId"));
+    	Integer contactId = (req.getParameter("contactId") != null)?Integer.parseInt(req.getParameter("contactId")):null;
     	
 		switch(cr.getAction())
 		{
 			case "openChat":
 			{    		
+				userBean.getMsgManager().setDstUserId(contactId);
 				cr.setUrl("chatWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
@@ -102,8 +103,7 @@ public class ChatServlet extends HttpServlet {
 			case "addContact":
 			{
 				session.setAttribute("searchUserBean", null);
-								
-				userBean.getUser().addContact(userBean.getMsgManager().getDstUserId());
+				userBean.getUser().addContact(contactId);
 				cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
@@ -126,12 +126,12 @@ public class ChatServlet extends HttpServlet {
 					
 					if (acceptRequest)
 					{
-						userBean.getUser().addContact(userBean.getMsgManager().getDstUserId());
+						userBean.getUser().addContact(contactId);
 						cr.setUrl("contactWindow.jsp");
 					}
 					else
 					{
-						userBean.getUser().deleteContact(userBean.getMsgManager().getDstUserId());
+						userBean.getUser().deleteContact(contactId);
 						cr.setUrl("contactRequestsWindow.jsp");
 					}
 				}
@@ -165,7 +165,7 @@ public class ChatServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
 	{
-		System.out.println("User" + ((Bean.UserBean)req.getSession(true).getAttribute("userBean")).getId() + ": Entering ChatServlet.doGet");
+		System.out.println("User Entering ChatServlet.doGet");
 		chatRouting(req, res);
 		
 	}

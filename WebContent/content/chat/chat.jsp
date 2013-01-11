@@ -11,16 +11,6 @@
 		<link rel="stylesheet" type="text/css" href="style/style.css" />
 		<link rel="stylesheet" type="text/css" href="style/contact.css" />
 		<link rel="stylesheet" type="text/css" href="style/chat.css" />
-		<script>
-			function submitForm(pForm)
-			{
-				document.forms[pForm].submit();
-			}
-			function setValue(pForm, pElement, pValue)
-			{
-				document.forms[pForm].elements[pElement].value = pValue;		
-			}
-		</script>
 		<script type="text/javascript" src="script/jquery-1.8.3.js"></script>
 		<script type="text/javascript" src="script/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="script/jquery.defaultvalue.js"></script>
