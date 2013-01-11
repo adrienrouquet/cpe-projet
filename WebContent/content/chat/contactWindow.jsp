@@ -23,6 +23,7 @@
 					{
 						System.out.println(user.getFirstName());						
 						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
+						String onClickDeleteContent = "setValue('mainForm','action','deleteContact');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 						String contactWrapperClass 	= "contactWrapper";
 						String contactStatusClass	= "contactStatus";
 						String unreadMessageStyle 	= "display: none;";
@@ -55,6 +56,7 @@
 			<jsp:param value='<%= unreadMessageCount %>' name='unreadMessageCount'/>
 			<jsp:param value='<%= unreadMessageStyle %>' name='unreadMessageStyle'/>
 			<jsp:param value='<%= onClickContent %>' name='onClickContent'/>
+			<jsp:param value='<%= onClickDeleteContent %>' name='onClickDeleteContent'/>
 			<jsp:param value='<%= contactStatusClass %>' name='contactStatusClass'/>
 			<jsp:param value='<%= contactStatus %>' name='contactStatus'/>
 			</jsp:include>
