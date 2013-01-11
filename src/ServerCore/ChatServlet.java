@@ -61,6 +61,15 @@ public class ChatServlet extends HttpServlet {
 //	    		rd.forward(req, res);
 	    	}break;
 			
+			case "deleteContact":
+			{
+				userBean.getUser().deleteContact(userBean.getMsgManager().getDstUserId());
+				
+				cr.setUrl("contactWindow.jsp");
+	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+//	    		rd.forward(req, res);
+			}break;
+	    	
 			case "openAddContactWindow":
 			{ 
 				//Chaque fois qu'on ouvre la page de recherche, le searchUserBean doit etre vide
