@@ -21,7 +21,7 @@
 				{
 					for(User user : users)
 					{
-						
+						System.out.println(user.getFirstName());						
 						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 						String contactWrapperClass 	= "contactWrapper";
 						String contactStatusClass	= "contactStatus";
