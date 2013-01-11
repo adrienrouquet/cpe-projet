@@ -43,7 +43,7 @@
 						else
 						{
 							contactWrapperClass = "contactWrapperNoHover greyed";
-							contactStatusClass 	= "";
+							contactStatusClass 	= "contactStatusOffline";
 							contactStatus		= "Offline";
 						}							
 			%>

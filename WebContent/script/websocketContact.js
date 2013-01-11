@@ -23,7 +23,9 @@ $(document).ready(function() {
 			var contactWrapper = $("#"+login);
 			contactWrapper.removeClass();
 			contactWrapper.addClass('contactWrapper');
+			contactWrapper.find('.contactStatusOffline').addClass('contactStatus');
 			contactWrapper.attr('onClick',contactWrapper.attr('onClick')+"submitForm('mainForm');");
+			
 			
 			
 		});

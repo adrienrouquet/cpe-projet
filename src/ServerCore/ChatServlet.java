@@ -64,7 +64,6 @@ public class ChatServlet extends HttpServlet {
 			case "deleteContact":
 			{
 				userBean.getUser().deleteContact(userBean.getMsgManager().getDstUserId());
-				
 				cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
@@ -142,6 +141,7 @@ public class ChatServlet extends HttpServlet {
 						for(User user : UserManager.getUsersConnected(userBean.getMsgManager().getDstUserId()))
 						{
 							user.getWebsocket().emit("contactApprovedNotification", userBean.getLogin());
+							user.getWebsocket().emit("updateContactStatus" , userBean.getLogin(), userBean.getUser().getLastLoginDateFormated());
 						}
 						cr.setUrl("contactWindow.jsp");
 					}
