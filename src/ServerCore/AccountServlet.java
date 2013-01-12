@@ -60,15 +60,6 @@ public class AccountServlet extends HttpServlet {
 			session.setAttribute("userBean", userBean);
 		}
 		
-//		if(!userBean.getIsConnected())
-//		{	
-//			System.out.println("User disconnected/No active session");
-//		}
-//		else
-//		{
-//			System.out.println("User exists and is already connected");
-//		}
-		
 		if(req.getParameter("action") != null)
 		{
 			switch(req.getParameter("action"))

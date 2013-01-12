@@ -15,6 +15,11 @@
 			<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
 			<input type="button" class="imageButton back w50 h50 floatLeft" value="" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
 		</form>
+		<form method="post" id="deleteContactForm" name="deleteContactForm" action="ChatServlet">
+			<input type="hidden" name="contactId" value="<%=userBean.getMsgManager().getDstUserId()%>" />
+			<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
+			<input type="button" class="imageButton delete w50 h50 floatLeft" value="" onclick="if(confirm('Are you sure you want to delete this contact? All data will be lost!')){setValue('deleteContactForm','action','submitDeleteContact');submitForm('deleteContactForm');}"/>	
+		</form>
 		<%
 		int dstId = userBean.getMsgManager().getDstUserId();
 		%>

@@ -140,6 +140,12 @@ input.add {
 	background-size: 100% 100%;
 }
 
+input.delete {
+	background: url("../img/delete.png");
+	background-size: 100% 100%;
+	display: inline;
+}
+
 input.ignore {
 	background: url("../img/ignore.png");
 	background-size: 100% 100%;

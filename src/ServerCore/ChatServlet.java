@@ -122,6 +122,24 @@ public class ChatServlet extends HttpServlet {
 				if (user != null) {
 					for(Websocket WS : user.getWebsockets()) {
 						WS.emit("contactRequestNotification");
+						WS.emit("contactApprovedNotification", userBean.getLogin());
+						WS.emit("updateContactStatus" , userBean.getLogin(), userBean.getUser().getLastLoginDateFormated());
+					}
+				}
+					
+					cr.setUrl("contactWindow.jsp");
+					rd = req.getRequestDispatcher("content/chat/chat.jsp");
+	    	}break;
+	    	
+			case "submitDeleteContact":
+			{
+				userBean.getUser().deleteContact(contactId);
+				
+				User user = UserManager.getUserConnected(contactId);
+				if (user != null) {
+					for(Websocket WS : user.getWebsockets()) {
+						WS.emit("contactDeletedNotification", userBean.getLogin());
+						WS.emit("updateContactStatus" , userBean.getLogin(), "Offline");				
 					}
 				}
 					

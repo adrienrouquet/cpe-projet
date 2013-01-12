@@ -33,6 +33,16 @@ $(document).ready(function() {
 			contactWrapper.attr('onClick',contactWrapper.attr('onClick')+"submitForm('mainForm');");		
 		});
 		
+		_websocket.on("contactDeletedNotification", function(login) {
+			 
+			var contactWrapper = $("#"+login);
+			contactWrapper.removeClass();
+			contactWrapper.addClass('contactWrapperNoHover');
+			contactWrapper.addClass('greyed');
+			contactWrapper.find('.contactStatus').addClass('contactStatus');
+			contactWrapper.attr('onClick',contactWrapper.attr('onClick').substr("submitForm('mainForm');".length));		
+		});
+		
 		_websocket.on("updateContactStatus", function(login, message) {
 			$("#"+login).children(".contactStatus").html(message);
 		});
