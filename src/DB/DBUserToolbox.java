@@ -89,6 +89,33 @@ public class DBUserToolbox extends DBToolbox {
 		return users;
 	}
 	
+	public Boolean hasApprovedContact(int srcUserId, int dstUserId)
+	{
+		Connection conn = getConn();
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		Boolean result = false;
+		
+		try {
+			cs = conn.prepareCall("{CALL hasApprovedContact(?,?)}");
+			cs.setInt("pSrcUserId", srcUserId);
+			cs.setInt("pDstUserId", dstUserId);
+			
+			rs = cs.executeQuery();
+			while(rs.next())
+			{
+				result = rs.getBoolean("hasApprovedContact");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error in hasApprovedContact:" +e.getMessage());
+		} finally {		
+			closeConn(conn);
+		}
+		
+		return result;
+	}
+	
 	public ArrayList<User> getContacts(int id)
 	{
 		

@@ -30,7 +30,7 @@ $(document).ready(function() {
 			contactWrapper.removeClass();
 			contactWrapper.addClass('contactWrapper');
 			contactWrapper.find('.contactStatusOffline').addClass('contactStatus');
-			contactWrapper.attr('onClick',contactWrapper.attr('onClick')+"submitForm('mainForm');");		
+			//contactWrapper.attr('onClick',contactWrapper.attr('onClick')+"submitForm('mainForm');");		
 		});
 		
 		_websocket.on("contactDeletedNotification", function(login) {
@@ -38,9 +38,10 @@ $(document).ready(function() {
 			var contactWrapper = $("#"+login);
 			contactWrapper.removeClass();
 			contactWrapper.addClass('contactWrapperNoHover');
+			contactWrapper.addClass('pointerOnHover');
 			contactWrapper.addClass('greyed');
 			contactWrapper.find('.contactStatus').addClass('contactStatus');
-			contactWrapper.attr('onClick',contactWrapper.attr('onClick').substr("submitForm('mainForm');".length));		
+			//contactWrapper.attr('onClick',contactWrapper.attr('onClick').substr("submitForm('mainForm');".length));		
 		});
 		
 		_websocket.on("updateContactStatus", function(login, message) {

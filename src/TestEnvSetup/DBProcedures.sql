@@ -116,6 +116,27 @@ BEGIN
 END //
 DELIMITER ;
 
+/*---------------------------------------------------*/
+DROP PROCEDURE IF EXISTS hasApprovedContact;
+DELIMITER //
+CREATE PROCEDURE hasApprovedContact
+(
+	IN pSrcUserId INT,
+	IN pDstUserId INT
+)
+BEGIN
+
+	SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END AS hasApprovedContact FROM contacts
+	WHERE 
+		srcUserId = pSrcUserId
+	AND
+		dstUserId = pDstUserId
+	AND
+		approvalStatus = 1
+	;
+   
+END //
+DELIMITER ;
 
 /*---------------------------------------------------*/
 DROP PROCEDURE IF EXISTS getContactRequests;

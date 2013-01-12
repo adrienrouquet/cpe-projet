@@ -120,13 +120,21 @@ public class Websocket extends MessageInbound{
 		
 		// Pour tous les users qui on le meme id (un utilisateur qui est connecté sur plusieurs interfaces), on envoit un event
 		User user = UserManager.getUserConnected(_msgManager.getDstUserId());
+		
 		if (user != null) {
-			for (Websocket WS : user.getWebsockets())
-				if (WS.getMsgManager().getDstUserId() == _msgManager.getSrcUserId()) {
-					WS.emit("newMessage", msg.getJsonStringifyMsg("id", "content", "sentDate"));
-				} else {
-					WS.emit("messageNotification", msg.getJsonStringifyMsg("srcLogin", "srcName"));
-				}
+			//On verifie aussi que le user en question a bien accepte la personne dans ses contacts!
+			if(UserManager.hasApprovedContact(_msgManager.getDstUserId(),_msgManager.getSrcUserId()))
+			{
+				for (Websocket WS : user.getWebsockets())
+					if (WS.getMsgManager().getDstUserId() == _msgManager.getSrcUserId()) {
+						WS.emit("newMessage", msg.getJsonStringifyMsg("id", "content", "sentDate"));
+					} else {
+						WS.emit("messageNotification", msg.getJsonStringifyMsg("srcLogin", "srcName"));
+					}
+			}
+			else {
+				System.err.println("USER" + _msgManager.getDstUserId() + " has not approved the sender. No notification will be sent");
+			}
 		} else {
 			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");
 		}

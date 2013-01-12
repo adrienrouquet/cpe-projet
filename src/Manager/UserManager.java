@@ -87,6 +87,11 @@ public abstract class UserManager {
 		return _dbut.findContacts(userId, searchString);
 	}
 	
+	public static Boolean hasApprovedContact(int srcUserId, int dstUserId)
+	{
+		return _dbut.hasApprovedContact(srcUserId, dstUserId);
+	}
+	
 	public static User getUser(int id) {
 		return _dbut.getUser(id);
 	}

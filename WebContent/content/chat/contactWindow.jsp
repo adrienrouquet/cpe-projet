@@ -21,7 +21,7 @@
 				{
 					for(User user : users)
 					{					
-						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');";
+						String onClickContent		= "setValue('mainForm','action','openChat');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 						String onClickDeleteContent = "setValue('mainForm','action','deleteContact');setValue('mainForm','contactId','" + user.getId() + "');submitForm('mainForm');";
 						String contactWrapperClass 	= "contactWrapper";
 						String contactStatusClass	= "contactStatus";
@@ -33,7 +33,7 @@
 						
 						if(user.getApprovalStatus() == 1)
 						{
-							onClickContent += "submitForm('mainForm');";
+							onClickContent += "";
 							if( unreadMessageCount > 0 )
 							{
 								contactWrapperClass += " contactHasUnreadMessages";
@@ -42,7 +42,7 @@
 						}
 						else
 						{
-							contactWrapperClass = "contactWrapperNoHover greyed";
+							contactWrapperClass = "contactWrapperNoHover pointerOnHover greyed";
 							contactStatusClass 	= "contactStatusOffline";
 							contactStatus		= "Offline";
 						}							

@@ -68,6 +68,14 @@ footer{
 	background: rgb(120,120,120);
 }
 
+.greyed:hover *{
+	background: rgb(150,150,150);
+}
+
+.pointerOnHover:hover {
+	cursor: pointer;
+}
+
 .floatLeft{
 	float: left;
 }
