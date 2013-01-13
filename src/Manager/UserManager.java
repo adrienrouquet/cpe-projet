@@ -47,30 +47,18 @@ public abstract class UserManager {
 	public static void addUserConnected(User user) {
 		System.out.println("User"+ user.getId() + "("+ user.getName() +") is connected");
 		_usersConnected.put(user.getId(),user);
-		System.err.println(_usersConnected);
 		
-		if (!user.getIsConnected()) {			
-			user.setIsConnected(true);
-			for (User contact : user.getContacts()) {
-				User connectedContact = UserManager.getUserConnected(contact.getId());
-				if(connectedContact != null)
-				{
-					for (Websocket WS : connectedContact.getWebsockets()) {
-						WS.emit("updateContactStatus", user.getLogin(), user.getLastLoginDateFormated());
-					}
-				}
-			}
-		}
-		
+		UserManager.updateContactsStatus(user);
 	}
 	
 	public static void delUserConnected(User user) {
 		System.out.println("User"+ user.getId() + "("+ user.getName() +") is disconnected");
 		_usersConnected.remove(user.getId());
-		System.err.println(_usersConnected);
 		
-		user.setIsConnected(false);
-		
+		UserManager.updateContactsStatus(user);
+	}
+	
+	private static void updateContactsStatus (User user) {
 		for (User contact : user.getContacts()) {
 			User connectedContact = UserManager.getUserConnected(contact.getId());
 			if(connectedContact != null)
@@ -80,16 +68,10 @@ public abstract class UserManager {
 				}
 			}
 		}
-		
 	}
 	
 	public static ArrayList<User> findContacts(int userId, String searchString) {
 		return _dbut.findContacts(userId, searchString);
-	}
-	
-	public static Boolean hasApprovedContact(int srcUserId, int dstUserId)
-	{
-		return _dbut.hasApprovedContact(srcUserId, dstUserId);
 	}
 	
 	public static User getUser(int id) {

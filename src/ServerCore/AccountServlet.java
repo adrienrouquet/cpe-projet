@@ -79,7 +79,7 @@ public class AccountServlet extends HttpServlet {
 						User user = UserManager.getUserConnected(login);
 						if (user == null) {
 							user = UserManager.getUser(login);
-							UserManager.addUserConnected(user);
+							user.setIsConnected(true);
 						}
 						
 						userBean.setUser(user);

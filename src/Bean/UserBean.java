@@ -18,12 +18,15 @@ public class UserBean implements Serializable {
 	private MsgManager _msgManager = null;
 	
 	public UserBean () {
-		_user = new User();
 		_msgManager = new MsgManager();
 	};
 	
 	
 	public User getUser() {
+		if (this._user == null) {
+			this._user = new User();
+		}
+		
 		return _user;
 	}
 		
@@ -34,88 +37,93 @@ public class UserBean implements Serializable {
 
 	public int getApprovalStatus()
 	{
-		return this._user.getApprovalStatus();
+		return this.getUser().getApprovalStatus();
 	}
 	public void setApprovalStatus(int approvalStatus)
 	{
-		this._user.setApprovalStatus(approvalStatus);
+		this.getUser().setApprovalStatus(approvalStatus);
 	}	
 	
 	public ArrayList<User> getContacts() {
-		return _user.getContacts();
+		return getUser().getContacts();
 	}
 	
 	public ArrayList<User> getContactRequests() {
-		return _user.getContactRequests();
+		return getUser().getContactRequests();
 	}
 	
 	public int getContactRequestsCount()
 	{
-		return _user.getContactRequestsCount();
+		return getUser().getContactRequestsCount();
 	}
 	
 	public MsgManager getMsgManager() {
+		if (this._msgManager == null) {
+			this._msgManager = new MsgManager();
+			if (this.getUser().getId() != 0)
+				this._msgManager.setSrcUserId(this.getUser().getId());
+		}
 		return this._msgManager;
 	}
 	
 	public void setId ( int id )
 	{
-		this._user.setId(id);
+		this.getUser().setId(id);
 		this._msgManager.setSrcUserId(id);
 	}
 	public int getId ( ) {
-		return this._user.getId();
+		return this.getUser().getId();
 	}
 	public void setLogin ( String login ) {
-		this._user.setLogin(login);
+		this.getUser().setLogin(login);
 	}
 	public String getLogin ( ) {
-		return this._user.getLogin();
+		return this.getUser().getLogin();
 	}
 	public String getEmail ( ) {
-		return this._user.getEmail();
+		return this.getUser().getEmail();
 	}
 	public void setEmail ( String email ) {
-		this._user.setEmail(email);
+		this.getUser().setEmail(email);
 	}
 	public String getPhone() {
-		return this._user.getPhone();
+		return this.getUser().getPhone();
 	}
 	public String getFirstName() {
-		return this._user.getFirstName();
+		return this.getUser().getFirstName();
 	}
 
 	public void setFirstName(String firstName) {
-		this._user.setFirstName(firstName);
+		this.getUser().setFirstName(firstName);
 	}
 
 	public String getLastName() {
-		return this._user.getLastName();
+		return this.getUser().getLastName();
 	}
 
 	public void setLastName(String lastName) {
-		this._user.setLastName(lastName);
+		this.getUser().setLastName(lastName);
 	}
 
 	public String getName() {
-		return _user.getName();
+		return getUser().getName();
 	}
 	
 	public Timestamp getLastLoginDate() {
-		return this._user.getLastLoginDate();
+		return this.getUser().getLastLoginDate();
 	}
 
 	public void setLastLoginDate(Timestamp lastLoginDate) {
-		this._user.setLastLoginDate(lastLoginDate);
+		this.getUser().setLastLoginDate(lastLoginDate);
 	}
 
 	public void setPhone(String phone) {
-		this._user.setPhone(phone);
+		this.getUser().setPhone(phone);
 	}
 	public void setIsConnected ( boolean isConnected ) {
-		this._user.setIsConnected(isConnected);
+		this.getUser().setIsConnected(isConnected);
 	}
 	public boolean getIsConnected () {
-		return this._user.getIsConnected();
+		return this.getUser().getIsConnected();
 	}
 }

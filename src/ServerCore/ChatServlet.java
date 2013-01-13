@@ -30,13 +30,16 @@ public class ChatServlet extends HttpServlet {
     	    	
     	//On recupere le userBean de la session    
     	Bean.UserBean userBean	= (Bean.UserBean) session.getAttribute("userBean");		
-		if(userBean == null)
+		if(userBean == null || userBean.getUser().getId() == 0)
 		{
 			System.out.println("Warning: userBean is null in ChatServlet");
 			res.sendRedirect("AccountServlet");
 			return;
 		}
     	
+		if (!userBean.getUser().getIsConnected())
+			userBean.getUser().setIsConnected(true);
+		
 		//On recupere le searchBean de la session    
     	Bean.UserBean searchUserBean = (Bean.UserBean) session.getAttribute("searchUserBean");
 		
@@ -57,9 +60,11 @@ public class ChatServlet extends HttpServlet {
 		{
 			case "openChat":
 			{
+				System.err.println(userBean.getMsgManager());
+				System.err.println(contactId);
 				userBean.getMsgManager().setDstUserId(contactId);
 				cr.setUrl("chatWindow.jsp");
-	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
+				rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);
 	    	}break;
 			

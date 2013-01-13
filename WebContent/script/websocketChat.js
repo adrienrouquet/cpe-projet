@@ -52,6 +52,9 @@ $(document).ready(function() {
 				element.attr("id", json.sentDate);
 		}
 		
+		if (json.status != "")
+			element.find(".messageStatus").html(json.status);
+		
 		$('#messageForm').append(element);
 	}
 	
@@ -74,11 +77,20 @@ $(document).ready(function() {
 	}
 	
 	function listeningEvents() {
-		_websocket.on('newMessage', function(data) {
+		_websocket.on('newMessage', function(data, param) {
 			var json = new JSONMessage();
 			json.parse(data);
-			writeNewMessage(_incomingMessage.clone(), json);
-			_websocket.emit('updateMessageStatus', json.stringify());
+			var sendUpdateStatus = true;
+			
+			var element = _incomingMessage;
+			if (param == "outgoing") {
+				element = _outgoingMessage;
+				sendUpdateStatus = false;
+			}
+			
+			writeNewMessage(element.clone(), json);
+			if (sendUpdateStatus)
+				_websocket.emit('updateMessageStatus', json.stringify());
 		});
 		
 		_websocket.on('updateMessageStatus', function(data) {

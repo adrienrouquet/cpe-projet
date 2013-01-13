@@ -70,19 +70,11 @@ public class Websocket extends MessageInbound{
 	@Override
 	protected void onClose(int status) {
 		System.out.println("User" + _msgManager.getSrcUserId() + ": Entering onClose: " + this.getWsOutbound());
-		// Lorsque la websocket se ferme, on supprime l'user de la liste des users connectés
-		
-		User user = UserManager.getUserConnected(_msgManager.getSrcUserId());
-		user.delWebsocket(this);
-		
-//		for (User user : UserManager.getUsersConnected(_msgManager.getSrcUserId())) {
-//			if (this.equals(user.getWebsocket())) {
-//				UserManager.delUserConnected(user);
-//			}
-//		}
+		// Lorsque la websocket se ferme, on la supprime de la liste du user
+		UserManager.getUserConnected(_msgManager.getSrcUserId()).delWebsocket(this);
 	}
 
-	public void onUpdateMessageStatus(JSONObject data) {
+	private void onUpdateMessageStatus(JSONObject data) {
 		System.err.println("EVENT: updateMessageStatus");
 		
 		Msg msg = new Msg(data);
@@ -90,16 +82,6 @@ public class Websocket extends MessageInbound{
 		msg.setDstUserId(_msgManager.getSrcUserId());
 		
 		msg.setIsDelivered(true);
-		
-//		User user = UserManager.getUserConnected(_msgManager.getDstUserId());
-//		if (user != null) {
-//			for (Websocket WS : user.getWebsockets()) {
-//				WS.emit("updateMessageStatus", msg.getJsonStringifyMsg("id", "status"));
-//			}
-//		}
-//		
-//		// MAJ en DB
-//		_msgManager.setMessageDelivered(Integer.parseInt((String) data.get("id")));
 	}
 
 	private void onSendMessage(JSONObject data) {
@@ -123,7 +105,7 @@ public class Websocket extends MessageInbound{
 		
 		if (user != null) {
 			//On verifie aussi que le user en question a bien accepte la personne dans ses contacts!
-			if(UserManager.hasApprovedContact(_msgManager.getDstUserId(),_msgManager.getSrcUserId()))
+			if(user.hasApprovedContact(_msgManager.getSrcUserId()))
 			{
 				for (Websocket WS : user.getWebsockets())
 					if (WS.getMsgManager().getDstUserId() == _msgManager.getSrcUserId()) {
@@ -137,6 +119,16 @@ public class Websocket extends MessageInbound{
 			}
 		} else {
 			System.err.println("USER" + _msgManager.getDstUserId() + " NOT CONNECTED");
+		}
+		
+		user = UserManager.getUserConnected(_msgManager.getSrcUserId());
+		
+		if (user != null) {
+			for (Websocket WS : user.getWebsockets()) {
+				if (!WS.equals(this)) {
+					WS.emit("newMessage", msg.getJsonStringifyMsg("id", "content", "sentDate", "status"), "outgoing");
+				}
+			}
 		}
 	}
 	

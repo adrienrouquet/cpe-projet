@@ -163,8 +163,12 @@ public class User{
 	}
 	public void setIsConnected ( boolean isConnected ) {
 		_isConnected = isConnected;
-		if (!isConnected)
+		if (isConnected) {
+			UserManager.addUserConnected(this);
+		} else {
+			UserManager.delUserConnected(this);
 			_dbut.updateUserLastLogin(_id);
+		}
 	}
 	public boolean getIsConnected ( ) {
 		return _isConnected;
@@ -184,15 +188,18 @@ public class User{
 	
 	public void delWebsocket(Websocket websocket) {
 		_websockets.remove(websocket);
+		
+		// On attend 3s
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (_websockets.size() == 0) {
+		
+		// On deconnecte l'utilisateur s'il n'a plus de websocket
+		if (this._websockets.size() == 0) {
 			this.setIsConnected(false);
-			UserManager.delUserConnected(this);
 		}
 	}
 	
@@ -209,6 +216,11 @@ public class User{
 	public void deleteContact(int contactId)
 	{
 		_dbut.deleteContact(_id, contactId);
+	}
+	
+	public Boolean hasApprovedContact(int dstUserId)
+	{
+		return User.hasApprovedContact(this._id, dstUserId);
 	}
 	
 	public static String getName(int id)
@@ -237,5 +249,10 @@ public class User{
 		{
 			return "Online";
 		}
+	}
+	
+	public static Boolean hasApprovedContact(int srcUserId, int dstUserId)
+	{
+		return _dbut.hasApprovedContact(srcUserId, dstUserId);
 	}
 }
