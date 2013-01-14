@@ -18,7 +18,7 @@ public class DBUserToolbox extends DBToolbox {
 	public DBUserToolbox ()
 	{
 		super();
-		_dbName = "cpe-projet_db";
+		_dbName = "myam-db";
 		_dbHandler = new DBHandler(_dbName);
 	}
 

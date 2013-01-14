@@ -24,6 +24,44 @@ body{
 	overflow: hidden;
 }
 
+#bigLogoLabel{
+	background-image: url("../img/logolabel.png");
+	background-size: 100% 100%;
+	background-position: center center;
+	text-align: center;
+	display: inline-block;
+	position: relative;
+	top: 50px;
+	height:100px;
+	width:200px;
+	z-index: -2;
+}
+#bigLogo{
+	background-image: url("../img/logo.png");
+	background-size: 100% 100%;
+	background-position: center center;
+	text-align: center;
+	display: inline-block;
+	position: relative;
+	top: 20px;
+	height:100px;
+	width:100px;
+	z-index: -2;
+}
+#logoBGContainer{
+	background-image: url("../img/logo.png");
+	background-size: 100% 100%;
+	background-position: center center;
+	position: absolute;
+	top: 0;
+	right: 0;
+	text-align: center;
+	display: block;
+	height:50px;
+	width:50px;
+	z-index: -2;
+}
+
 #container{
 	position: absolute;
 	top: 0px;
@@ -36,27 +74,35 @@ body{
 	width:100%;	
 	background-image: url("../img/background.jpg");
 	background-repeat: no-repeat;
-	background-size: 100% 100%; 
+	background-size: 100% 100%;
+	z-index: -3; 
 }
 
 header{
 	position: absolute;
 	top: 0px;
 	width: 100%;
+	z-index: 0;
 }
 
 section{
 	width: 100%;
 	position: absolute;
 	top: 50px;
+	z-index: 0;
 }
 
 footer{
 	position: absolute;
 	bottom: 0px;
 	width: 100%;
+	z-index: 0;
 }
 
+.noAbsolute{
+	position: relative;
+	top:0px;
+}
 .black{
 	background: rgb(40,40,40);
 	border: 2px;

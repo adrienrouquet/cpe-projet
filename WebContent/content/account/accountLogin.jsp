@@ -24,7 +24,7 @@
 </script>
 <div id="container">
 	<header>
-		<h1>MyaM</h1>
+		<div id="bigLogoLabel"></div>
 	</header>
 	<section class="login">
 		<% 
@@ -42,7 +42,6 @@
 			<input type="submit" class="button" value="Login" />
 			<br /><a href="AccountServlet?action=subscribe"> Sign up </a>
 			<br /><br /><br />
-			<a href="!?action=resetDB" style="color: red;"> RESET DB </a>
 		</form>
 	</section>
 </div>

@@ -17,8 +17,8 @@ public class DBHandler{
 	{
 		_dbName = dbName;
 		_connectionProps = new Properties();
-	    _connectionProps.put("user", "root");
-	    _connectionProps.put("password", "password");
+	    _connectionProps.put("user", "myam-sa");
+	    _connectionProps.put("password", "mysam-toor");
 	   
 	   
 	    try {

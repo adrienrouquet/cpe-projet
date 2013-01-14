@@ -60,9 +60,8 @@ public class ChatServlet extends HttpServlet {
 		{
 			case "openChat":
 			{
-				System.err.println(userBean.getMsgManager());
-				System.err.println(contactId);
-				userBean.getMsgManager().setDstUserId(contactId);
+				if(userBean.getMsgManager().getDstUserId() == 0)
+					userBean.getMsgManager().setDstUserId(contactId);
 				cr.setUrl("chatWindow.jsp");
 				rd = req.getRequestDispatcher("content/chat/chat.jsp");
 //	    		rd.forward(req, res);

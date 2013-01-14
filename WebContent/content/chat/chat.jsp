@@ -17,7 +17,8 @@
 		<script type="text/javascript" src="script/script.js"></script>
 		<script type="text/javascript" src="script/websocket.js"></script>
 	</head>
-	<body>		
+	<body>	
+	<div id="logoBGContainer"></div>	
 	<% 
 		if( chatRouterBean.getUrl() != "")  
 		{

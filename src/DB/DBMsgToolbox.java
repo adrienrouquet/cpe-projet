@@ -18,7 +18,7 @@ public class DBMsgToolbox extends DBToolbox {
 	public DBMsgToolbox ()
 	{
 		super();
-		_dbName = "cpe-projet_db";
+		_dbName = "myam-db";
 		_dbHandler = new DBHandler(_dbName);
 	}
 	

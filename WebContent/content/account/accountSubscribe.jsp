@@ -43,10 +43,12 @@
 	});	
 </script>
 <div id="container">
-	<header>
+	<div id="bigLogo"></div>
+		
+	<header class="noAbsolute">
 		<h2>Create an account</h2>
 	</header>
-	<section>
+	<section class="noAbsolute">
 		<form method="post" action="AccountServlet" id="accountSubscribeForm">
 			<input type="hidden" name="action" value="submitSubscribe" />
 			<input type="text" name="firstName" placeholder="Enter first name" value="<% if(request.getParameter("firstName") != null){ out.print(request.getParameter("firstName")); } %>"/>
