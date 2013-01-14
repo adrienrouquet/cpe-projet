@@ -1,4 +1,4 @@
-package Class;
+package AppCore;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -11,7 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 
-import Class.User;
+import AppCore.User;
 import Manager.MsgManager;
 import Manager.UserManager;
 
@@ -150,8 +150,7 @@ public class Websocket extends MessageInbound{
 			if (conn != null)
 			conn.writeTextMessage(CharBuffer.wrap(jsonEvent.toJSONString()));
 		} catch (IOException e) {
-			System.err.println("ERROR IN emit");
-//			e.printStackTrace();
+			System.out.println("Error in emit");
 		}
 	}
 }

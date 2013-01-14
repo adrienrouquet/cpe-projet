@@ -1,8 +1,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Manager.UserManager"%>
-<%@page import="Class.Msg"%>
-<%@page import="Class.User"%>
-<%@page import="Class.Websocket"%>
+<%@page import="AppCore.Msg"%>
+<%@page import="AppCore.User"%>
+<%@page import="AppCore.Websocket"%>
 
 <jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />

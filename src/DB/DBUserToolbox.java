@@ -8,27 +8,27 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import DB.DBHandler;
-import Class.User;
+import AppCore.User;
 
 /**
- * Class DBUserToolbox
+ * AppCore DBUserToolbox
  */
 public class DBUserToolbox extends DBToolbox {
 	
 	public DBUserToolbox ()
 	{
 		super();
-		_dbName = "myam-db";
-		_dbHandler = new DBHandler(_dbName);
+		_dbName 		= "myam-db";
+		_dbHandler 	= new DBHandler(_dbName);
 	}
 
 	public String userExists(String email, String phone, String login)
 	{
 		
-		Connection conn 			= getConn();
+		Connection conn 				= getConn();
 		CallableStatement cs 		= null;
-		ResultSet rs 				= null;
-		String exists				= "";
+		ResultSet rs 						= null;
+		String exists						= "";
 		try {
 			
 			cs = conn.prepareCall("{CALL userExists(?,?,?)}");
@@ -64,9 +64,9 @@ public class DBUserToolbox extends DBToolbox {
 	public ArrayList<User> getUsers()
 	{
 		
-		Connection conn 		= getConn();
-		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
+		Connection conn 				= getConn();
+		CallableStatement cs 		= null;
+		ResultSet rs 						= null;
 		ArrayList<User> users 	= null;
 		
 		try {
@@ -91,10 +91,10 @@ public class DBUserToolbox extends DBToolbox {
 	
 	public Boolean hasApprovedContact(int srcUserId, int dstUserId)
 	{
-		Connection conn = getConn();
-		CallableStatement cs = null;
-		ResultSet rs = null;
-		Boolean result = false;
+		Connection conn 			= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 					= null;
+		Boolean result 				= false;
 		
 		try {
 			cs = conn.prepareCall("{CALL hasApprovedContact(?,?)}");
@@ -119,9 +119,9 @@ public class DBUserToolbox extends DBToolbox {
 	public ArrayList<User> getContacts(int id)
 	{
 		
-		Connection conn 		= getConn();
-		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
+		Connection conn 				= getConn();
+		CallableStatement cs 		= null;
+		ResultSet rs 						= null;
 		ArrayList<User> users 	= null;
 		
 		try {
@@ -151,9 +151,9 @@ public class DBUserToolbox extends DBToolbox {
 	public ArrayList<User> getContactRequests(int id)
 	{
 		
-		Connection conn 		= getConn();
-		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
+		Connection conn 				= getConn();
+		CallableStatement cs 		= null;
+		ResultSet rs 						= null;
 		ArrayList<User> users 	= null;
 		
 		try {
@@ -179,10 +179,10 @@ public class DBUserToolbox extends DBToolbox {
 	public int getContactRequestsCount(int id)
 	{
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
-		int count			 	= 0;
+		ResultSet rs 					= null;
+		int count			 			= 0;
 		
 		try {
 			cs 		= conn.prepareCall("{CALL getContactRequestsCount(?)}");
@@ -205,9 +205,9 @@ public class DBUserToolbox extends DBToolbox {
 	public ArrayList<User> findContacts(int userId, String searchString)
 	{
 		
-		Connection conn 		= getConn();
-		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
+		Connection conn 				= getConn();
+		CallableStatement cs 		= null;
+		ResultSet rs 						= null;
 		ArrayList<User> users 	= null;
 		
 		try {
@@ -231,11 +231,12 @@ public class DBUserToolbox extends DBToolbox {
 		return users;
 	}
 
-	public void addUser(String firstName, String lastName, String email, String phone, String login, String password)
+	public Boolean addUser(String firstName, String lastName, String email, String phone, String login, String password)
 	{
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
+		Boolean rs					= false;
 		
 		try {
 			
@@ -246,61 +247,65 @@ public class DBUserToolbox extends DBToolbox {
 			cs.setString("pPhone", phone);
 			cs.setString("pLogin", login);
 			cs.setString("pPassword", password);
-			cs.executeQuery();			
+			rs = cs.execute();			
 			
 		} catch (SQLException e) {
 			System.out.println("Error in addUser:" +e.getMessage());
 		} finally {		
 			closeConn(conn);
 		}
+		
+		return rs;
 	}
 	
-	public void addContact(int srcUserId, int dstUserId)
+	public Boolean addContact(int srcUserId, int dstUserId)
 	{
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		
+		Boolean rs					= false;
 		try {
 			
 			cs = conn.prepareCall("{CALL addContact(?,?)}");
 			cs.setInt("pSrcUserId", srcUserId);
 			cs.setInt("pDstUserId", dstUserId);
-			cs.executeQuery();			
+			rs = cs.execute();			
 			
 		} catch (SQLException e) {
 			System.out.println("Error in addContact:" +e.getMessage());
 		} finally {		
 			closeConn(conn);
 		}
+		return rs;
 	}
 	
-	public void deleteContact(int srcUserId, int dstUserId)
+	public Boolean deleteContact(int srcUserId, int dstUserId)
 	{
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		
+		Boolean rs					= false;
 		try {
 			
 			cs = conn.prepareCall("{CALL deleteContact(?,?)}");
 			cs.setInt("pSrcUserId", srcUserId);
 			cs.setInt("pDstUserId", dstUserId);
-			cs.executeQuery();			
+			rs = cs.execute();			
 			
 		} catch (SQLException e) {
 			System.out.println("Error in deleteContact:" +e.getMessage());
 		} finally {		
 			closeConn(conn);
 		}
+		return rs;
 	}
 	
 	public String getName(Integer id)
 	{
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
-		String name 			= "";
+		ResultSet rs 					= null;
+		String name 					= "";
 		
 		try {
 			
@@ -316,17 +321,16 @@ public class DBUserToolbox extends DBToolbox {
 			System.out.println("Error in getName:" +e.getMessage());
 		} finally {		
 			closeConn(conn);
-		}
-		
+		}		
 		return name;
 	}
 	
 	public String getLogin(Integer id)
 	{
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
-		String name 			= "";
+		ResultSet rs 					= null;
+		String login 					= "";
 		
 		try {
 			
@@ -336,23 +340,22 @@ public class DBUserToolbox extends DBToolbox {
 			
 			while(rs.next())
 			{
-				name = rs.getString("login");
+				login = rs.getString("login");
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getLogin:" +e.getMessage());
 		} finally {
 			closeConn(conn);
-		}
-		
-		return name;
+		}		
+		return login;
 	}
 	
 	public Timestamp getLastLogin(Integer id)
 	{
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
+		ResultSet rs 					= null;
 		Timestamp lastLogin 	= null;
 		
 		try {
@@ -376,32 +379,33 @@ public class DBUserToolbox extends DBToolbox {
 	
 	
 	
-	public void updateUserLastLogin(Integer id)
+	public Boolean updateUserLastLogin(Integer id)
 	{
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		
+		Boolean rs					= false;
 		try {
 			
 			cs = conn.prepareCall("{CALL updateUserLastLogin(?)}");
 			cs.setInt("pUserId", id);
-			cs.executeQuery();
+			rs = cs.execute();
 			
 		} catch (SQLException e) {
 			System.out.println("Error in updateUserLastLogin:" +e.getMessage());
 		} finally {
 			closeConn(conn);
 		}
+		return rs;
 	}
 	
 	public boolean checkCredentials(String login, String password)
 	{
-		boolean match 	= false;
+		boolean match 			= false;
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
+		ResultSet rs 					= null;
 		
 		try {
 			
@@ -426,10 +430,10 @@ public class DBUserToolbox extends DBToolbox {
 	public int getIdFromLogin(String login)
 	{
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
-		int id	 				= 0;
+		ResultSet rs 					= null;
+		int id	 						= 0;
 		
 		try {
 			
@@ -455,10 +459,10 @@ public class DBUserToolbox extends DBToolbox {
 	{
 		
 		
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
-		User user 				= null;
+		ResultSet rs 					= null;
+		User user 					= null;
 		
 		try {
 			

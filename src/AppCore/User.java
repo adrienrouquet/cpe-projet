@@ -1,17 +1,17 @@
-package Class;
+package AppCore;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import Class.Websocket;
+import AppCore.Websocket;
 import DB.DBUserToolbox;
 //import Manager.MsgManager;
 import Manager.UserManager;
 
 
 /**
- * Class User
+ * AppCore User
  */
 public class User{
 
@@ -26,14 +26,12 @@ public class User{
 	private boolean _isConnected = false;
 	private int _approvalStatus = 1;
 	private ArrayList<Websocket> _websockets = null;
-//	private MsgManager _mm = null;
 	
 	private static DBUserToolbox _dbut = null;
 
 	public User () { 	  
 		_dbut 	= new DBUserToolbox();
 		_websockets = new ArrayList<Websocket>();
-//		_mm		= new MsgManager();
 	};
 	
 	public User (int id, String login, String password)
@@ -43,7 +41,6 @@ public class User{
 		_password 	= password;
 		_dbut 		= new DBUserToolbox();
 		_websockets = new ArrayList<Websocket>();
-//		_mm			= new MsgManager(_id);
 	};
 	
 	public User (int id, String login, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -57,7 +54,6 @@ public class User{
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
 		_websockets = new ArrayList<Websocket>();
-//		_mm				= new MsgManager(_id);
 	};
 
 	public User (int id, String login, String password, String email, String phone, String firstName, String lastName, Timestamp lastLoginDate)
@@ -72,7 +68,6 @@ public class User{
 		_lastLoginDate  = lastLoginDate;
 		_dbut 			= new DBUserToolbox();
 		_websockets = new ArrayList<Websocket>();
-//		_mm				= new MsgManager(_id);
 	};
 	
 	public void setApprovalStatus(int i)
@@ -98,16 +93,10 @@ public class User{
 	{
 		return _dbut.getContactRequestsCount(_id);
 	}
-
-//	public MsgManager getMsgManager()
-//	{
-//		return this._mm;
-//	}
 	
 	public void setId ( int id )
 	{
 		this._id = id;
-//		_mm.setSrcUserId(id);
 	}
 	public int getId ( ) {
 		return this._id;

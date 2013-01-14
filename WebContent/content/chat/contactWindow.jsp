@@ -1,5 +1,5 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="Class.User"%>
+<%@page import="AppCore.User"%>
 
 <jsp:useBean id="userBean" class="Bean.UserBean" scope="session" />
 <jsp:useBean id="chatRouterBean" class="Bean.Router" scope="session" />

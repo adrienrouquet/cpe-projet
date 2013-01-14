@@ -3,13 +3,13 @@ package Manager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Class.User;
-import Class.Websocket;
+import AppCore.User;
+import AppCore.Websocket;
 import DB.DBUserToolbox;
 
 
 /**
- * Class UserManager
+ * AppCore UserManager
  */
 public abstract class UserManager {
 

@@ -7,13 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import AppCore.User;
+import AppCore.Websocket;
 import Bean.UserBean;
-import Class.Websocket;
-import Class.User;
 
-/**
- * Servlet implementation class Test
- */
 @WebServlet("/WebsocketServlet")
 public class WebsocketServlet extends WebSocketServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +20,6 @@ public class WebsocketServlet extends WebSocketServlet {
      */
     public WebsocketServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	@Override

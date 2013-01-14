@@ -6,13 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Class.Msg;
+import AppCore.Msg;
 import DB.DBHandler;
 
 
-/**
- * Class DBUserToolbox
- */
 public class DBMsgToolbox extends DBToolbox {
 	
 	public DBMsgToolbox ()
@@ -24,10 +21,10 @@ public class DBMsgToolbox extends DBToolbox {
 	
 	public ArrayList<Msg> getMessages(int srcUserId, int dstUserId)
 	{
-		Connection conn 		= getConn();
-		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
-		ArrayList<Msg> messages = null;
+		Connection conn 					= getConn();
+		CallableStatement cs 			= null;
+		ResultSet rs 							= null;
+		ArrayList<Msg> messages 	= null;
 		
 		
 		try {
@@ -44,18 +41,20 @@ public class DBMsgToolbox extends DBToolbox {
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getMessages:" +e.getMessage());
+		} finally {
+			closeConn(conn);	
 		}
-		closeConn(conn);
+		
 		
 		return messages;
 	}
 	
 	public int sendMessage(int srcUserId, int dstUserId, String content)
 	{
-		Connection conn 		= getConn();
+		Connection conn 			= getConn();
 		CallableStatement cs 	= null;
-		ResultSet rs 			= null;
-		int id					= 0;
+		ResultSet rs 					= null;
+		int id							= 0;
 		
 		try {
 			cs = conn.prepareCall("{CALL sendMessage(?,?,?,?)}");
@@ -72,18 +71,19 @@ public class DBMsgToolbox extends DBToolbox {
 			
 		} catch (SQLException e) {
 			System.out.println("Error in sendMessage:" +e.getMessage());
+		} finally {
+			closeConn(conn);	
 		}
-		closeConn(conn);
 		
 		return id;
 	}
 	
 	public int getNonDeliveredMessageCount(int srcUserId, int dstUserId)
 	{
-		Connection conn = getConn();
-		CallableStatement cs = null;
-		ResultSet rs = null;
-		
+		Connection conn 			= getConn();
+		CallableStatement cs 	= null;
+		ResultSet rs 					= null;
+		int count 						= 0;
 		
 		try {
 			cs = conn.prepareCall("{CALL getNonDeliveredMessageCount(?,?)}");
@@ -93,23 +93,23 @@ public class DBMsgToolbox extends DBToolbox {
 			rs = cs.executeQuery();
 			while(rs.next())
 			{
-				return rs.getInt("count");
+				count = rs.getInt("count");
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("Error in getNonDeliveredMessageCount:" +e.getMessage());
+		} finally {
+			closeConn(conn);	
 		}
-		closeConn(conn);
 		
-		return 0;
+		return count;
 	}
 	
 	public Boolean setMessageDelivered(int msgId)
 	{
-		Connection conn = getConn();
-		CallableStatement cs = null;
-		Boolean rs = false;
-		
+		Connection conn 			= getConn();
+		CallableStatement cs 	= null;
+		Boolean rs 					= false;
 		
 		try {
 			cs = conn.prepareCall("{CALL setMessageDelivered(?)}");
@@ -120,8 +120,9 @@ public class DBMsgToolbox extends DBToolbox {
 			
 		} catch (SQLException e) {
 			System.out.println("Error in setMessageDelivered:" +e.getMessage());
+		} finally {
+			closeConn(conn);	
 		}
-		closeConn(conn);
 		
 		return rs;
 	}

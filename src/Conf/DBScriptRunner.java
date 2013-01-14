@@ -19,7 +19,7 @@
  *  limitations under the License.
  */
 
-package TestEnvSetup; 
+package Conf; 
 
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -30,7 +30,7 @@ import java.sql.*;
 /**
  * Tool to run database scripts
  */
-public class ScriptRunner {
+public class DBScriptRunner {
 
 	private static final String DEFAULT_DELIMITER = ";";
 
@@ -48,8 +48,7 @@ public class ScriptRunner {
 	/**
 	 * Default constructor
 	 */
-	public ScriptRunner(Connection connection, boolean autoCommit,
-			boolean stopOnError) {
+	public DBScriptRunner(Connection connection, boolean autoCommit, boolean stopOnError) {
 		this.connection = connection;
 		this.autoCommit = autoCommit;
 		this.stopOnError = stopOnError;

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Class.User;
-import Class.Websocket;
+import AppCore.User;
+import AppCore.Websocket;
 import Manager.UserManager;
 
 
@@ -64,7 +64,6 @@ public class ChatServlet extends HttpServlet {
 					userBean.getMsgManager().setDstUserId(contactId);
 				cr.setUrl("chatWindow.jsp");
 				rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
 	    	}break;
 			
 			case "deleteContact":
@@ -73,7 +72,6 @@ public class ChatServlet extends HttpServlet {
 				
 				cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
 			}break;
 	    	
 			case "openAddContactWindow":
@@ -113,7 +111,6 @@ public class ChatServlet extends HttpServlet {
 				session.setAttribute("searchUserBean", searchUserBean);
 				cr.setUrl("addContactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
 	    		
 	    	}break;
 	    	
@@ -155,7 +152,6 @@ public class ChatServlet extends HttpServlet {
 			{
 				cr.setUrl("contactRequestsWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
 			}
 	    	
 			case "submitContactRequests":
@@ -187,7 +183,6 @@ public class ChatServlet extends HttpServlet {
 				}
 				
 				rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
 	    	}break;
 	    	
 	    	//Action: on est sur la chatWindow et on veut retourner a la contactWindow. Il faut donc vider le dstUserId du msgManager
@@ -196,9 +191,7 @@ public class ChatServlet extends HttpServlet {
 				cr.setAction("DefaultView");
 				cr.setUrl("contactWindow.jsp");
 				userBean.getMsgManager().setDstUserId(0);
-				System.out.println("test");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
 	    	}break;
 	    	
 	    	default:
@@ -206,7 +199,6 @@ public class ChatServlet extends HttpServlet {
 	    		cr.setAction("DefaultView");
 	    		cr.setUrl("contactWindow.jsp");
 	    		rd = req.getRequestDispatcher("content/chat/chat.jsp");
-//	    		rd.forward(req, res);
 	    	}break;
 		}
 		

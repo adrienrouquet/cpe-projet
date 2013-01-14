@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 
 
 /**
- * Class DBToolbox
+ * AppCore DBToolbox
  */
 abstract public class DBToolbox {
 
-	protected String _dbName = "";
-	protected DBHandler _dbHandler = null;
+	protected String _dbName 			= "";
+	protected DBHandler _dbHandler 	= null;
   
 	public DBToolbox () { };
 

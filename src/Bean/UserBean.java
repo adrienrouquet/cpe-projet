@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
 
-import Class.User;
+import AppCore.User;
 import Manager.MsgManager;
 
 
-/**
- * Class User
- */
 public class UserBean implements Serializable {
 
 	private static final long serialVersionUID = 5313606931922030655L;

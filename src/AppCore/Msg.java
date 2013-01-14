@@ -1,4 +1,4 @@
-package Class;
+package AppCore;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

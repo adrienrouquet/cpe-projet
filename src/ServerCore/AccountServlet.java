@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Manager.UserManager;
-import Class.User;
+import AppCore.User;
 
 
 @WebServlet("/AccountServlet")
