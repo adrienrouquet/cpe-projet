@@ -46,7 +46,7 @@
 	<div id="bigLogo"></div>
 		
 	<header class="noAbsolute">
-		<h2>Create an account</h2>
+		<br /><br /><h2>Create an account</h2>
 	</header>
 	<section class="noAbsolute">
 		<form method="post" action="AccountServlet" id="accountSubscribeForm">
