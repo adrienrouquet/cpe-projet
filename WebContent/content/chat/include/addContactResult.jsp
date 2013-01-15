@@ -10,7 +10,7 @@
 
 <script type="text/javascript" src="script/websocketContact.js"></script>
 
-<h1>Search results</h1>
+<h2>Search results</h2>
 <form method="post" id="addContactForm" name="addContactForm" action="ChatServlet">
 	<input type="hidden" name="action" value="addContact" />
 	<input type="hidden" name="contactId" value="0"/>
@@ -33,9 +33,11 @@
 
 					<div id="contactWrapper<%= user.getId() %>" class="contactWrapperNoHover" >
 						<div class="addContactName">
-							<%= user.getFirstName() %> <%= user.getLastName() %>
+							<%= user.getName() %>
+							<br />Login:
+							<%= user.getLogin() %>
 						</div>
-						<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
+						<input type="button" class="imageButton add floatRight w40 h40" value="" onclick="setValue('addContactForm','contactId','<%= user.getId() %>');submitForm('addContactForm');"/>	
 					</div>
 
 	<%
@@ -45,7 +47,7 @@
 				else{
 											
 	%>
-					<h1 >Sorry, no result found...</h1>
+					<h2>Sorry, no result found...</h2>
 	<%	
 				}
 			}

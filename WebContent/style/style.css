@@ -11,6 +11,7 @@ h1{
 	font-family:serif;
 	color:white;
 	font-size: 1.8em;
+	display: inline;
 }
 
 h2{
@@ -18,10 +19,12 @@ h2{
 	font-family:serif;
 	color:white;
 	font-size: 1.4em;
+	display: inline;
 }
 
 body{
 	overflow: hidden;
+	color: white;
 }
 
 #bigLogoLabel{
@@ -53,12 +56,12 @@ body{
 	background-size: 100% 100%;
 	background-position: center center;
 	position: absolute;
-	top: 0;
+	top: 2px;
 	right: 0;
 	text-align: center;
 	display: block;
-	height:50px;
-	width:50px;
+	height:20px;
+	width:20px;
 	z-index: -2;
 }
 
@@ -135,6 +138,11 @@ footer{
 	height: 30px;
 }
 
+.h40
+{
+	height: 40px;
+}
+
 .h50
 {
 	height: 50px;
@@ -155,6 +163,12 @@ footer{
 {
 	width: 30px;
 }
+
+.w40
+{
+	width: 40px;
+}
+
 .w50
 {
 	width: 50px;

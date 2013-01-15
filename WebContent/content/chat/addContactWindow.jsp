@@ -9,12 +9,14 @@
 
 <script type="text/javascript" src="script/websocketContact.js"></script>
 <div id="container">
-	<header class="black">
+	<header class="black" style="text-align:center;">
 		<form method="post" id="backForm" name="backForm" action="ChatServlet">
 		<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
 		<input type="button" class="imageButton back h50 w50 floatLeft" value="" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
 		</form>	
-		Find Contact
+		<h2>
+			Find Contact
+		</h2>
 	</header>
 
 	<section id="search" class="addContactSection">

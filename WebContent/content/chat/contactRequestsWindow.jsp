@@ -14,11 +14,10 @@
 		<input type="hidden" name="action" value="<%=chatRouterBean.getAction()%>" />
 		<input type="button" class="imageButton back h50 w50 floatLeft" value="" onclick="setValue('backForm','action','backToContactView');submitForm('backForm');"/>	
 		</form>	
-		Contact requests
+		<h2>Contact requests</h2>
 	</header>
 
 	<section id="contactRequests" class="addContactSection">
-		<h1>Contact requests</h1>
 		
 		<form method="post" id="contactRequestsForm" name="contactRequestsForm" action="ChatServlet">
 			<input type="hidden" name="action" value="submitContactRequests" />
@@ -43,9 +42,11 @@
 							<div class="contactWrapperNoHover" >
 								<div class="addContactName">
 									<%= user.getName() %>
+								<br />Login:
+									<%= user.getLogin() %>
 								</div>
-								<input type="button" class="imageButton ignore floatRight w30 h30" value="" onclick="setValue('contactRequestsForm','contactId','<%= user.getId() %>');setValue('contactRequestsForm','acceptRequest','false');submitForm('contactRequestsForm');"/>
-								<input type="button" class="imageButton add floatRight w30 h30" value="" onclick="setValue('contactRequestsForm','contactId','<%= user.getId() %>');setValue('contactRequestsForm','acceptRequest','true');submitForm('contactRequestsForm');"/>	
+								<input type="button" class="imageButton ignore floatRight w40 h40" value="" onclick="setValue('contactRequestsForm','contactId','<%= user.getId() %>');setValue('contactRequestsForm','acceptRequest','false');submitForm('contactRequestsForm');"/>
+								<input type="button" class="imageButton add floatRight w40 h40" value="" onclick="setValue('contactRequestsForm','contactId','<%= user.getId() %>');setValue('contactRequestsForm','acceptRequest','true');submitForm('contactRequestsForm');"/>	
 							</div>
 		
 			<%

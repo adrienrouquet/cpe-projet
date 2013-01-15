@@ -26,7 +26,6 @@ $(document).ready(function() {
 	function doSend() {
 		if (jQuery.trim($('#content').val()).length > 0) {
 			var json = new JSONMessage();
-			
 			json.sentDate = new Date().getTime();
 			json.content = $('#content').val();
 			$('#content').val("");

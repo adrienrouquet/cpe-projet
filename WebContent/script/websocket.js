@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	var _wsUri = "ws://" + window.location.host + "/cpe-projet/WebsocketServlet";
+	var _wsUri = "ws://" + window.location.host + "/MyAM/WebsocketServlet";
 	var _websocket = null;
 	
 	function JSONMessage() {

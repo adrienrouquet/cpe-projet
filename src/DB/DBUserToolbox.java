@@ -472,7 +472,7 @@ public class DBUserToolbox extends DBToolbox {
 			
 			while(rs.next())
 			{
-				user = new User(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate"));
+				user = new User(rs.getInt("id"),rs.getString("login"),rs.getString("password"),rs.getString("email"),rs.getString("phone"),rs.getString("firstName"),rs.getString("lastName"),rs.getTimestamp("lastLoginDate"));;
 			}
 		} catch (SQLException e) {
 			System.out.println("Error in getUser:" +e.getMessage());

@@ -23,7 +23,7 @@
 		<%
 		int dstId = userBean.getMsgManager().getDstUserId();
 		%>
-		<div id=<%= User.getLogin(dstId) %>>
+		<div id=<%= User.getLogin(dstId) %> style="text-align:center;">
 			<div class="contactName">
 				<%= User.getName(dstId) %>
 			</div>
