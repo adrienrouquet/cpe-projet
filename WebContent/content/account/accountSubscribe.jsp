@@ -20,7 +20,8 @@
 					email: true
 				},
 				phone: {
-					required: true
+					required: true,
+					minlength: 10
 				},
 				login: {
 					required: true,
