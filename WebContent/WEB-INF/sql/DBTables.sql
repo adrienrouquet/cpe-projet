@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `content` text NOT NULL,
   `sentDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `isDelivered` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`srcUserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`dstUserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 /*---------------------------------------------------*/
@@ -31,5 +33,9 @@ DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE IF NOT EXISTS `contacts` (
   `srcUserId` int(11) NOT NULL,
   `dstUserId` int(11) NOT NULL,
-  `approvalStatus` int(2) NOT NULL DEFAULT '0'
+  `approvalStatus` int(2) NOT NULL DEFAULT '0',
+  KEY `contacts_ibfk_1` (`srcUserId`),
+  KEY `contacts_ibfk_2` (`dstUserId`),
+  CONSTRAINT `contacts_ibfk_2` FOREIGN KEY (`dstUserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `contacts_ibfk_1` FOREIGN KEY (`srcUserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
